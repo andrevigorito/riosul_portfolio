@@ -1,0 +1,19 @@
+// Global Imports
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i');
+
+// ==========================================================================
+// Variaveis de reutilização
+$total: 1100;
+$cor: #292D41;
+$font: 'CircularStd';
+
+// partials
+@import 'font/circular';
+@import 'Geral/mixins';
+@import 'Geral/reset';
+@import 'Geral/base';
+
+@import 'Layout/menu';
+@import 'Layout/header';
+@import 'Layout/relatoriogerancial';
+

@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html xml:lang="pt-br" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
+    
+    <!-- User Stylesheets -->
+    <link rel=stylesheet href="vendors/css/normalize.min.css">
+    <link rel=stylesheet href="css/style.css">
+
+    <title>Document</title>
+</head>
+<body>
+        <div class="main-menu">
+                <div class="scrollmenu" v-bar>
+                    <div class="content">
+                        <div class="icon-menu" >
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <div class="user">
+                            <img src="img/user-header.png" alt="">
+                            <p>Josieli Machado</p>
+                            <p><small>Grupo Toniato</small></p>
+                        </div>
+                        <nav >
+                            <a href="#">Meu Perfil</a>   
+                            <a href="./">Dashboard</a>
+                            <a href="./relatorios.html">Relatório </a>
+                            <a href="./import.html">Import</a>
+                                             
+                        </nav>
+                        <div class="logout">
+                            <p>Logout</p>
+                            <img src="img/icons/icon-logout.png" alt="">
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+    <header class="main-header">
+        <div class="center">
+            <div class="logo">
+                <a href="index.html">
+                <img src="img/logo.png" alt="">
+            </a>
+            </div>
+            <nav class="main-nav">
+                <a href="./">Dashboard</a>
+                <a href="./relatorios.html">Relatório </a>
+                <a href="./import.html">Import</a>
+            </nav>
+            <div class="user-header">
+                <img src="img/user-header.png" alt="" class="logo">
+                <div class="icon-menu" >
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="center">
+        <div class="page-header">
+            <h1>
+                <img src="img/icons/title-dash.png" alt="">
+                Relatório Gerencial
+            </h1>
+            
+            <div class="last-wrap">
+                <div class="btnvoltar">
+                    <img src="img/icons/back.png" alt="">
+                    <a href="javascript:history.back()">
+                        <p>Voltar</p>
+                    </a>
+                </div>
+            </div>
+    
+            
+        </div>
+
+        <div class="content-regerencial">
+            <div class="page-interna">
+                <header class="title">
+                    <div class="first">
+                        <p>ID: <strong>D13319661</strong></p>
+                        <p>Produto: <strong>APROACH PRIMA 5L</strong></p>
+                    </div>
+                    <div class="last">
+                        <p class="emp">Dupont</p>
+                    </div>
+                </header>
+
+                <div class="boxgra">
+                    <div class="first">
+                        <div class="tit">
+                            <img src="img/icons/title-dash.png" alt="">
+                            <p>GR Atual</p>
+                        </div>
+                        <div class="item-gra">
+                            <p><img src="img/icons/rg-c.png" alt=""> 30/05/2019</p>
+                            <p><img src="img/icons/rg-p.png" alt=""> 43.200</p>
+                        </div>
+                        <div class="item-gra">
+                            <p class="alterada"><img src="img/icons/rg-c.png" alt=""> 03/06/2019</p>
+                            <p><img src="img/icons/rg-p.png" alt=""> 10.800</p>
+                        </div>
+                        <div class="item-gra">
+                            <p><img src="img/icons/rg-c.png" alt=""> 07/06/2019</p>
+                            <p><img src="img/icons/rg-p.png" alt=""> 75.000</p>
+                        </div>
+                    </div>
+                    <div class="total">
+                        <img src="img/icons/total.png" alt="">
+                        <p>Total: <strong>129.000</strong></p>
+                    </div>
+                </div>
+                
+                <div class="list-po">
+                    <div class="header">
+                        <p class="w60">PO</p>
+                        <p class="w20">Qtd.</p>
+                        <p class="w20">Valor</p>
+                    </div>
+
+                    <!-- Acordion e panel -->
+                    <div class="item accordion">
+                        <p class="w60">4100004249</p>
+                        <p class="w20">58.320,00</p>
+                        <p class="w20">1.341.360,00</p>
+                    </div>
+                    <div class="panel">
+                        <div class="content-po ">
+                            <header>
+                                <div class="gra">
+                                    <p>GR Atual</p>
+                                    <p >30/03/2019</p>
+                                </div>
+                                <div class="historico">
+                                    <div class="hist-tit">
+                                        <p>Último Histórico</p>
+                                        <p class="date">08/04/2019</p>
+                                    </div>
+                                    <div class="boll">
+                                        <span></span>
+                                    </div>
+                                    <div class="infouser">
+                                        <img src="img/user-header.png" alt="">
+                                        <div class="info">
+                                            <p class="user">Roberta Beltran</p>
+                                            <p>Processo protocolado no MAPA - IN 26 12/03/2019</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </header>
+                            <div class="boxs">
+                                <div class="box">
+                                    <div class="icon">
+                                        <img src="img/icons/icon-nf-remetente.png" alt="">
+                                    </div>
+                                    <div class="info">
+                                        <div class="row">
+                                            <p>Item:</p>
+                                            <p>1</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>QTD. Produto:</p>
+                                            <p>19.400,00</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>QTD. Container:</p>
+                                            <p>1</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Peso:</p>
+                                            <p>19.400,00 KG</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box">
+                                    <div class="icon">
+                                        <img src="img/icons/icon-nf-map.png" alt="">
+                                    </div>
+                                    <div class="info">
+                                        <div class="row">
+                                            <p>Origem:</p>
+                                            <p>1</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Destino:</p>
+                                            <p>AVENIDA CONSTANTE PAVAN 4327 PAULINIA</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Transportador:</p>
+                                            <p>Transporte Toniato</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box">
+                                    <div class="icon">
+                                        <img src="img/icons/icon-barco.png" alt="">
+                                    </div>
+                                    <div class="info">
+                                        <div class="row">
+                                            <p>ETD - Prev. Embarque:</p>
+                                            <p>22/02/2019</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>ATD - Real. Embarque:</p>
+                                            <p>24/02/2019</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>ETA - Prev. Entrega:</p>
+                                            <p>13/03/2019</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>ATA - Real. Entrega:</p>
+                                            <p>10/03/2019</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Entrega na Planta:</p>
+                                            <p>29/03/2019</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                     <!-- Fim Acordion e panel -->
+
+                    <!-- Acordion e panel -->
+                    <div class="item accordion">
+                        <p class="w60">4100004249</p>
+                        <p class="w20">58.320,00</p>
+                        <p class="w20">1.341.360,00</p>
+                    </div>
+                    <div class="panel">
+                        <div class="content-po ">
+                            <header>
+                                <div class="gra">
+                                    <p>GR Atual</p>
+                                    <p>30/03/2019</p>
+                                </div>
+                                <div class="historico">
+                                    <div class="hist-tit">
+                                        <p>Último Histórico</p>
+                                        <p class="date">08/04/2019</p>
+                                    </div>
+                                    <div class="boll">
+                                        <span></span>
+                                    </div>
+                                    <div class="infouser">
+                                        <img src="img/user-header.png" alt="">
+                                        <div class="info">
+                                            <p class="user">Roberta Beltran</p>
+                                            <p>Processo protocolado no MAPA - IN 26 12/03/2019</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </header>
+                            <div class="boxs">
+                                <div class="box">
+                                    <div class="icon">
+                                        <img src="img/icons/icon-nf-remetente.png" alt="">
+                                    </div>
+                                    <div class="info">
+                                        <div class="row">
+                                            <p>Item:</p>
+                                            <p>1</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>QTD. Produto:</p>
+                                            <p>19.400,00</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>QTD. Container:</p>
+                                            <p>1</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Peso:</p>
+                                            <p>19.400,00 KG</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box">
+                                    <div class="icon">
+                                        <img src="img/icons/icon-nf-map.png" alt="">
+                                    </div>
+                                    <div class="info">
+                                        <div class="row">
+                                            <p>Origem:</p>
+                                            <p>1</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Destino:</p>
+                                            <p>AVENIDA CONSTANTE PAVAN 4327 PAULINIA</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Transportador:</p>
+                                            <p>Transporte Toniato</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box">
+                                    <div class="icon">
+                                        <img src="img/icons/icon-air.png" alt="">
+                                    </div>
+                                    <div class="info">
+                                        <div class="row">
+                                            <p>ETD - Prev. Embarque:</p>
+                                            <p>22/02/2019</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>ATD - Real. Embarque:</p>
+                                            <p>24/02/2019</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>ETA - Prev. Entrega:</p>
+                                            <p>13/03/2019</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>ATA - Real. Entrega:</p>
+                                            <p>10/03/2019</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Entrega na Planta:</p>
+                                            <p>29/03/2019</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <!-- Fim Acordion e panel -->
+                    
+                    <!-- Acordion e panel -->
+                    <div class="item accordion">
+                        <p class="w60">4100004249</p>
+                        <p class="w20">58.320,00</p>
+                        <p class="w20">1.341.360,00</p>
+                    </div>
+                    <div class="panel">
+                        <div class="content-po ">
+                            <header>
+                                <div class="gra">
+                                    <p>GR Atual</p>
+                                    <p>30/03/2019</p>
+                                </div>
+                                <div class="historico">
+                                    <div class="hist-tit">
+                                        <p>Último Histórico</p>
+                                        <p class="date">08/04/2019</p>
+                                    </div>
+                                    <div class="boll">
+                                        <span></span>
+                                    </div>
+                                    <div class="infouser">
+                                        <img src="img/user-header.png" alt="">
+                                        <div class="info">
+                                            <p class="user">Roberta Beltran</p>
+                                            <p>Processo protocolado no MAPA - IN 26 12/03/2019</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </header>
+                            <div class="boxs">
+                                <div class="box">
+                                    <div class="icon">
+                                        <img src="img/icons/icon-nf-remetente.png" alt="">
+                                    </div>
+                                    <div class="info">
+                                        <div class="row">
+                                            <p>Item:</p>
+                                            <p>1</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>QTD. Produto:</p>
+                                            <p>19.400,00</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>QTD. Container:</p>
+                                            <p>1</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Peso:</p>
+                                            <p>19.400,00 KG</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box">
+                                    <div class="icon">
+                                        <img src="img/icons/icon-nf-map.png" alt="">
+                                    </div>
+                                    <div class="info">
+                                        <div class="row">
+                                            <p>Origem:</p>
+                                            <p>1</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Destino:</p>
+                                            <p>AVENIDA CONSTANTE PAVAN 4327 PAULINIA</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Transportador:</p>
+                                            <p>Transporte Toniato</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box">
+                                    <div class="icon">
+                                        <img src="img/icons/icon-air.png" alt="">
+                                    </div>
+                                    <div class="info">
+                                        <div class="row">
+                                            <p>ETD - Prev. Embarque:</p>
+                                            <p>22/02/2019</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>ATD - Real. Embarque:</p>
+                                            <p>24/02/2019</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>ETA - Prev. Entrega:</p>
+                                            <p>13/03/2019</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>ATA - Real. Entrega:</p>
+                                            <p>10/03/2019</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Entrega na Planta:</p>
+                                            <p>29/03/2019</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="content-po ">
+                            <header>
+                                <div class="gra">
+                                    <p>GR Atual</p>
+                                    <p>30/03/2019</p>
+                                </div>
+                                <div class="historico">
+                                    <div class="hist-tit">
+                                        <p>Último Histórico</p>
+                                        <p class="date">08/04/2019</p>
+                                    </div>
+                                    <div class="boll">
+                                        <span></span>
+                                    </div>
+                                    <div class="infouser">
+                                        <img src="img/user-header.png" alt="">
+                                        <div class="info">
+                                            <p class="user">Roberta Beltran</p>
+                                            <p>Processo protocolado no MAPA - IN 26 12/03/2019</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </header>
+                            <div class="boxs">
+                                <div class="box">
+                                    <div class="icon">
+                                        <img src="img/icons/icon-nf-remetente.png" alt="">
+                                    </div>
+                                    <div class="info">
+                                        <div class="row">
+                                            <p>Item:</p>
+                                            <p>1</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>QTD. Produto:</p>
+                                            <p>19.400,00</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>QTD. Container:</p>
+                                            <p>1</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Peso:</p>
+                                            <p>19.400,00 KG</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box">
+                                    <div class="icon">
+                                        <img src="img/icons/icon-nf-map.png" alt="">
+                                    </div>
+                                    <div class="info">
+                                        <div class="row">
+                                            <p>Origem:</p>
+                                            <p>1</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Destino:</p>
+                                            <p>AVENIDA CONSTANTE PAVAN 4327 PAULINIA</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Transportador:</p>
+                                            <p>Transporte Toniato</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box">
+                                    <div class="icon">
+                                        <img src="img/icons/icon-air.png" alt="">
+                                    </div>
+                                    <div class="info">
+                                        <div class="row">
+                                            <p>ETD - Prev. Embarque:</p>
+                                            <p>22/02/2019</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>ATD - Real. Embarque:</p>
+                                            <p>24/02/2019</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>ETA - Prev. Entrega:</p>
+                                            <p>13/03/2019</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>ATA - Real. Entrega:</p>
+                                            <p>10/03/2019</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Entrega na Planta:</p>
+                                            <p>29/03/2019</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <!-- Fim Acordion e panel -->
+                    
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+    
+
+    <script src="vendors/js/jquery-3.2.1.min.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight){
+            panel.style.maxHeight = null;
+            } else {
+            panel.style.maxHeight = panel.scrollHeight + "px";
+            } 
+        });
+        }
+    </script>
+</body>
+</html>
+

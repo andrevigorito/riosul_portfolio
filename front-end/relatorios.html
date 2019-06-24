@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html xml:lang="pt-br" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
+    
+    <!-- User Stylesheets -->
+    <link rel=stylesheet href="vendors/css/normalize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/css/datepicker.min.css" />
+    <link rel=stylesheet href="css/style.css">
+
+    <title>Document</title>
+</head>
+<body>
+
+    <div class="main-menu">
+            <div class="scrollmenu" v-bar>
+                <div class="content">
+                    <div class="icon-menu" >
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <div class="user">
+                        <img src="img/user-header.png" alt="">
+                        <p>Josieli Machado</p>
+                        <p><small>Grupo Toniato</small></p>
+                    </div>
+                    <nav >
+                        <a href="#">Meu Perfil</a>   
+                        <a href="./">Dashboard</a>
+                        <a href="./relatorios.html">Relatório </a>
+                        <a href="./import.html">Import</a>
+                                            
+                    </nav>
+                    <div class="logout">
+                        <p>Logout</p>
+                        <img src="img/icons/icon-logout.png" alt="">
+                    </div>
+                </div>
+            </div>
+    </div>
+        
+    <header class="main-header">
+        <div class="center">
+            <div class="logo">
+                <img src="img/logo.png" alt="">
+            </div>
+            <nav class="main-nav">
+                <a href="./">Dashboard</a>
+                <a href="./relatorios.html">Relatório </a>
+                <a href="./import.html">Import</a>
+            </nav>
+            <div class="user-header">
+                <img src="img/user-header.png" alt="" class="logo">
+                <div class="icon-menu" >
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="center">
+        <div class="page-header">
+            <h1>
+                <img src="img/icons/title-dash.png" alt="">
+                Relatório Gerencial
+            </h1>
+            
+            <div class="last-wrap">
+                <div class="btn-filter-nfs" >
+                    <div class="icon-filter">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    Filtrar
+                </div>            
+            </div>
+    
+            
+        </div>
+        
+        <div class="filter-box">
+            <form action="">
+                <div class="nfs">
+                    <label for="dupont">
+                        <input type="checkbox" name="" id="dupont">
+                        DUPONT
+                    </label>
+                    <label for="dow">
+                        <input type="checkbox" name="" id="dow">
+                        DOW
+                    </label>
+                </div>
+                <div class="item">
+                    <label for="idproduto">ID / Produto:</label>
+                    <input type="text" id="idproduto">
+                </div>
+                <div class="item">
+                    <label for="data-inicio">Data início:</label>
+                    <input type="text" class="datepicker-here date" data-language="pt-BR" id="data-inicio">
+                </div>
+                <div class="item">
+                    <label for="data-fim">Data fim:</label>
+                    <input type="text" class="datepicker-here date" data-language="pt-BR" id="data-fim">
+                </div>
+                <div class="item">
+                    <label for="">Urgente:</label>
+                   <div class="boxurgente">
+
+                       <label for="urgente-sim">
+                           <input type="checkbox" name="" id="urgente-sim">
+                           Y
+                       </label>
+                       <label for="urgente-nao">
+                           <input type="checkbox" name="" id="urgente-nao">
+                           N
+                       </label>
+                   </div>
+                </div>
+                <div class="item">
+                    <label> &nbsp; </label>
+                    <button class="btn">Filtrar</button>
+                </div>
+            </form>
+
+        </div>
+
+        <div class="content-regerencial">
+            <div class="list-rege">
+                <header class="headerlist">
+                    <div class="first">
+                        <p>ID / Produto</p>
+                        <p>GR Atual</p>
+                    </div>
+                    <div class="last">
+                        <p>*Alterada <span class="a"></span></p>
+                        <p>*Urgente: Y<span class="y"></span>N<span class="n"></span></p>
+                    </div>
+                </header>
+                <a href="detalhe.html">
+                    <div class="item">
+                        <div class="main-info">
+                            <p class="emp">Dupont</p>
+                            <p class="idpro">D13319661</p>
+                            <p class="namepro">FRONT</p>
+                        </div>
+                        <div class="info">
+                            <div class="list-gra">
+                                <div class="item-gra">
+                                    <p><img src="img/icons/rg-c.png" alt=""> 30/05/2019</p>
+                                    <p><img src="img/icons/rg-p.png" alt=""> 43.200</p>
+                                </div>
+                                <div class="item-gra">
+                                    <p class="alterada"><img src="img/icons/rg-c.png" alt=""> 03/06/2019</p>
+                                    <p><img src="img/icons/rg-p.png" alt=""> 10.800</p>
+                                </div>
+                                <div class="item-gra">
+                                    <p><img src="img/icons/rg-c.png" alt=""> 07/06/2019</p>
+                                    <p><img src="img/icons/rg-p.png" alt=""> 75.000</p>
+                                </div>
+        
+                            </div>
+                            <div class="item-gra">
+                                <p><strong>Total</strong></p>
+                                <p><img src="img/icons/rg-p.png" alt=""> 129.000</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <div class="item">
+                    <div class="main-info">
+                        <p class="emp">Dupont</p>
+                        <p class="idpro">D15407934</p>
+                        <p class="namepro">GALIL</p>
+                    </div>
+                    <div class="info">
+                        <div class="list-gra">
+                            <div class="item-gra">
+                                <p><img src="img/icons/rg-c.png" alt=""> 03/06/2019</p>
+                                <p><img src="img/icons/rg-p.png" alt=""> 36.000</p>
+                            </div>
+                            <div class="item-gra">
+                                <p><img src="img/icons/rg-c.png" alt=""> 07/06/2019</p>
+                                <p><img src="img/icons/rg-p.png" alt=""> 12.000</p>
+                            </div>
+                            <div class="item-gra">
+                                <p><img src="img/icons/rg-c.png" alt=""> 17/06/2019</p>
+                                <p><img src="img/icons/rg-p.png" alt=""> 54.000</p>
+                            </div>
+    
+                        </div>
+                         <div class="item-gra">
+                            <p><strong>Total</strong></p>
+                            <p><img src="img/icons/rg-p.png" alt=""> 102.000</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item urgente">
+                    <div class="main-info">
+                        <p class="emp">Dupont</p>
+                        <p class="idpro">D15531705</p>
+                        <p class="namepro">METHOMYL HAILI</p>
+                    </div>
+                    <div class="info">
+                        <div class="list-gra">
+                            <div class="item-gra">
+                                <p><img src="img/icons/rg-c.png" alt=""> 26/06/2019</p>
+                                <p><img src="img/icons/rg-p.png" alt=""> 30.000</p>
+                            </div>
+                        </div>
+                         <div class="item-gra">
+                            <p><strong>Total</strong></p>
+                            <p><img src="img/icons/rg-p.png" alt=""> 30.000</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="main-info">
+                        <p class="emp">Dupont</p>
+                        <p class="idpro">D13300665</p>
+                        <p class="namepro">APROACH PRIMA 5L</p>
+                    </div>
+                    <div class="info">
+                        <div class="list-gra">
+                            <div class="item-gra">
+                                <p><img src="img/icons/rg-c.png" alt=""> 30/05/2019</p>
+                                <p><img src="img/icons/rg-p.png" alt=""> 136.080</p>
+                            </div>
+                            <div class="item-gra">
+                                <p><img src="img/icons/rg-c.png" alt=""> 13/06/2019</p>
+                                <p><img src="img/icons/rg-p.png" alt=""> 19.440</p>
+                            </div>
+                            <div class="item-gra">
+                                <p><img src="img/icons/rg-c.png" alt=""> 17/06/2019</p>
+                                <p><img src="img/icons/rg-p.png" alt=""> 272.160</p>
+                            </div>
+                            <div class="item-gra">
+                                <p><img src="img/icons/rg-c.png" alt=""> 24/06/2019</p>
+                                <p><img src="img/icons/rg-p.png" alt=""> 30.240</p>
+                            </div>
+                            <div class="item-gra">
+                                <p><img src="img/icons/rg-c.png" alt=""> 24/06/2019</p>
+                                <p><img src="img/icons/rg-p.png" alt=""> 77.760</p>
+                            </div>
+    
+                        </div>
+                         <div class="item-gra">
+                            <p><strong>Total</strong></p>
+                            <p><img src="img/icons/rg-p.png" alt=""> 535.680</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="main-info">
+                        <p class="emp">Dupont</p>
+                        <p class="idpro">D13902124</p>
+                        <p class="namepro">CYMOXANIL</p>
+                    </div>
+                    <div class="info">
+                        <div class="list-gra">
+                            <div class="item-gra">
+                                <p><img src="img/icons/rg-c.png" alt=""> 19/06/2019</p>
+                                <p><img src="img/icons/rg-p.png" alt=""> 8.000</p>
+                            </div>
+                        </div>
+                         <div class="item-gra">
+                            <p><strong>Total</strong></p>
+                            <p><img src="img/icons/rg-p.png" alt=""> 8.000</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="main-info">
+                        <p class="emp">Dupont</p>
+                        <p class="idpro">D13319661</p>
+                        <p class="namepro">FRONT</p>
+                    </div>
+                    <div class="info">
+                        <div class="list-gra">
+                            <div class="item-gra">
+                                <p><img src="img/icons/rg-c.png" alt=""> 30/05/2019</p>
+                                <p><img src="img/icons/rg-p.png" alt=""> 43.200</p>
+                            </div>
+                            <div class="item-gra">
+                                <p><img src="img/icons/rg-c.png" alt=""> 03/06/2019</p>
+                                <p><img src="img/icons/rg-p.png" alt=""> 10.800</p>
+                            </div>
+                            <div class="item-gra">
+                                <p><img src="img/icons/rg-c.png" alt=""> 07/06/2019</p>
+                                <p><img src="img/icons/rg-p.png" alt=""> 75.000</p>
+                            </div>
+    
+                        </div>
+                         <div class="item-gra">
+                            <p><strong>Total</strong></p>
+                            <p><img src="img/icons/rg-p.png" alt=""> 129.000</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="main-info">
+                        <p class="emp">Dupont</p>
+                        <p class="idpro">D15407934</p>
+                        <p class="namepro">GALIL</p>
+                    </div>
+                    <div class="info">
+                        <div class="list-gra">
+                            <div class="item-gra">
+                                <p><img src="img/icons/rg-c.png" alt=""> 03/06/2019</p>
+                                <p><img src="img/icons/rg-p.png" alt=""> 36.000</p>
+                            </div>
+                            <div class="item-gra">
+                                <p><img src="img/icons/rg-c.png" alt=""> 07/06/2019</p>
+                                <p><img src="img/icons/rg-p.png" alt=""> 12.000</p>
+                            </div>
+                            <div class="item-gra">
+                                <p><img src="img/icons/rg-c.png" alt=""> 17/06/2019</p>
+                                <p><img src="img/icons/rg-p.png" alt=""> 54.000</p>
+                            </div>
+    
+                        </div>
+                         <div class="item-gra">
+                            <p><strong>Total</strong></p>
+                            <p><img src="img/icons/rg-p.png" alt=""> 102.000</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item urgente">
+                    <div class="main-info">
+                        <p class="emp">Dupont</p>
+                        <p class="idpro">D15531705</p>
+                        <p class="namepro">METHOMYL HAILI</p>
+                    </div>
+                    <div class="info">
+                        <div class="list-gra">
+                            <div class="item-gra">
+                                <p><img src="img/icons/rg-c.png" alt=""> 26/06/2019</p>
+                                <p><img src="img/icons/rg-p.png" alt=""> 30.000</p>
+                            </div>
+                        </div>
+                         <div class="item-gra">
+                            <p><strong>Total</strong></p>
+                            <p><img src="img/icons/rg-p.png" alt=""> 30.000</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="main-info">
+                        <p class="emp">Dupont</p>
+                        <p class="idpro">D13300665</p>
+                        <p class="namepro">APROACH PRIMA 5L</p>
+                    </div>
+                    <div class="info">
+                        <div class="list-gra">
+                            <div class="item-gra">
+                                <p><img src="img/icons/rg-c.png" alt=""> 30/05/2019</p>
+                                <p><img src="img/icons/rg-p.png" alt=""> 136.080</p>
+                            </div>
+                            <div class="item-gra">
+                                <p><img src="img/icons/rg-c.png" alt=""> 13/06/2019</p>
+                                <p><img src="img/icons/rg-p.png" alt=""> 19.440</p>
+                            </div>
+                            <div class="item-gra">
+                                <p><img src="img/icons/rg-c.png" alt=""> 17/06/2019</p>
+                                <p><img src="img/icons/rg-p.png" alt=""> 272.160</p>
+                            </div>
+                            <div class="item-gra">
+                                <p><img src="img/icons/rg-c.png" alt=""> 24/06/2019</p>
+                                <p><img src="img/icons/rg-p.png" alt=""> 30.240</p>
+                            </div>
+                            <div class="item-gra">
+                                <p><img src="img/icons/rg-c.png" alt=""> 24/06/2019</p>
+                                <p><img src="img/icons/rg-p.png" alt=""> 77.760</p>
+                            </div>
+    
+                        </div>
+                         <div class="item-gra">
+                            <p><strong>Total</strong></p>
+                            <p><img src="img/icons/rg-p.png" alt=""> 535.680</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="main-info">
+                        <p class="emp">Dupont</p>
+                        <p class="idpro">D13902124</p>
+                        <p class="namepro">CYMOXANIL</p>
+                    </div>
+                    <div class="info">
+                        <div class="list-gra">
+                            <div class="item-gra">
+                                <p><img src="img/icons/rg-c.png" alt=""> 19/06/2019</p>
+                                <p><img src="img/icons/rg-p.png" alt=""> 8.000</p>
+                            </div>
+                        </div>
+                         <div class="item-gra">
+                            <p><strong>Total</strong></p>
+                            <p><img src="img/icons/rg-p.png" alt=""> 8.000</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <script src="vendors/js/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/js/datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/js/i18n/datepicker.pt-BR.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
+
