@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import axios from 'axios';
 // Images
 import iconRgc from '../img/icons/rg-c.png'
 import iconRgp from '../img/icons/rg-p.png'
@@ -10,6 +11,18 @@ import PageHeader from './components/PageHeader';
 
 
 class List extends Component {
+	state = {
+		products: []
+	}
+
+	componentDidMount() {
+		axios.get(`https://webcol.herokuapp.com/products`)
+		  .then(res => {
+			const products = res.data;
+			console.log(products)
+			this.setState({ products });
+		  })
+	  }
 
 	
     render(){
@@ -35,35 +48,41 @@ class List extends Component {
 								</div>
 							</header>
 	
-							<div className="item">
-								<div className="main-info">
-									<p className="emp">Dupont</p>
-									<p className="idpro">D13319661</p>
-									<p className="namepro">FRONT</p>
-								</div>
-	
-								<div className="info">
-									<div className="list-gra">
-										<div className="item-gra">
-											<p><img src={iconRgc} alt="" /> 30/05/2019</p>
-											<p><img src={iconRgp} alt="" /> 43.200</p>
+						
+							{ this.state.products.map(product => 
+							
+							
+								<div className="item" key={product.uuid}>
+									<div className="main-info">
+										<p className="emp">{product.owner}</p>
+										<p className="idpro">{product.code}</p>
+										{/* <p className="namepro">{product.name.substring(0,20)}</p> */}
+										<p className="namepro">{product.name}</p>
+									</div>
+
+									<div className="info">
+										<div className="list-gra">
+											
+										{ product.pos.map(po => 
+											<div className={po.alert ? "item-gra alert": "item-gra"}  key={po.uuid}>
+												<p><img src={iconRgc} alt="" /> {new Date(po.eta).toLocaleDateString()}</p>
+												<p><img src={iconRgp} alt="" /> {po.weight}</p>
+											</div>
+										)}
 										</div>
+										
 										<div className="item-gra">
-											<p className="alterada"><img src={iconRgc} alt="" /> 03/06/2019</p>
-											<p><img src={iconRgp} alt="" /> 10.800</p>
-										</div>
-										<div className="item-gra">
-											<p><img src={iconRgc} alt="" /> 07/06/2019</p>
-											<p><img src={iconRgp} alt="" /> 75.000</p>
+											<p><strong>Total</strong></p>
+											<p><img src={iconRgp} alt="" /> 129.000</p>
 										</div>
 									</div>
-									<div className="item-gra">
-										<p><strong>Total</strong></p>
-										<p><img src={iconRgp} alt="" /> 129.000</p>
-									</div>
-								</div>
-	
-							</div>
+
+								</div>	
+							
+							)}
+
+
+						
 							
 							
 						</div>

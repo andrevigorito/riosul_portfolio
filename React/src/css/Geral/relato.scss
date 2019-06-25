@@ -37,7 +37,7 @@
                         background: #E99898;
                     }
                     &.a{
-                        background: #3498db;
+                        background: #d25b5b;
                     }
                 }
             }
@@ -104,6 +104,13 @@
                         &:last-child{
                             margin-bottom: 0;
                         }
+                    }
+                    &.alert{
+                        border-left: solid 4px #d25b5b;
+                        padding-left: 10px;
+                        padding: 10px;
+                        background: #f7e9e9;
+                        border-radius: 10px;
                     }
                 }
                 p{
@@ -528,7 +535,7 @@
     }
 
     .alterada{
-        color: #3498db !important;
+        color: #d25b5b !important;
         font-weight: 700;
     }
 }
