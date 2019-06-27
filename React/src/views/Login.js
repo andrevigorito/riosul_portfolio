@@ -5,6 +5,7 @@ import logoLogin from '../img/logologin.png'
 import '../css/Layout/login.scss';
 
 
+
 class Login extends Component {
 
     state = {
@@ -19,8 +20,8 @@ class Login extends Component {
         })
     }
 
-    login = () => {
-        console.log(this.state.email, this.state.passwd)
+    login = (props) => {
+      this.props.handleLogin(this.state.email,this.state.passwd);
     }
 
     render(){
@@ -32,20 +33,23 @@ class Login extends Component {
                         <p className="tit">COL REPORT</p>
                         <p>Bem vindo! Digite seus dados de acesso.</p>
                         <div className="main-form">
-                            <input type="text" onChange={this.handleChange('email')} className="first" placeholder="E-mail" />
-                            <input type="password" onChange={this.handleChange('passwd')} placeholder="Senha de Acesso" />
+                            
+                                <input type="text" name="username" onChange={this.handleChange('email')} className="first" placeholder="E-mail" />
+                                <input type="password" name="password" onChange={this.handleChange('passwd')} placeholder="Senha de Acesso" />
 
-                            <div className="row">
-                                <label for="lembrame">
-                                    <input type="checkbox" id="lembrame" />
-                                    Lembrar-me
-                                </label>
-                                    
-                                <div className="esqueciminhasenha">
-                                    Esqueci minha senha
+                                <div className="row">
+                                    <label for="lembrame">
+                                        <input type="checkbox" id="lembrame" />
+                                        Lembrar-me
+                                    </label>
+                                        
+                                    <div className="esqueciminhasenha">
+                                        Esqueci minha senha
+                                    </div>
                                 </div>
-                            </div>
-                            <button onClick={this.login}>Entrar</button>
+                                <button onClick={this.login}>Entrar</button>
+
+                           
                         </div>
                     </div>
                 </div>

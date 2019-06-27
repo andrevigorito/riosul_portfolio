@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
+import API from './service/api'
 
 
 // Views
@@ -18,8 +19,33 @@ import './css/main.scss';
 class App extends Component {
 
 	state = {
-		isAuth: true,
-  	}
+		isAuth: false,
+	  }
+	  
+	handleLogin = (email,passwd) => {
+		
+		API.post(`auth/login`, {username: email, password: passwd}, {headers: {'Content-Type': 'application/json'}})
+		  .then(res => {
+			
+			this.setState({ 
+				isAuth: true
+			 });
+		})
+	
+	}
+
+	componentDidMount(){
+
+		API.get(`auth/status`)
+		  .then(res => {
+			
+			this.setState({ 
+				isAuth: true
+			 });
+			 console.log('aqui')
+		})
+
+	}
 
 	render(){
 
@@ -29,7 +55,7 @@ class App extends Component {
 				<Router>
 
 				
-				{ !this.state.isAuth && <Route path="*" exact component={Login} /> }
+				{ !this.state.isAuth && <Route path="*" render={(props) => <Login {...props} handleLogin={this.handleLogin} />} /> }
 
 				{ this.state.isAuth && <Route path="/detalhe" exact component={Detalhe} /> }
 				{ this.state.isAuth && <Route path="/relatorios" exact component={List} /> }

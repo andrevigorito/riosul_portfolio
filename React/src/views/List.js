@@ -15,6 +15,7 @@ class List extends Component {
 	state = {
 		products: [],
 		isLoading: false,
+		total: 0
 	}
 
 	componentDidMount() {
@@ -30,9 +31,13 @@ class List extends Component {
 			
 		  })
 	  }
-
+	
+	  
 	
     render(){
+
+		
+
         return(
 			<div>
 				<Menu />
@@ -61,24 +66,25 @@ class List extends Component {
 									<div className="main-info">
 										<p className="emp">{product.owner}</p>
 										<p className="idpro">{product.code}</p>
-										{/* <p className="namepro">{product.name.substring(0,20)}</p> */}
-										<p className="namepro">{product.name}</p>
+										<p className="namepro">{product.name.substring(0,20)}</p>
+										{/* <p className="namepro">{product.name}</p> */}
 									</div>
 
 									<div className="info">
 										<div className="list-gra">
 											{ 
-												product.pos.map(po => 
+												product.pos.map(po =>  
 												<div className={po.alert ? "item-gra alert": "item-gra"}  key={po.uuid}>
 													<p><img src={iconRgc} alt="" /> {new Date(po.eta).toLocaleDateString()}</p>
 													<p><img src={iconRgp} alt="" /> {po.weight}</p>
 												</div>
+												
 											)}
 										</div>
-										
+										 
 										<div className="item-gra">
 											<p><strong>Total</strong></p>
-											<p><img src={iconRgp} alt="" /> 129.000</p>
+											<p><img src={iconRgp} alt="" />{}</p>
 										</div>
 									</div>
 

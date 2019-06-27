@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom'
 import imgUser from '../../img/user-header.png'
 import iconLogout from '../../img/icons/icon-logout.png'
+import API from '../../service/api'
 
 class Menu extends Component {
 
@@ -13,6 +14,18 @@ class Menu extends Component {
 		let menu = document.querySelector('.main-menu')
 		menu.classList.remove("ativo")
 	}
+
+	handleLogout(){
+
+		API.get(`auth/logout`)
+		  .then(res => {
+			this.setState({ 
+				isAuth: false
+			 });
+		})
+
+	}
+
     render(){
         return(
 			
@@ -38,7 +51,7 @@ class Menu extends Component {
 				
 						</Route>
 						</nav>
-						<div className="logout">
+						<div className="logout" onClick={this.handleLogout} >
 							<p>Logout</p>
 							<img src={iconLogout} alt="" />
 						</div>
