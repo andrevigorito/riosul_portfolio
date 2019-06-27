@@ -52,8 +52,9 @@
             border-left: solid 10px #1ABC9C; 
             .main-info{
                 
-                width: 160px;
+                width: 140px;
                 text-align: left;
+                padding-right: 20px;
                 p{
                     line-height: 18px;
                     &.emp{
@@ -69,6 +70,7 @@
                         font-size: 16px;
                         font-weight: 700;
                         color: #4C5062;
+                        word-break: break-all;
                     }
                 }
             }

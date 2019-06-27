@@ -7,6 +7,22 @@ import '../css/Layout/login.scss';
 
 class Login extends Component {
 
+    state = {
+        email: '',
+        passwd: '',
+       
+    }
+
+    handleChange = field => e => {
+        this.setState({
+            [field]: e.target.value
+        })
+    }
+
+    login = () => {
+        console.log(this.state.email, this.state.passwd)
+    }
+
     render(){
         return(
             <section className="login">
@@ -16,8 +32,8 @@ class Login extends Component {
                         <p className="tit">COL REPORT</p>
                         <p>Bem vindo! Digite seus dados de acesso.</p>
                         <div className="main-form">
-                            <input type="text" className="first" placeholder="E-mail" />>
-                            <input type="password" placeholder="Senha de Acesso" />
+                            <input type="text" onChange={this.handleChange('email')} className="first" placeholder="E-mail" />
+                            <input type="password" onChange={this.handleChange('passwd')} placeholder="Senha de Acesso" />
 
                             <div className="row">
                                 <label for="lembrame">
@@ -29,7 +45,7 @@ class Login extends Component {
                                     Esqueci minha senha
                                 </div>
                             </div>
-                            <button>Entrar</button>
+                            <button onClick={this.login}>Entrar</button>
                         </div>
                     </div>
                 </div>

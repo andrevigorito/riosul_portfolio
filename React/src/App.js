@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 
@@ -15,25 +15,34 @@ import Import from './views/Import'
 // Css
 import './css/main.scss';
 
-function App() {
+class App extends Component {
 
-	
-	return (
-		<div className="App">
-						
-			<Router>
+	state = {
+		isAuth: true,
+  	}
+
+	render(){
+
+		return (
+			<div className="App">
+							
+				<Router>
+
 				
-				<Route path="/detalhe" exact component={Detalhe} />
-				<Route path="/relatorios" exact component={List} />
-				<Route path="/" exact component={Login} />
-				<Route path="/dashboard" exact component={Dashboard} />
-				<Route path="/import" exact component={Import} />
+				{ !this.state.isAuth && <Route path="*" exact component={Login} /> }
 
-			</Router>
+				{ this.state.isAuth && <Route path="/detalhe" exact component={Detalhe} /> }
+				{ this.state.isAuth && <Route path="/relatorios" exact component={List} /> }
+				{ this.state.isAuth && <Route path="/dashboard" exact component={Dashboard} /> }
+				{ this.state.isAuth && <Route path="/import" exact component={Import} /> }
+		
 
-
-		</div>
-	);
+				</Router>
+	
+	
+			</div>
+		)
+	}
 }
 
 export default App;

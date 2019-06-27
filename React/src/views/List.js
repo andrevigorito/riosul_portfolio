@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import axios from 'axios';
+import API from '../service/api';
 // Images
 import iconRgc from '../img/icons/rg-c.png'
 import iconRgp from '../img/icons/rg-p.png'
@@ -8,19 +8,26 @@ import iconRgp from '../img/icons/rg-p.png'
 import Menu from './components/Menu';
 import Header from './components/Header';
 import PageHeader from './components/PageHeader';
+import Loading from './components/Loading';
 
 
 class List extends Component {
 	state = {
-		products: []
+		products: [],
+		isLoading: false,
 	}
 
 	componentDidMount() {
-		axios.get(`https://webcol.herokuapp.com/products`)
+		this.setState({ isLoading: true })
+		API.get(`products`)
 		  .then(res => {
 			const products = res.data;
 			console.log(products)
-			this.setState({ products });
+			this.setState({ 
+				products,
+				isLoading: false
+			 });
+			
 		  })
 	  }
 
@@ -47,11 +54,9 @@ class List extends Component {
 									<p>*Urgente: Y<span className="y"></span>N<span className="n"></span></p>
 								</div>
 							</header>
-	
-						
+
+							{ this.state.isLoading && <Loading /> }
 							{ this.state.products.map(product => 
-							
-							
 								<div className="item" key={product.uuid}>
 									<div className="main-info">
 										<p className="emp">{product.owner}</p>
@@ -62,13 +67,13 @@ class List extends Component {
 
 									<div className="info">
 										<div className="list-gra">
-											
-										{ product.pos.map(po => 
-											<div className={po.alert ? "item-gra alert": "item-gra"}  key={po.uuid}>
-												<p><img src={iconRgc} alt="" /> {new Date(po.eta).toLocaleDateString()}</p>
-												<p><img src={iconRgp} alt="" /> {po.weight}</p>
-											</div>
-										)}
+											{ 
+												product.pos.map(po => 
+												<div className={po.alert ? "item-gra alert": "item-gra"}  key={po.uuid}>
+													<p><img src={iconRgc} alt="" /> {new Date(po.eta).toLocaleDateString()}</p>
+													<p><img src={iconRgp} alt="" /> {po.weight}</p>
+												</div>
+											)}
 										</div>
 										
 										<div className="item-gra">
@@ -78,13 +83,7 @@ class List extends Component {
 									</div>
 
 								</div>	
-							
 							)}
-
-
-						
-							
-							
 						</div>
 					</div>
 				</div>
