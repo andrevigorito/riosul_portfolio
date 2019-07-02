@@ -43,15 +43,15 @@ class Alertas extends Component {
                             <p className="w10">Data</p>
                             <p className="w60">PO / Linha</p>
                             <p className="w20">Data Po Inicial</p>
-                            <p className="w20">Data Po Alterada</p>
+                            <p className="w20">GR Atual</p>
                         </div>
 
                         { this.state.alerts.map(alerta => 
-                        <div className="item">
-                            <p className="date current w10">{new Date(alerta.eta_date).toLocaleDateString()}</p>
-                            <p className="po w60">4100001234 / L1</p>
-                            <p className="date w20">17/07/2019</p>
-                            <p className="altered date w20">18/07/2019</p>
+                        <div className="item" key={alerta.uuid}>
+                            <p className="date current w10">{new Date(alerta.last_update).toLocaleDateString()}</p>
+                            <p className="po w60">{alerta.bdp_ref} /  {alerta.po_number}</p>
+                            <p className="date w20">{new Date(alerta.gr_requested_date).toLocaleDateString()}</p>
+                            <p className="altered date w20">{new Date(alerta.eta_date).toLocaleDateString()}</p> 
                         </div>
                         )}
 
