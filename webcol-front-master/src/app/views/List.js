@@ -60,7 +60,7 @@ class List extends Component {
 							{ this.state.products.map(product => 
 								<div className="item" key={product.uuid}>
 									<div className="main-info">
-										<p className="emp">{product.consignee}</p>
+										<p className="emp">{product.consignee.split(' ')[0]}</p>
 										<p className="idpro">{product.product_id}</p>
 										<p className="namepro">{product.product_description.substring(0,20)}</p>
 										{/* <p className="namepro">{product.name}</p> */}
