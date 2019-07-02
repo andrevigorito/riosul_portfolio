@@ -5,12 +5,13 @@ import API from '../service/api';
 import iconTitleAlert from '../img/icons/title-alert.png'
 
 // Components
-
+import Loading from './components/Loading';
 
 
 class Alertas extends Component {
     state = {
-		alerts: [],
+        alerts: [],
+        isLoading: false,
     }
     
     componentDidMount() {
@@ -45,11 +46,11 @@ class Alertas extends Component {
                             <p className="w20">Data Po Inicial</p>
                             <p className="w20">GR Atual</p>
                         </div>
-
+                        { this.state.isLoading && <Loading /> }
                         { this.state.alerts.map(alerta => 
                         <div className="item" key={alerta.uuid}>
                             <p className="date current w10">{new Date(alerta.last_update).toLocaleDateString()}</p>
-                            <p className="po w60">{alerta.bdp_ref} /  {alerta.po_number}</p>
+                            <p className="po w60">{alerta.order_reference} /  {alerta.po_number}</p>
                             <p className="date w20">{new Date(alerta.gr_requested_date).toLocaleDateString()}</p>
                             <p className="altered date w20">{new Date(alerta.eta_date).toLocaleDateString()}</p> 
                         </div>

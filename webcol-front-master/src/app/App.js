@@ -39,11 +39,6 @@ class App extends Component {
 	
 	}
 
-	componentDidMount(){
-
-
-	}
-	
 	handleLogout = () => {
 
 		

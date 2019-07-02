@@ -40,7 +40,8 @@ class Menu extends Component {
 							{/* <Link to="/meuperfil">Meu Perfil</Link>    */}
 							<Link to="/dashboard">Dashboard</Link>
 							<Link to="/relatorios">Gerencial </Link>
-							<Link to="/import">Import</Link>				
+							<Link to="/import">Import</Link>	
+							<Link to="/alertas">Alertas</Link>			
 				
 						</Route>
 						</nav>
