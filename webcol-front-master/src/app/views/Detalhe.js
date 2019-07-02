@@ -34,6 +34,23 @@ class Detalhe extends Component {
             });
         }
     }
+
+    // btnAccordion = () => {
+	// 	let acc = document.querySelector('.accordion')
+    //     acc.classList.toggle("active")
+	// }
+
+    // accordion = () =>{
+    //     let acc = document.querySelector('.accordion')
+    //     acc.classList.toggle('active');
+
+    //     let panel = this.nextElementSibling;
+    //     if (panel.style.maxHeight){
+    //     panel.style.maxHeight = null;
+    //     } else {
+    //     panel.style.maxHeight = panel.scrollHeight + "px";
+    //     } 
+    // }
 	
     render(){
         return(

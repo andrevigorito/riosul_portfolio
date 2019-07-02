@@ -34,8 +34,8 @@ class Filter extends Component{
             <div className="filter-box">
                 <form action="">
                     <div className="item">
-                        <label for="data-inicio">Data de alteração:</label>
-                        {/* <input type="text" className="datepicker-here date" data-language="pt-BR" id="data-inicio" /> */}
+                        <label >Data de alteração:</label>
+                        
                         <DatePicker 
                             locale="pt-BR" 
                             selected={this.state.date} 
@@ -47,12 +47,12 @@ class Filter extends Component{
                     </div>
                     
                     <div className="item">
-                        <label for="idproduto">PO:</label>
+                        <label >PO:</label>
                         <input type="text" id="idproduto" />
                     </div>
                     <div className="item">
-                        <label for="data-inicio">GR Inicial:</label>
-                        {/* <input type="text" className="datepicker-here date" data-language="pt-BR" id="data-inicio" /> */}
+                        <label >GR Inicial:</label>
+                        
                         <DatePicker 
                             locale="pt-BR" 
                             selected={this.state.startDate} 
@@ -65,7 +65,7 @@ class Filter extends Component{
 
                     </div>
                     <div className="item">
-                        <label for="data-fim">GT Atual:</label>
+                        <label >GT Atual:</label>
                         {/* <input type="text" className="datepicker-here date" data-language="pt-BR" id="data-fim" /> */}
                         <DatePicker 
                             locale="pt-BR" 

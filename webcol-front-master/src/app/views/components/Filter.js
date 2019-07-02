@@ -28,21 +28,21 @@ class Filter extends Component{
             <div className="filter-box">
                 <form action="">
                     <div className="nfs">
-                        <label for="dupont">
+                        <label >
                             <input type="checkbox" name="" id="dupont" />
                             DUPONT
                         </label>
-                        <label for="dow">
+                        <label >
                             <input type="checkbox" name="" id="dow"/>
                             DOW
                         </label>
                     </div>
                     <div className="item">
-                        <label for="idproduto">ID / Produto:</label>
+                        <label >ID / Produto:</label>
                         <input type="text" id="idproduto" />
                     </div>
                     <div className="item">
-                        <label for="data-inicio">Data início:</label>
+                        <label >Data início:</label>
                         {/* <input type="text" className="datepicker-here date" data-language="pt-BR" id="data-inicio" /> */}
                         <DatePicker 
                             locale="pt-BR" 
@@ -56,7 +56,7 @@ class Filter extends Component{
 
                     </div>
                     <div className="item">
-                        <label for="data-fim">Data fim:</label>
+                        <label >Data fim:</label>
                         {/* <input type="text" className="datepicker-here date" data-language="pt-BR" id="data-fim" /> */}
                         <DatePicker 
                             locale="pt-BR" 
@@ -70,14 +70,14 @@ class Filter extends Component{
                         />
                     </div>
                     <div className="item">
-                        <label for="">Urgente:</label>
+                        <label >Urgente:</label>
                     <div className="boxurgente">
 
-                        <label for="urgente-sim">
+                        <label >
                             <input type="checkbox" name="" id="urgente-sim" />
                             Y
                         </label>
-                        <label for="urgente-nao">
+                        <label >
                             <input type="checkbox" name="" id="urgente-nao" />
                             N
                         </label>

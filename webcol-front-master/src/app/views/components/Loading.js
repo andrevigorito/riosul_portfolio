@@ -9,7 +9,7 @@ class Loading extends Component{
             
             <div className="box-loading">
 
-                <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
             </div>
         )
     }
