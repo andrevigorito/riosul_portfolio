@@ -9,6 +9,7 @@ import Login from './views/Login'
 import List from './views/List'
 import Dashboard from './views/Dashboard'
 import Import from './views/Import'
+import Alertas from './views/Alertas'
 
 //Components
 import Menu from './views/components/Menu';
@@ -23,7 +24,7 @@ import './css/main.scss';
 class App extends Component {
 
 	state = {
-		isAuth: false,
+		isAuth: true,
 	  }
 	  
 	handleLogin = (email,passwd) => {
@@ -74,6 +75,7 @@ class App extends Component {
 					{ this.state.isAuth && <Route path="/relatorios" exact component={List} /> }
 					{ this.state.isAuth && <Route path="/dashboard" exact component={Dashboard} /> }
 					{ this.state.isAuth && <Route path="/import" exact component={Import} /> }
+					{ this.state.isAuth && <Route path="/alertas" exact component={Alertas} /> }
 		
 					{ this.state.isAuth && <Route path="/" exact component={List} /> }
 					

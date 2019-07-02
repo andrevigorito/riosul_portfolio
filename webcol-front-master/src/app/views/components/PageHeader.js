@@ -24,7 +24,7 @@ class PageHeader extends Component {
             <div className="page-header">
                 <h1>
                     <img src={iconTitleDash} alt="" />
-                    Relatório Gerencial
+                    Gerencial
                 </h1>
                 
                 <div className="last-wrap">
