@@ -12,7 +12,9 @@ class Menu extends Component {
 
 	btnMenu = () => {
 		let menu = document.querySelector('.main-menu')
+		let menulink = document.querySelector('.main-menu nav a')
 		menu.classList.remove("ativo")
+		menulink.classList.remove("ativo")
 	}
 
 	
@@ -38,10 +40,10 @@ class Menu extends Component {
 						<nav >
 						<Route>
 							{/* <Link to="/meuperfil">Meu Perfil</Link>    */}
-							<Link to="/dashboard">Dashboard</Link>
-							<Link to="/relatorios">Gerencial </Link>
-							<Link to="/import">Import</Link>	
-							<Link to="/alertas">Alertas</Link>			
+							<Link onClick={this.btnMenu} to="/dashboard">Dashboard</Link>
+							<Link onClick={this.btnMenu} to="/relatorios">Gerencial </Link>
+							<Link onClick={this.btnMenu} to="/import">Import</Link>	
+							<Link onClick={this.btnMenu} to="/alertas">Alertas</Link>			
 				
 						</Route>
 						</nav>

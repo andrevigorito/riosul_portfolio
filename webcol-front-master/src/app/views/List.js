@@ -13,7 +13,8 @@ class List extends Component {
 	state = {
 		products: [],
 		isLoading: false,
-		total: 0
+		total: 0,
+		title: 'Gerencial'
 	}
 
 	componentDidMount() {
@@ -37,7 +38,7 @@ class List extends Component {
         return(
 			<div>
 				
-				<PageHeader />
+				<PageHeader title={this.title} />
 				
 				<div className="center">
 	

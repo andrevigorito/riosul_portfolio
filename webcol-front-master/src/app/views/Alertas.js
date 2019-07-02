@@ -6,6 +6,7 @@ import iconTitleAlert from '../img/icons/title-alert.png'
 
 // Components
 import Loading from './components/Loading';
+import FilterAlert from './components/FilterAlert';
 
 
 class Alertas extends Component {
@@ -26,7 +27,13 @@ class Alertas extends Component {
 			 });
 			
 		  })
-	  }
+      }
+      btnFilter = () => {
+		let filter = document.querySelector('.filter-box')
+        filter.classList.toggle("active")
+        let btn = document.querySelector('.btn-filter-nfs')
+        btn.classList.toggle("active")
+	}
 	
     render(){
         return(
@@ -37,13 +44,26 @@ class Alertas extends Component {
                             <img src={iconTitleAlert} alt="" />
                             Alertas
                         </h1>
+                        <div className="last-wrap">
+                            <div className="btn-filter-nfs" onClick={this.btnFilter} >
+                                <div className="icon-filter">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                                Filtrar
+                            </div>            
+                        </div>
+                        
                     </div>
+
+                    <FilterAlert />
 
                     <div className="list-alerts">
                         <div className="header">
                             <p className="w10">Data</p>
                             <p className="w60">PO / Linha</p>
-                            <p className="w20">Data Po Inicial</p>
+                            <p className="w20">GR Inicial</p>
                             <p className="w20">GR Atual</p>
                         </div>
                         { this.state.isLoading && <Loading /> }
