@@ -56,7 +56,7 @@ class App extends Component {
 
 				
 				{ !this.state.isAuth && <Route path="*" render={(props) => <Login {...props} handleLogin={this.handleLogin} />} /> }
-
+				{ this.state.isAuth && <Route path="/" exact component={List} /> }
 				{ this.state.isAuth && <Route path="/detalhe" exact component={Detalhe} /> }
 				{ this.state.isAuth && <Route path="/relatorios" exact component={List} /> }
 				{ this.state.isAuth && <Route path="/dashboard" exact component={Dashboard} /> }

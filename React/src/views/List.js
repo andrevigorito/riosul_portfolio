@@ -15,7 +15,8 @@ class List extends Component {
 	state = {
 		products: [],
 		isLoading: false,
-		total: 0
+		total: 0,
+		hasMoreItems: true,
 	}
 
 	componentDidMount() {
@@ -30,8 +31,11 @@ class List extends Component {
 			 });
 			
 		  })
+		  .catch(error => {
+			console.log(error);
+		  });
 	  }
-	
+
 	  
 	
     render(){
@@ -60,14 +64,15 @@ class List extends Component {
 								</div>
 							</header>
 
+							
 							{ this.state.isLoading && <Loading /> }
 							{ this.state.products.map(product => 
-								<div className="item" key={product.uuid}>
+								<div className="item" key={product.product_id}>
 									<div className="main-info">
-										<p className="emp">{product.owner}</p>
-										<p className="idpro">{product.code}</p>
-										<p className="namepro">{product.name.substring(0,20)}</p>
-										{/* <p className="namepro">{product.name}</p> */}
+										<p className="emp">{product.consignee.split(' ')[0]}</p>
+										<p className="idpro">{product.product_id}</p>
+										{/* <p className="namepro">{product.name.substring(0,20)}</p> */}
+										<p className="namepro">{product.product_description}</p>
 									</div>
 
 									<div className="info">
@@ -75,21 +80,21 @@ class List extends Component {
 											{ 
 												product.pos.map(po =>  
 												<div className={po.alert ? "item-gra alert": "item-gra"}  key={po.uuid}>
-													<p><img src={iconRgc} alt="" /> {new Date(po.eta).toLocaleDateString()}</p>
-													<p><img src={iconRgp} alt="" /> {po.weight}</p>
+													<p><img src={iconRgc} alt="" /> {new Date(po.eta_date).toLocaleDateString()}</p>
+													<p><img src={iconRgp} alt="" /> {po.qty}</p>
 												</div>
-												
 											)}
 										</div>
 										 
 										<div className="item-gra">
 											<p><strong>Total</strong></p>
-											<p><img src={iconRgp} alt="" />{}</p>
+											<p><img src={iconRgp} alt="" />10000</p>
 										</div>
 									</div>
 
 								</div>	
 							)}
+							
 						</div>
 					</div>
 				</div>

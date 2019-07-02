@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import API from '../service/api';
 // Images
 import iconRgc from '../img/icons/rg-c.png'
 import iconRgp from '../img/icons/rg-p.png'
@@ -18,6 +19,10 @@ import Header from './components/Header';
 
 class Detalhe extends Component {
 
+    state = {
+		products: '',
+	}
+
 
     componentDidMount(){
         let acc = document.getElementsByClassName("accordion");
@@ -34,6 +39,19 @@ class Detalhe extends Component {
                 } 
             });
         }
+
+		API.get(`products`)
+		  .then(res => {
+			const products = res.data;
+			console.log(products)
+			this.setState({ 
+				products
+			 });
+			
+		  })
+		  .catch(error => {
+			console.log(error);
+		  });
     }
 	
     render(){
@@ -51,12 +69,13 @@ class Detalhe extends Component {
                         </h1>
                     </div>
 
+                    
                     <div className="content-regerencial">
                         <div className="page-interna">
                             <header className="title">
                                 <div className="first">
                                     <p>ID: <strong>D13319661</strong></p>
-                                    <p>Produto: <strong>APROACH PRIMA 5L</strong></p>
+                                    <p>Produto: <strong>{this.state.products.product_description}</strong></p>
                                 </div>
                                 <div className="last">
                                     <p className="emp">Dupont</p>
