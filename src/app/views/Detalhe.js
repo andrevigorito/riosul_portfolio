@@ -177,7 +177,7 @@ class Detalhe extends Component {
                                                     </div>
                                                     <div className="box">
                                                         <div className="icon">
-                                                            <img src={iconBarco} alt="" />
+                                                        <img src={accordion.modal === "Ocean Import" ? iconBarco : iconAir} alt="" />
                                                         </div>
                                                         <div className="info">
                                                             <div className="row">
