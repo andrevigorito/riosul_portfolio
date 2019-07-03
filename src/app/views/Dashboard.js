@@ -21,7 +21,7 @@ class Dashboard extends Component {
                         </h1>
                     </div>
 
-                    <iframe width="100%" height="700" src="https://app.powerbi.com/view?r=eyJrIjoiOGJjZTlhNGQtOGY5YS00N2ExLThhMzAtZGFiZGI0Y2U3MTI5IiwidCI6IjNhNTZkODhlLWUxNjgtNGNmZC1hMWM4LWVlOTVlMzVkZGI5ZiJ9" frameborder="0" allowFullScreen="true" title="Dashboard"></iframe>
+                    <iframe width="100%" height="700" src="https://app.powerbi.com/view?r=eyJrIjoiZGQ2ODgyZmEtNjAwOC00MGYzLWFhYTAtM2VjNjRlYjhkZWYyIiwidCI6IjNhNTZkODhlLWUxNjgtNGNmZC1hMWM4LWVlOTVlMzVkZGI5ZiJ9" frameborder="0" allowFullScreen="true" title="Dashboard"></iframe>
 					
 				</div>
 			

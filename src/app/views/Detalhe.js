@@ -16,6 +16,7 @@ import iconBack from '../img/icons/back.png'
 
 class Detalhe extends Component {
 
+   
 
     componentDidMount(){
         let acc = document.getElementsByClassName("accordion");
@@ -112,12 +113,12 @@ class Detalhe extends Component {
                                                 <header>
                                                     <div className="gra">
                                                         <p>GR Atual</p>
-                                                        <p>{new Date(accordion.gr_requested_date).toLocaleDateString()}</p>
+                                                        <p> {accordion.gr_requested_date ? new Date(accordion.gr_requested_date).toLocaleDateString() : "-"}</p>
                                                     </div>
                                                     <div className="historico">
                                                         <div className="hist-tit">
                                                             <p>Último Histórico</p>
-                                                            <p className="date">{accordion.last_update ? new Date(accordion.last_update).toLocaleDateString() : ""}</p>
+                                                            <p className="date">{accordion.last_update ? new Date(accordion.last_update).toLocaleDateString() : "-"}</p>
                                                         </div>
                                                         <div className="boll">
                                                             <span></span>
