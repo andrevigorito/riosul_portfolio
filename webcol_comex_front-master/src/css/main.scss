@@ -1,0 +1,35 @@
+// Global Imports
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i');
+
+// Variaveis de reutilização
+$total: 1100;
+$cor: #292D41;
+$font: 'Open Sans', sans-serif; 
+
+$verde: #1ABC9C;
+$azul: #3498DB;
+$roxo: #9B59B6;
+$amarelo: #F39C12;
+$vermelho: #FF4E50;
+
+.center {
+	max-width: $total + px;
+	margin: 0 auto;
+	position: relative;
+	box-sizing: border-box;
+	width: 100%;
+	@media (max-width: 1099px){
+		width: 92%;
+	}
+}
+
+// Layout
+@import 'font/circular';
+@import 'Layout/reset';
+@import 'Layout/base';
+@import 'Layout/header';
+@import 'Layout/menu';
+
+// Paginas
+@import 'Geral/app';
+@import 'Geral/relato';
