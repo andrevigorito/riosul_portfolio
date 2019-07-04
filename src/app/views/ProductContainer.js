@@ -44,6 +44,7 @@ class ProductContainer extends Component {
 		API.get(`products`)
 		  .then(res => {
 			const products = res.data;
+			console.log(products)
 			this.setState({ 
 				products,
 				isLoading: false

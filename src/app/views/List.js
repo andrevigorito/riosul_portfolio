@@ -54,11 +54,13 @@ class List extends Component {
 										<div className="list-gra">
 											{ 
 												product.pos.map(po =>  
-												
-													<div className={po.alert ? "item-gra alert": "item-gra"}  key={po.uuid}>
-														<p><img src={iconRgc} alt="" /> {new Date(po.eta_date).toLocaleDateString()}</p>
-														<p><img src={iconRgp} alt="" /> {po.qty.toLocaleString()}</p>
-													</div>
+													po.po_items.map(item => 
+														<div className={po.alert ? "item-gra alert": "item-gra"}  key={item.uuid}>
+															<p><img src={iconRgc} alt="" /> {new Date(item.eta_date).toLocaleDateString()}</p>
+															<p><img src={iconRgp} alt="" /> {item.qty.toLocaleString()}</p>
+														</div>
+														
+													)
 											)}
 										</div> 
 										 

@@ -24,7 +24,7 @@ class Header extends Component {
 					<nav className="main-nav">
 						<Route>
 							<Link to="/dashboard">Dashboard</Link>
-							<Link to="/relatorios">Gerencial </Link>
+							<Link to="/gerencial">Gerencial </Link>
 							<Link to="/import">Import</Link>
 						</Route>
 					</nav>

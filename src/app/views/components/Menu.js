@@ -41,7 +41,7 @@ class Menu extends Component {
 						<Route>
 							{/* <Link to="/meuperfil">Meu Perfil</Link>    */}
 							<Link onClick={this.btnMenu} to="/dashboard">Dashboard</Link>
-							<Link onClick={this.btnMenu} to="/relatorios">Gerencial </Link>
+							<Link onClick={this.btnMenu} to="/gerencial">Gerencial </Link>
 							<Link onClick={this.btnMenu} to="/import">Import</Link>	
 							<Link onClick={this.btnMenu} to="/alertas">Alertas</Link>			
 				

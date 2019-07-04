@@ -16,8 +16,6 @@ import iconBack from '../img/icons/back.png'
 
 class Detalhe extends Component {
 
-   
-
     componentDidMount(){
         let acc = document.getElementsByClassName("accordion");
         let i;
@@ -78,11 +76,13 @@ class Detalhe extends Component {
 
                                     { 
                                         this.props.product.pos.map(po =>  
-                                        
-                                            <div className={po.alert ? "item-gra alert": "item-gra"}  key={po.uuid}>
-                                                <p><img src={iconRgc} alt="" /> {new Date(po.eta_date).toLocaleDateString()}</p>
-                                                <p><img src={iconRgp} alt="" /> {po.qty.toLocaleString()}</p>
-                                            </div>
+                                            po.po_items.map(item => 
+                                                
+                                                <div className={item.alert ? "item-gra alert": "item-gra"}  key={item.uuid}>
+                                                    <p><img src={iconRgc} alt="" /> {new Date(item.eta_date).toLocaleDateString()}</p>
+                                                    <p><img src={iconRgp} alt="" /> {item.qty.toLocaleString()}</p>
+                                                </div>
+                                            )
                                     )}
 
                                 </div>
@@ -101,24 +101,24 @@ class Detalhe extends Component {
 
                                 { 
                                     this.props.product.pos.map(accordion =>  
-                                    
-                                    <div key={accordion.uuid}>
+                                        accordion.po_items.map(item => 
+                                    <div key={item.uuid}>
                                         <div className="item accordion" >
-                                            <p className="w60">{accordion.bdp_ref}</p>
-                                            <p className="w20">{accordion.qty}</p>
-                                            <p className="w20">{accordion.invoice_value}</p>
+                                            <p className="w60">{item.bdp_ref}</p>
+                                            <p className="w20">{item.qty}</p>
+                                            <p className="w20">{item.invoice_value}</p>
                                         </div>
                                         <div className="panel">
                                             <div className="content-po ">
                                                 <header>
                                                     <div className="gra">
                                                         <p>GR Atual</p>
-                                                        <p> {accordion.gr_requested_date ? new Date(accordion.gr_requested_date).toLocaleDateString() : "-"}</p>
+                                                        <p> {item.gr_requested_date ? new Date(item.gr_requested_date).toLocaleDateString() : "-"}</p>
                                                     </div>
                                                     <div className="historico">
                                                         <div className="hist-tit">
                                                             <p>Último Histórico</p>
-                                                            <p className="date">{accordion.last_update ? new Date(accordion.last_update).toLocaleDateString() : "-"}</p>
+                                                            <p className="date">{item.last_update ? new Date(item.last_update).toLocaleDateString() : "-"}</p>
                                                         </div>
                                                         <div className="boll">
                                                             <span></span>
@@ -127,7 +127,7 @@ class Detalhe extends Component {
                                                             <img src={iconUser} alt="" />
                                                             <div className="info">
                                                                 <p className="user">Roberta Beltran</p>
-                                                                <p>{accordion.notes}</p>
+                                                                <p>{item.notes}</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -140,19 +140,19 @@ class Detalhe extends Component {
                                                         <div className="info">
                                                             <div className="row">
                                                                 <p>Item:</p>
-                                                                <p>{accordion.item}</p>
+                                                                <p>{item.item}</p>
                                                             </div>
                                                             <div className="row">
                                                                 <p>QTD. Produto:</p>
-                                                                <p>{accordion.qty}</p>
+                                                                <p>{item.qty}</p>
                                                             </div>
                                                             <div className="row">
                                                                 <p>QTD. Container:</p>
-                                                                <p>{accordion.container_qty}</p>
+                                                                <p>{item.container_qty}</p>
                                                             </div>
                                                             <div className="row">
                                                                 <p>Peso:</p>
-                                                                <p>{accordion.net_weight_kg} KG</p>
+                                                                <p>{item.net_weight_kg} KG</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -163,38 +163,38 @@ class Detalhe extends Component {
                                                         <div className="info">
                                                             <div className="row">
                                                                 <p>Origem:</p>
-                                                                <p>{accordion.origin}</p>
+                                                                <p>{item.origin}</p>
                                                             </div>
                                                             <div className="row">
                                                                 <p>Destino:</p>
-                                                                <p>{accordion.destination}</p>
+                                                                <p>{item.destination}</p>
                                                             </div>
                                                             <div className="row">
                                                                 <p>Transportador:</p>
-                                                                <p>{accordion.carrier}</p>
+                                                                <p>{item.carrier}</p>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div className="box">
                                                         <div className="icon">
-                                                        <img src={accordion.modal === "Ocean Import" ? iconBarco : iconAir} alt="" />
+                                                        <img src={item.modal === "Ocean Import" ? iconBarco : iconAir} alt="" />
                                                         </div>
                                                         <div className="info">
                                                             <div className="row">
                                                                 <p>ETD - Prev. Embarque:</p>
-                                                                <p>{accordion.etd_date ? new Date(accordion.etd_date).toLocaleDateString() : "-"}</p>
+                                                                <p>{item.etd_date ? new Date(item.etd_date).toLocaleDateString() : "-"}</p>
                                                             </div>
                                                             <div className="row">
                                                                 <p>ATD - Real. Embarque:</p>
-                                                                <p>{accordion.ata_date ? new Date(accordion.ata_date).toLocaleDateString() : "-"}</p>
+                                                                <p>{item.ata_date ? new Date(item.ata_date).toLocaleDateString() : "-"}</p>
                                                             </div>
                                                             <div className="row">
                                                                 <p>ETA - Prev. Entrega:</p>
-                                                                <p> {accordion.eta_date ? new Date(accordion.eta_date).toLocaleDateString() : "-"}</p>
+                                                                <p> {item.eta_date ? new Date(item.eta_date).toLocaleDateString() : "-"}</p>
                                                             </div>
                                                             <div className="row">
                                                                 <p>ATA - Real. Entrega:</p>
-                                                                <p>{accordion.ata_date ? new Date(accordion.ata_date).toLocaleDateString() : "-"}</p>
+                                                                <p>{item.ata_date ? new Date(item.ata_date).toLocaleDateString() : "-"}</p>
                                                             </div>
                                                             <div className="row">
                                                                 <p>Entrega na Planta:</p>
@@ -208,7 +208,7 @@ class Detalhe extends Component {
                                         </div>
                                     </div>
                                        
-                                )}
+                                ))}
                                 
                                
                             </div>
