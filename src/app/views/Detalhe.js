@@ -16,6 +16,8 @@ import iconBack from '../img/icons/back.png'
 
 class Detalhe extends Component {
 
+   
+
     componentDidMount(){
         let acc = document.getElementsByClassName("accordion");
         let i;
@@ -35,6 +37,17 @@ class Detalhe extends Component {
 
 	
     render(){
+        
+        let total = 0;
+		
+		const adicionaTotal = (valor) => {
+			total +=valor;	
+		}
+		
+		const zeraTotal = () => {
+			total = 0;	
+		}
+        
         return(
 
             <div>
@@ -76,19 +89,19 @@ class Detalhe extends Component {
 
                                     { 
                                         this.props.product.pos.map(po =>  
-                                            po.po_items.map(item => 
-                                                
-                                                <div className={item.alert ? "item-gra alert": "item-gra"}  key={item.uuid}>
-                                                    <p><img src={iconRgc} alt="" /> {new Date(item.eta_date).toLocaleDateString()}</p>
-                                                    <p><img src={iconRgp} alt="" /> {item.qty.toLocaleString()}</p>
-                                                </div>
-                                            )
+                                        
+                                            <div className={po.alert ? "item-gra alert": "item-gra"}  key={po.uuid}>
+                                                <p><img src={iconRgc} alt="" /> {po.order_reference}</p>
+                                                <p><img src={iconRgp} alt="" /> {po.po_items.reduce((total, obj) => obj.qty + total,0).toLocaleString()}</p>
+                                                {adicionaTotal(po.po_items.reduce((total, obj) => obj.qty + total,0))}	
+                                            </div>
                                     )}
 
                                 </div>
                                 <div className="total">
                                     <img src={iconTotal} alt=""/>
-                                    <p>Total: <strong>{this.props.product.pos.reduce((total, obj) => obj.qty + total,0).toLocaleString()}</strong></p>
+                                    <p>Total: <strong>{total.toLocaleString()}</strong></p>
+                                    {zeraTotal}
                                 </div>
                             </div>
                             
@@ -100,116 +113,121 @@ class Detalhe extends Component {
                                 </div>
 
                                 { 
-                                    this.props.product.pos.map(accordion =>  
-                                        accordion.po_items.map(item => 
-                                    <div key={item.uuid}>
-                                        <div className="item accordion" >
-                                            <p className="w60">{item.bdp_ref}</p>
-                                            <p className="w20">{item.qty}</p>
-                                            <p className="w20">{item.invoice_value}</p>
-                                        </div>
-                                        <div className="panel">
-                                            <div className="content-po ">
-                                                <header>
-                                                    <div className="gra">
-                                                        <p>GR Atual</p>
-                                                        <p> {item.gr_requested_date ? new Date(item.gr_requested_date).toLocaleDateString() : "-"}</p>
-                                                    </div>
-                                                    <div className="historico">
-                                                        <div className="hist-tit">
-                                                            <p>Último Histórico</p>
-                                                            <p className="date">{item.last_update ? new Date(item.last_update).toLocaleDateString() : "-"}</p>
-                                                        </div>
-                                                        <div className="boll">
-                                                            <span></span>
-                                                        </div>
-                                                        <div className="infouser">
-                                                            <img src={iconUser} alt="" />
-                                                            <div className="info">
-                                                                <p className="user">Roberta Beltran</p>
-                                                                <p>{item.notes}</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </header>
-                                                <div className="boxs">
-                                                    <div className="box">
-                                                        <div className="icon">
-                                                            <img src={iconRemetente} alt="" />
-                                                        </div>
-                                                        <div className="info">
-                                                            <div className="row">
-                                                                <p>Item:</p>
-                                                                <p>{item.item}</p>
-                                                            </div>
-                                                            <div className="row">
-                                                                <p>QTD. Produto:</p>
-                                                                <p>{item.qty}</p>
-                                                            </div>
-                                                            <div className="row">
-                                                                <p>QTD. Container:</p>
-                                                                <p>{item.container_qty}</p>
-                                                            </div>
-                                                            <div className="row">
-                                                                <p>Peso:</p>
-                                                                <p>{item.net_weight_kg} KG</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="box">
-                                                        <div className="icon">
-                                                            <img src={iconMap} alt="" />
-                                                        </div>
-                                                        <div className="info">
-                                                            <div className="row">
-                                                                <p>Origem:</p>
-                                                                <p>{item.origin}</p>
-                                                            </div>
-                                                            <div className="row">
-                                                                <p>Destino:</p>
-                                                                <p>{item.destination}</p>
-                                                            </div>
-                                                            <div className="row">
-                                                                <p>Transportador:</p>
-                                                                <p>{item.carrier}</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="box">
-                                                        <div className="icon">
-                                                        <img src={item.modal === "Ocean Import" ? iconBarco : iconAir} alt="" />
-                                                        </div>
-                                                        <div className="info">
-                                                            <div className="row">
-                                                                <p>ETD - Prev. Embarque:</p>
-                                                                <p>{item.etd_date ? new Date(item.etd_date).toLocaleDateString() : "-"}</p>
-                                                            </div>
-                                                            <div className="row">
-                                                                <p>ATD - Real. Embarque:</p>
-                                                                <p>{item.ata_date ? new Date(item.ata_date).toLocaleDateString() : "-"}</p>
-                                                            </div>
-                                                            <div className="row">
-                                                                <p>ETA - Prev. Entrega:</p>
-                                                                <p> {item.eta_date ? new Date(item.eta_date).toLocaleDateString() : "-"}</p>
-                                                            </div>
-                                                            <div className="row">
-                                                                <p>ATA - Real. Entrega:</p>
-                                                                <p>{item.ata_date ? new Date(item.ata_date).toLocaleDateString() : "-"}</p>
-                                                            </div>
-                                                            <div className="row">
-                                                                <p>Entrega na Planta:</p>
-                                                                <p>29/03/2019</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                    this.props.product.pos.map(po =>  
+                                        
+                                        <div key={po.uuid}>
+                                            <div className="item accordion" >
+                                                <p className="w60">{po.order_reference}</p>
+                                                <p className="w20">{po.po_items.reduce((total, obj) => obj.qty + total,0)}</p>
+                                                <p className="w20">{po.po_items.reduce((total, obj) => obj.invoice_value + total,0)}</p>
                                                 
                                             </div>
+                                            
+                                            <div className="panel">
+                                                {po.po_items.map(accordion =>
+                                                <div className="content-po ">
+                                                    <header>
+                                                        <div className="gra">
+                                                            <p>GR Atual</p>
+                                                            <p> {accordion.gr_requested_date ? new Date(accordion.gr_requested_date).toLocaleDateString() : "-"}</p>
+                                                        </div>
+                                                        <div className="historico">
+                                                            <div className="hist-tit">
+                                                                <p>Último Histórico</p>
+                                                                <p className="date">{accordion.last_update ? new Date(accordion.last_update).toLocaleDateString() : "-"}</p>
+                                                            </div>
+                                                            <div className="boll">
+                                                                <span></span>
+                                                            </div>
+                                                            <div className="infouser">
+                                                                <img src={iconUser} alt="" />
+                                                                <div className="info">
+                                                                    <p className="user">Roberta Beltran</p>
+                                                                    <p>{accordion.notes}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </header>
+                                                    <div className="boxs">
+                                                        <div className="box">
+                                                            <div className="icon">
+                                                                <img src={iconRemetente} alt="" />
+                                                            </div>
+                                                            <div className="info">
+                                                                <div className="row">
+                                                                    <p>Item:</p>
+                                                                    <p>{accordion.po_number}</p>
+                                                                </div>
+                                                                <div className="row">
+                                                                    <p>QTD. Produto:</p>
+                                                                    <p>{accordion.qty}</p>
+                                                                </div>
+                                                                <div className="row">
+                                                                    <p>QTD. Container:</p>
+                                                                    <p>{accordion.container_qty}</p>
+                                                                </div>
+                                                                <div className="row">
+                                                                    <p>Peso:</p>
+                                                                    <p>{accordion.net_weight_kg} KG</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="box">
+                                                            <div className="icon">
+                                                                <img src={iconMap} alt="" />
+                                                            </div>
+                                                            <div className="info">
+                                                                <div className="row">
+                                                                    <p>Origem:</p>
+                                                                    <p>{accordion.origin}</p>
+                                                                </div>
+                                                                <div className="row">
+                                                                    <p>Destino:</p>
+                                                                    <p>{accordion.destination}</p>
+                                                                </div>
+                                                                <div className="row">
+                                                                    <p>Transportador:</p>
+                                                                    <p>{accordion.carrier}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="box">
+                                                            <div className="icon">
+                                                            <img src={accordion.modal === "Ocean Import" ? iconBarco : iconAir} alt="" />
+                                                            </div>
+                                                            <div className="info">
+                                                                <div className="row">
+                                                                    <p>ETD - Prev. Embarque:</p>
+                                                                    <p>{accordion.etd_date ? new Date(accordion.etd_date).toLocaleDateString() : "-"}</p>
+                                                                </div>
+                                                                <div className="row">
+                                                                    <p>ATD - Real. Embarque:</p>
+                                                                    <p>{accordion.ata_date ? new Date(accordion.ata_date).toLocaleDateString() : "-"}</p>
+                                                                </div>
+                                                                <div className="row">
+                                                                    <p>ETA - Prev. Entrega:</p>
+                                                                    <p> {accordion.eta_date ? new Date(accordion.eta_date).toLocaleDateString() : "-"}</p>
+                                                                </div>
+                                                                <div className="row">
+                                                                    <p>ATA - Real. Entrega:</p>
+                                                                    <p>{accordion.ata_date ? new Date(accordion.ata_date).toLocaleDateString() : "-"}</p>
+                                                                </div>
+                                                                <div className="row">
+                                                                    <p>Entrega na Planta:</p>
+                                                                    <p>29/03/2019</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    </div>
+                                                )}
+                                            </div>
+                                            
+                                            
+                                            
                                         </div>
-                                    </div>
-                                       
-                                ))}
-                                
+                                )}
                                
                             </div>
                         </div>

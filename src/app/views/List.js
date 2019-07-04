@@ -15,10 +15,21 @@ class List extends Component {
 	state = {
 		title: 'Gerencial'
 	}
+	
 	  
 	
     render(){
-
+		
+		let total = 0;
+		
+		const adicionaTotal = (valor) => {
+			total +=valor;	
+		}
+		
+		const zeraTotal = () => {
+			total = 0;	
+		}
+		
         return(
 			<div>
 				
@@ -54,19 +65,19 @@ class List extends Component {
 										<div className="list-gra">
 											{ 
 												product.pos.map(po =>  
-													po.po_items.map(item => 
-														<div className={po.alert ? "item-gra alert": "item-gra"}  key={item.uuid}>
-															<p><img src={iconRgc} alt="" /> {new Date(item.eta_date).toLocaleDateString()}</p>
-															<p><img src={iconRgp} alt="" /> {item.qty.toLocaleString()}</p>
-														</div>
-														
-													)
+													<div className={po.alert ? "item-gra alert": "item-gra"}  key={po.uuid}>
+														<p><img src={iconRgc} alt="" /> {po.order_reference}</p>
+														<p><img src={iconRgp} alt="" /> {po.po_items.reduce((total, obj) => obj.qty + total,0).toLocaleString()}</p>
+														{adicionaTotal(po.po_items.reduce((total, obj) => obj.qty + total,0))}	
+													</div>
+												
 											)}
 										</div> 
 										 
 										<div className="item-gra">
 											<p><strong>Total</strong></p>
-											<p><img src={iconRgp} alt="" />{product.pos.reduce((total, obj) => obj.qty + total,0).toLocaleString()}</p>
+											<p><img src={iconRgp} alt="" />{total.toLocaleString()}</p>
+											{zeraTotal()}
 										</div>
 									</div>
 
