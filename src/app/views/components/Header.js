@@ -25,6 +25,7 @@ class Header extends Component {
 						<Route>
 							<Link to="/dashboard">Dashboard</Link>
 							<Link to="/gerencial">Gerencial </Link>
+							<Link to="/operacional">Operacional </Link>
 							<Link to="/import">Import</Link>
 						</Route>
 					</nav>

@@ -13,6 +13,7 @@ import ProductContainer from './views/ProductContainer'
 import Dashboard from './views/Dashboard'
 import Import from './views/Import'
 import Alertas from './views/Alertas'
+import Operacional from './views/Operacional'
 
 //Components
 import Menu from './views/components/Menu';
@@ -91,6 +92,7 @@ class App extends Component {
 					{ this.state.isAuth && <Route path="/dashboard" exact component={Dashboard} /> }
 					{ this.state.isAuth && <Route path="/import" exact component={Import} /> }
 					{ this.state.isAuth && <Route path="/alertas" exact component={Alertas} /> }
+					{ this.state.isAuth && <Route path="/operacional" exact component={Operacional} /> }
 		
 					{ this.state.isAuth && <Route path="/" exact component={ProductContainer} /> }
 					
