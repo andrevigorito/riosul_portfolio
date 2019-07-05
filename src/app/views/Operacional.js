@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 // Images
-import iconTitleDash from '../img/icons/title-dash.png'
+import iconOperacional from '../img/icons/title-ope.png'
 
 // Components
 
@@ -16,7 +16,7 @@ class Operacional extends Component {
 				<div className="center">
                     <div className="page-header">
                         <h1>
-                            <img src={iconTitleDash} alt="" />
+                            <img src={iconOperacional} alt="" />
                             Operacional
                         </h1>
                     </div>
