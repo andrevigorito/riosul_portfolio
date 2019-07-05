@@ -125,7 +125,7 @@ class Detalhe extends Component {
                                             
                                             <div className="panel">
                                                 {po.po_items.map(accordion =>
-                                                <div className="content-po ">
+                                                <div className="content-po "key={accordion.uuid}>
                                                     <header>
                                                         <div className="gra">
                                                             <p>GR Atual</p>
@@ -156,7 +156,7 @@ class Detalhe extends Component {
                                                             <div className="info">
                                                                 <div className="row">
                                                                     <p>Item:</p>
-                                                                    <p>{accordion.po_number}</p>
+                                                                    <p>{accordion.item}</p>
                                                                 </div>
                                                                 <div className="row">
                                                                     <p>QTD. Produto:</p>
