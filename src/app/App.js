@@ -87,7 +87,7 @@ class App extends Component {
 					</div> : 
 					null}
 					
-					{ this.state.isAuth && <Route path="/detalhe" exact component={Detalhe} /> }
+					{ this.state.isAuth && <Route path="/gerencial/:uuid" exact component={Detalhe} /> }
 					{ this.state.isAuth && <Route path="/gerencial" exact component={ProductContainer} /> }
 					{ this.state.isAuth && <Route path="/dashboard" exact component={Dashboard} /> }
 					{ this.state.isAuth && <Route path="/import" exact component={Import} /> }

@@ -4,7 +4,7 @@ import React, {Component} from 'react'
 import Filter from './Filter';
 
 //images
-import iconTitleDash from '../../img/icons/title-dash.png'
+import iconTitle from '../../img/icons/title-gerencial.png'
 
 class PageHeader extends Component {
 
@@ -23,7 +23,7 @@ class PageHeader extends Component {
         <div className="center">
             <div className="page-header">
                 <h1>
-                    <img src={iconTitleDash} alt="" />
+                    <img src={iconTitle} alt="" />
                     Gerencial
                 </h1>
                 
