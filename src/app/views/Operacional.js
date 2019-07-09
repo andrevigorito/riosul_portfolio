@@ -52,7 +52,7 @@ class Operacional extends Component {
                         </header>
                         { this.state.isLoading && <Loading /> }
                         { this.state.operacional.map(ope => 
-                            <div className='item'>
+                            <div className='item' key={ope.uuid}>
                                 <span className='critico'></span>
                                 <p className='po'>-</p>
                                 <p className='produto'>{ope.product_id}</p>
