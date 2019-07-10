@@ -47,10 +47,15 @@ class Operacional extends Component {
                             <p>Produto</p>
                             <p>Descrição</p>
                             <p>Qtd.</p>
-                            <p>Planta Destino</p>
+                            <p>P. Destino</p>
+                            <p>ATA</p>
+                            <p>GR Prog.</p>
+                            <p>GR Efet.</p>
                             <p>Status</p>
                         </header>
+
                         { this.state.isLoading && <Loading /> }
+
                         { this.state.operacional.map(ope => 
                             <div className='item' key={ope.uuid}>
                                 <span className='critico'></span>
@@ -59,6 +64,9 @@ class Operacional extends Component {
                                 <p className='descricao'>{ope.product_description}</p>
                                 <p className='qtd'>-</p>
                                 <p className='pd'>-</p>
+                                <p className='ata'>10/07/2019</p>
+                                <p className='grp'>10/07/2019</p>
+                                <p className='gre'>10/07/2019</p>
                                 <p className='status alert'>Possível Atraso</p> 
                             </div>
                         )}
