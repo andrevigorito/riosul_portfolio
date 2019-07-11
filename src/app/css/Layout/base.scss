@@ -151,7 +151,7 @@
 			font-weight: 300;
 			margin-bottom: 10px;
 			text-align: left;
-	}
+		}
 		.boxurgente{
 
 			height: 50px;
@@ -214,6 +214,11 @@
 					&:last-child{
 							margin-bottom: 0;
 					}
+			}
+		}
+		&.formoperacional{
+			input{
+				width: 100%;
 			}
 		}
 	}
