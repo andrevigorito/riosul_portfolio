@@ -61,18 +61,20 @@ class Alertas extends Component {
 
                     <div className="list-alerts">
                         <div className="header">
-                            <p className="w10">Data</p>
-                            <p className="w60">PO / Linha</p>
-                            <p className="w20">GR Inicial</p>
-                            <p className="w20">GR Atual</p>
+                            <p>Data</p>
+                            <p>PO / Linha</p>
+                            <p>GR Inicial</p>
+                            <p>GR Atual</p>
+                            <p>Mensagem do Alerta</p>
                         </div>
                         { this.state.isLoading && <Loading /> }
                         { this.state.alerts.map(alerta => 
                         <div className="item" key={alerta.uuid}>
-                            <p className="date current w10">{new Date(alerta.last_update).toLocaleDateString()}</p>
-                            <p className="po w60">{alerta.order_reference} /  {alerta.po_number}</p>
-                            <p className="date w20">{new Date(alerta.gr_requested_date).toLocaleDateString()}</p>
-                            <p className="altered date w20">{new Date(alerta.eta_date).toLocaleDateString()}</p> 
+                            <p className="date current ">{new Date(alerta.last_update).toLocaleDateString()}</p>
+                            <p className="po">{alerta.po.order_reference} /  {alerta.item}</p>
+                            <p className="date ">{new Date(alerta.gr_requested_date).toLocaleDateString()}</p>
+                            <p className="altered date ">{new Date(alerta.eta_date).toLocaleDateString()}</p> 
+                            <p className="alertmsg">{alerta.alertMsg}</p>
                         </div>
                         )}
 

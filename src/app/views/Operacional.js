@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import API from '../service/api';
+import { PopupboxManager, PopupboxContainer} from 'react-popupbox';
+
 
 // Images
 import iconOperacional from '../img/icons/title-ope.png'
@@ -14,6 +16,8 @@ class Operacional extends Component {
         operacional: [],
         isLoading: false,
     }
+
+    
 
     
     
@@ -37,9 +41,73 @@ class Operacional extends Component {
         let btn = document.querySelector('.btn-filter-nfs')
         btn.classList.toggle("active")
 	}
-	
+	openPopupbox() {
+        const content = (
+          <div className='lb-justificativa'>
+            <div className='content'>
+                <h2>Justificativa</h2>
+                {/* <div className='form-just'>
+                    <div className='row c2'>
+                        <div className='item'>
+                            <label>Tipo de Justificativa</label>
+                            <select>
+                                <option>Teste</option>
+                            </select>
+                        </div>
+                        <div className='item'>
+                            <label>E-mail</label>
+                            <input type='text' />
+                        </div>
+                    </div>
+                    <div className='row'>
+                        <div className='item'>
+                            <label>Justificativa</label>
+                            <textarea></textarea>
+                        </div>
+                    </div>
+                    <button className='btn'>Enviar</button>
+                </div> */}
+
+                <div className='list-justificativas'>
+                    <div className='item'>
+                        <p>Nulla vel placerat dolor. Etiam feugiat odio malesuada pellentesque vulputate. Nulla convallis varius erat quis vestibulum. Donec vitae ipsum vel elit porttitor porttitor quis eu sem.</p>
+                        <div className='user'>
+                            <input type='checkbox' />
+                            <p>Romero Almeida</p>
+                            <p>12/07/2019 08:16:21</p>
+                            <p>XO - AGENDAMENTO</p>
+                        </div>
+                    </div>
+                    <div className='item'>
+                        <p>Nulla vel placerat dolor. Etiam feugiat odio malesuada pellentesque vulputate. Nulla convallis varius erat quis vestibulum. Donec vitae ipsum vel elit porttitor porttitor quis eu sem.</p>
+                        <div className='user'>
+                            <input type='checkbox' />
+                            <p>Romero Almeida</p>
+                            <p>12/07/2019 08:16:21</p>
+                            <p>XO - AGENDAMENTO</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div className='wrap-btns'>
+                <div className='btnclose' onClick={PopupboxManager.close}>x</div>
+                <button className='btn abonar'>Abonar</button>
+                <button className='btn'>Justificativas</button>
+                <button className='btn'>Adicionar</button>
+            </div>
+          </div>
+        )
+        PopupboxManager.open({ content })
+    }
     render(){
-       
+        const popupboxConfig = {
+            fadeIn: true,
+            fadeInSpeed: 500
+          }
+
+          
+    
         return(
 			<div>
 							
@@ -62,7 +130,7 @@ class Operacional extends Component {
                     </div>
 
                     <FilterOperacional />
-
+                    <PopupboxContainer { ...popupboxConfig } />
                     <div className='list-ope'>
                         <header className="header-list-ope">
                             <p className='critico'>Crit.</p>
@@ -74,7 +142,7 @@ class Operacional extends Component {
                             <p className='ata'>ATA</p>
                             <p className='grp'>GR Prog.</p>
                             <p className='gre'>GR Efet.</p>
-                            <p className='status'>Status</p>
+                            <p className='status'>Status / Just.</p>
                         </header>
 
                         { this.state.isLoading && <Loading /> }
@@ -91,8 +159,7 @@ class Operacional extends Component {
                                 <p className='ata'>{ope.ata_date ? new Date(ope.ata_date).toLocaleDateString() : "-"}</p>
                                 <p className='grp'>{ope.gr_requested_date ? new Date(ope.gr_requested_date).toLocaleDateString() : "-"}</p>
                                 <p className='gre'>{ope.gr_actual ? new Date(ope.gr_actual).toLocaleDateString() : "-"}</p>
-                                
-                                <div className='status alert'><p>{ope.status}</p></div>
+                                <div className='status alert'><p>{ope.status}</p> <div onClick={this.openPopupbox} className='icon-justificativa'></div></div>
                             </div>
                         )}
                     </div>

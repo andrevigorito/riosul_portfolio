@@ -6,40 +6,33 @@
 .list-alerts{
     p{
         font-size: 14px;
+        line-height: 20px;
     }
-    .w30{
-        width: 30%;
-    }
-    .w20{
-        width: 20%;
-    }
-    .w40{
-        width: 40%;
-    }
-    .w60{
-        width: 40%;
-    }
-    .w50{
-        width: 50%;
-    }
-    .w10{
-        width: 10%;
-    }
+    
     .header{
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
         padding: 10px 20px;
+        display: grid;
+        align-items: center;
+        grid-template-columns: 1fr 2fr 1.5fr 1.5fr 3fr;
+        grid-row-gap: 10px;
+        grid-column-gap: 10px;
+        @media (max-width: 620px){
+            grid-template-columns: 1fr;
+        }
     }
     .item{
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
         background: #f7f7f7;
         padding: 10px 20px;
         margin-bottom: 4px;
         font-size: 14px;
-        
+        display: grid;
+        align-items: center;
+        grid-template-columns: 1fr 2fr 1.5fr 1.5fr 3fr;
+        grid-row-gap: 10px;
+        grid-column-gap: 10px;
+        @media (max-width: 620px){
+            grid-template-columns: 1fr;
+        }
         .date{
             &.altered{
                 color: red;
