@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 // Images
 import iconTitleDash from '../img/icons/title-dash.png';
 
 // Components
 
-class Dashboard extends Component {
+class Dashboard extends PureComponent {
   render() {
     return (
       <div>

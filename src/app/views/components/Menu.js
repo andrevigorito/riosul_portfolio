@@ -1,10 +1,18 @@
+// 52:46  error  Must use destructuring props assignment    react/destructuring-assignment
+// 52:57  error  'onLogout' is missing in props validation  react/prop-types
+
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { Route, Link } from 'react-router-dom';
 import imgUser from '../../img/user-header.png';
 import iconLogout from '../../img/icons/icon-logout.png';
 
 class Menu extends Component {
+  static propTypes = {
+    onLogout: PropTypes.func.isRequired,
+  };
+
   btnMenu = () => {
     const menu = document.querySelector('.main-menu');
     const menulink = document.querySelector('.main-menu nav a');
@@ -13,6 +21,8 @@ class Menu extends Component {
   };
 
   render() {
+    const { onLogout } = this.props;
+
     return (
       <div className="main-menu">
         <div className="scrollmenu">
@@ -49,7 +59,7 @@ class Menu extends Component {
                 </Link>
               </Route>
             </nav>
-            <div className="logout" onClick={this.props.onLogout}>
+            <div className="logout" onClick={onLogout}>
               <p>Logout</p>
               <img src={iconLogout} alt="" />
             </div>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { registerLocale } from DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import DatePicker, { registerLocale } from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import ptBR from 'date-fns/locale/pt-BR';
 
@@ -17,6 +17,7 @@ class Filter extends Component {
       startDate: date,
     });
   };
+
   handleChangeEnd = date => {
     this.setState({
       endDate: date,

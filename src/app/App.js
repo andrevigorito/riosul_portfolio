@@ -80,8 +80,12 @@ class App extends Component {
             <div>
               <Menu onLogout={this.handleLogout} />
               <Header />
-              <button onClick={this.notify}> Notify !</button>
-              <button onClick={this.notifySucess}> Agora vai !</button>
+              <button type="button" onClick={this.notify}>
+                Notify !
+              </button>
+              <button type="button" onClick={this.notifySucess}>
+                Agora vai !
+              </button>
               <ToastContainer hideProgressBar autoClose={false} />
             </div>
           ) : null}

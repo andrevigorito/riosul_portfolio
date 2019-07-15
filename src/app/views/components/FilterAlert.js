@@ -31,6 +31,8 @@ class Filter extends Component {
   };
 
   render() {
+    const { date, startDate, endDate } = this.state;
+
     return (
       <div className="filter-box">
         <form action="">
@@ -39,7 +41,7 @@ class Filter extends Component {
 
             <DatePicker
               locale="pt-BR"
-              selected={this.state.date}
+              selected={date}
               selectsStart
               onChange={this.handleChangeDate}
               dateFormat="d MMMM , yyyy "
@@ -55,11 +57,11 @@ class Filter extends Component {
 
             <DatePicker
               locale="pt-BR"
-              selected={this.state.startDate}
+              selected={startDate}
               selectsStart
               onChange={this.handleChangeStart}
-              startDate={this.state.startDate}
-              endDate={this.state.endDate}
+              startDate={startDate}
+              endDate={endDate}
               dateFormat="d MMMM , yyyy "
             />
           </div>
@@ -68,19 +70,21 @@ class Filter extends Component {
             {/* <input type="text" className="datepicker-here date" data-language="pt-BR" id="data-fim" /> */}
             <DatePicker
               locale="pt-BR"
-              selected={this.state.endDate}
+              selected={endDate}
               selectsEnd
               onChange={this.handleChangeEnd}
-              startDate={this.state.startDate}
-              endDate={this.state.endDate}
+              startDate={startDate}
+              endDate={endDate}
               dateFormat="d MMMM , yyyy "
-              minDate={this.state.startDate}
+              minDate={startDate}
             />
           </div>
 
           <div className="item">
             <label> &nbsp; </label>
-            <button className="btn">Filtrar</button>
+            <button type="button" className="btn">
+              Filtrar
+            </button>
           </div>
         </form>
       </div>

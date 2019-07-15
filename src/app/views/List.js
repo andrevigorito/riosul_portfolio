@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 // Images
 import iconRgc from '../img/icons/rg-c.png';
@@ -9,12 +10,18 @@ import PageHeader from './components/PageHeader';
 import Loading from './components/Loading';
 
 class List extends Component {
+  static propTypes = {
+    isLoading: PropTypes.bool.isRequired,
+    products: PropTypes.shape(PropTypes.any).isRequired,
+    onDetail: PropTypes.func.isRequired,
+  };
+
   state = {
     title: 'Gerencial',
   };
 
   render() {
-    const { isLoading, products } = this.props;
+    const { isLoading, products, onDetail } = this.props;
     let total = 0;
 
     const adicionaTotal = valor => {
@@ -53,7 +60,7 @@ class List extends Component {
                 <div
                   className="item"
                   key={product.uuid}
-                  onClick={() => this.props.onDetail(product.uuid)}
+                  onClick={() => onDetail(product.uuid)}
                 >
                   <div className="main-info">
                     <p className="emp">{product.consignee.split(' ')[0]}</p>

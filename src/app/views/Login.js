@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 // Images
 import logoLogin from '../img/logologin.png';
+
 // Css
 import '../css/Layout/login.scss';
 
 class Login extends Component {
+  static propTypes = {
+    handleLogin: PropTypes.func.isRequired,
+  };
+
   state = {
     email: '',
     passwd: '',
@@ -17,8 +24,9 @@ class Login extends Component {
   };
 
   login = () => {
+    const { handleLogin } = this.props;
     const { email, passwd } = this.state;
-    this.props.handleLogin(email, passwd);
+    handleLogin(email, passwd);
   };
 
   render() {

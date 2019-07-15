@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 // Images
 import iconRgc from '../img/icons/rg-c.png';
 import iconRgp from '../img/icons/rg-p.png';
@@ -14,12 +16,17 @@ import iconBack from '../img/icons/back.png';
 // Components
 
 class Detalhe extends Component {
+  static propTypes = {
+    onRemoveProduct: PropTypes.func.isRequired,
+    product: PropTypes.objectOf(PropTypes.any).isRequired,
+  };
+
   componentDidMount() {
     const acc = document.getElementsByClassName('accordion');
     let i;
 
-    for (i = 0; i < acc.length; i++) {
-      acc[i].addEventListener('click', function() {
+    for (i = 0; i < acc.length; i += 1) {
+      acc[i].addEventListener('click', () => {
         this.classList.toggle('active');
         const panel = this.nextElementSibling;
         if (panel.style.maxHeight) {
@@ -32,6 +39,8 @@ class Detalhe extends Component {
   }
 
   render() {
+    const { onRemoveProduct, product } = this.props;
+
     let total = 0;
 
     const adicionaTotal = valor => {
@@ -51,7 +60,7 @@ class Detalhe extends Component {
               Gerencial
             </h1>
             <div className="last-wrap">
-              <div className="btnvoltar" onClick={this.props.onRemoveProduct}>
+              <div className="btnvoltar" onClick={onRemoveProduct}>
                 <img src={iconBack} alt="" />
                 <p>Voltar</p>
               </div>
@@ -63,17 +72,14 @@ class Detalhe extends Component {
               <header className="title">
                 <div className="first">
                   <p>
-                    ID: <strong>{this.props.product.product_id}</strong>
+                    ID: <strong>{product.product_id}</strong>
                   </p>
                   <p>
-                    Produto:{' '}
-                    <strong>{this.props.product.product_description}</strong>
+                    Produto: <strong>{product.product_description}</strong>
                   </p>
                 </div>
                 <div className="last">
-                  <p className="emp">
-                    {this.props.product.consignee.split(' ')[0]}
-                  </p>
+                  <p className="emp">{product.consignee.split(' ')[0]}</p>
                 </div>
               </header>
 
@@ -84,7 +90,7 @@ class Detalhe extends Component {
                     <p>GR Atual</p>
                   </div>
 
-                  {this.props.product.pos.map(po => (
+                  {product.pos.map(po => (
                     <div
                       className={po.alert ? 'item-gra alert' : 'item-gra'}
                       key={po.uuid}
@@ -120,7 +126,7 @@ class Detalhe extends Component {
                   <p className="w20">Valor</p>
                 </div>
 
-                {this.props.product.pos.map(po => (
+                {product.pos.map(po => (
                   <div key={po.uuid}>
                     <div className="item accordion">
                       <p className="w60">{po.order_reference}</p>

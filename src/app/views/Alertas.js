@@ -34,6 +34,7 @@ class Alertas extends Component {
   };
 
   render() {
+    const { isLoading, alerts } = this.state;
     return (
       <div>
         <div className="center">
@@ -64,8 +65,8 @@ class Alertas extends Component {
               <p>GR Atual</p>
               <p>Mensagem do Alerta</p>
             </div>
-            {this.state.isLoading && <Loading />}
-            {this.state.alerts.map(alerta => (
+            {isLoading && <Loading />}
+            {alerts.map(alerta => (
               <div className="item" key={alerta.uuid}>
                 <p className="date current ">
                   {new Date(alerta.last_update).toLocaleDateString()}
