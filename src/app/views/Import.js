@@ -1,31 +1,26 @@
-import React, {Component} from 'react'
+import React, { PureComponent } from 'react';
 // Images
-import iconTitleDash from '../img/icons/title-dash.png'
+import iconTitleDash from '../img/icons/title-dash.png';
 
 // Components
 
-
-
-class Import extends Component {
-
-	
-    render(){
-        return(
-			<div>
-								
-				<div className="center">
-                    <div className="page-header">
-                        <h1>
-                            <img src={iconTitleDash} alt="" />
-                            Import
-                        </h1>
-                    </div>
-					
-				</div>
-			
-			</div>
-		)
-    }
+// class Import extends Component {
+// function Import() {
+class Import extends PureComponent {
+  render() {
+    return (
+      <div>
+        <div className="center">
+          <div className="page-header">
+            <h1>
+              <img src={iconTitleDash} alt="" />
+              Import
+            </h1>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default Import;
