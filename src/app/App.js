@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
-import API from './service/api';
+import API from './services/api';
 
 import 'react-toastify/dist/ReactToastify.css';
 

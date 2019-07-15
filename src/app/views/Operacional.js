@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { PopupboxManager, PopupboxContainer } from 'react-popupbox';
-import API from '../service/api';
+import API from '../services/api';
 
 // Images
 import iconOperacional from '../img/icons/title-ope.png';

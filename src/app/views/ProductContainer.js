@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import API from '../service/api';
+import API from '../services/api';
 import List from './List';
 import Detalhe from './Detalhe';
 
