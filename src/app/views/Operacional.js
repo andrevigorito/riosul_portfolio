@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
 import { PopupboxManager, PopupboxContainer } from 'react-popupbox';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import ptBR from 'date-fns/locale/pt';
+
 import API from '../services/api';
+import 'react-datepicker/dist/react-datepicker.css';
 
 // Images
 import iconOperacional from '../img/icons/title-ope.png';
 
 // Components
 import Loading from './components/Loading';
-import FilterOperacional from './components/FilterOperacional';
+
+registerLocale('pt-BR', ptBR);
+// import FilterOperacional from './components/FilterOperacional';
 
 class Operacional extends Component {
   state = {
     operacional: [],
     isLoading: false,
+    filtroAtivo: false,
   };
 
   componentDidMount() {
@@ -28,10 +35,11 @@ class Operacional extends Component {
   }
 
   btnFilter = () => {
-    const filter = document.querySelector('.filter-box');
-    filter.classList.toggle('active');
-    const btn = document.querySelector('.btn-filter-nfs');
-    btn.classList.toggle('active');
+    // const filter = document.querySelector('.filter-box');
+    // filter.classList.toggle('active');
+    // const btn = document.querySelector('.btn-filter-nfs');
+    // btn.classList.toggle('active');
+    this.setState({ filtroAtivo: true });
   };
 
   openPopupbox = () => {
@@ -117,7 +125,14 @@ class Operacional extends Component {
       fadeInSpeed: 500,
     };
 
-    const { isLoading, operacional } = this.state;
+    const {
+      isLoading,
+      operacional,
+      filtroAtivo,
+      date,
+      startDate,
+      endDate,
+    } = this.state;
 
     return (
       <div>
@@ -139,7 +154,67 @@ class Operacional extends Component {
             </div>
           </div>
 
-          <FilterOperacional />
+          {filtroAtivo && (
+            <div className="filter-box">
+              <form action="" className="formoperacional">
+                <div className="item">
+                  <label>Palavra Chave:</label>
+                  <input type="text" id="idproduto" />
+                </div>
+
+                <div className="item">
+                  <label>Produto:</label>
+                  <input type="text" id="idproduto" />
+                </div>
+                <div className="item">
+                  <label>ATA:</label>
+
+                  <DatePicker
+                    locale="pt-BR"
+                    selected={date}
+                    selectsStart
+                    startDate={startDate}
+                    onChange={this.handleChangeDate}
+                    dateFormat="d MMMM , yyyy "
+                  />
+                </div>
+                <div className="item">
+                  <label>GR Programado:</label>
+
+                  <DatePicker
+                    locale="pt-BR"
+                    selected={startDate}
+                    selectsStart
+                    onChange={this.handleChangeStart}
+                    startDate={startDate}
+                    endDate={endDate}
+                    dateFormat="d MMMM , yyyy "
+                  />
+                </div>
+                <div className="item">
+                  <label>GR Efeitvo:</label>
+
+                  <DatePicker
+                    locale="pt-BR"
+                    selected={endDate}
+                    selectsEnd
+                    onChange={this.handleChangeEnd}
+                    startDate={startDate}
+                    endDate={endDate}
+                    dateFormat="d MMMM , yyyy "
+                    minDate={startDate}
+                  />
+                </div>
+
+                <div className="item">
+                  <label> &nbsp; </label>
+                  <button type="button" className="btn">
+                    Filtrar
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
           <PopupboxContainer {...popupboxConfig} />
           <div className="list-ope">
             <header className="header-list-ope">
