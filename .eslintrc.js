@@ -22,7 +22,7 @@ module.exports = {
     'react/jsx-filename-extension': ['warn', { extensions: ['.jsx', '.js'] }],
     'import/prefer-default-export': 'off',
     // a linha a seguir é p evitar o erro 'date-fns' should be listed in the project's dependencies
-    // 'import/no-extraneous-dependencies': ['warn', { devDependencies: true }],
+    'import/no-extraneous-dependencies': ['warn', { devDependencies: true }],
     // as linhas a seguir desabilitam avisos que não são tão importantes para
     // manter as boas práticas de programação e um codigo limpo
     'jsx-a11y/label-has-associated-control': 'off',
