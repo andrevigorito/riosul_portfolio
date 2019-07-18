@@ -1,37 +1,51 @@
 import React, { Component } from 'react';
 import { PopupboxManager, PopupboxContainer } from 'react-popupbox';
-import API from '../service/api';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import ptBR from 'date-fns/locale/pt-BR';
+
+import { compareAsc, parseISO, isSameDay } from 'date-fns';
+
+import API from '../services/api';
+import 'react-datepicker/dist/react-datepicker.css';
 
 // Images
 import iconOperacional from '../img/icons/title-ope.png';
 
 // Components
 import Loading from './components/Loading';
-import FilterOperacional from './components/FilterOperacional';
+
+registerLocale('pt-BR', ptBR);
+// import FilterOperacional from './components/FilterOperacional';
 
 class Operacional extends Component {
   state = {
     operacional: [],
+    operacionalFiltrada: [],
     isLoading: false,
+    filtroAtivo: false,
+    produtoFiltro: '',
+    queryFilter: '',
+    ataDateIncio: '',
+    grProgramado: '',
+    grEfetivo: '',
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     this.setState({ isLoading: true });
-    API.get(`poItems`).then(res => {
-      const operacional = res.data;
-      console.log(operacional);
-      this.setState({
-        operacional,
-        isLoading: false,
-      });
+
+    const response = await API.get('poItems');
+    const { data: operacional } = response;
+
+    this.setState({
+      operacional,
+      operacionalFiltrada: operacional,
+      isLoading: false,
     });
   }
 
   btnFilter = () => {
-    const filter = document.querySelector('.filter-box');
-    filter.classList.toggle('active');
-    const btn = document.querySelector('.btn-filter-nfs');
-    btn.classList.toggle('active');
+    const { filtroAtivo } = this.state;
+    this.setState({ filtroAtivo: !filtroAtivo });
   };
 
   openPopupbox = () => {
@@ -111,13 +125,102 @@ class Operacional extends Component {
     PopupboxManager.open({ content });
   };
 
+  handleQueryInput = e => {
+    this.setState({ queryFilter: e.target.value });
+  };
+
+  handleProduto = e => {
+    this.setState({ produtoFiltro: e.target.value });
+  };
+
+  handleChangeDateAta = date => {
+    this.setState({
+      ataDateIncio: date,
+    });
+  };
+
+  handleChangeGrProgramado = date => {
+    this.setState({
+      grProgramado: date,
+    });
+  };
+
+  handleChangeGrEfetivo = date => {
+    this.setState({
+      grEfetivo: date,
+    });
+  };
+
+  handleFormSubit = e => {
+    e.preventDefault();
+
+    this.setState({ isLoading: true });
+
+    const {
+      queryFilter,
+      operacional,
+      produtoFiltro,
+      ataDateIncio,
+      grProgramado,
+      grEfetivo,
+    } = this.state;
+
+    let newOpe = operacional;
+
+    if (produtoFiltro) {
+      newOpe = newOpe.filter(
+        ope => ope.po.product.product_id.indexOf(produtoFiltro) > -1
+      );
+    }
+
+    if (queryFilter) {
+      newOpe = newOpe.filter(
+        ope =>
+          ope.po.order_reference.indexOf(queryFilter) > -1 ||
+          ope.po.product.product_description.indexOf(queryFilter) > -1
+      );
+    }
+
+    if (ataDateIncio) {
+      newOpe = newOpe.filter(
+        ope => isSameDay(parseISO(ope.ata_date), ataDateIncio) === true
+      );
+    }
+    
+    if (grProgramado) {
+      newOpe = newOpe.filter(
+        ope => isSameDay(parseISO(ope.gr_requested_date), grProgramado) === true
+      );
+    }
+
+    if (grEfetivo) {
+      newOpe = newOpe.filter(
+        ope => isSameDay(parseISO(ope.gr_actual), grEfetivo) === true
+      );
+    }
+
+    if (!queryFilter && !produtoFiltro && !ataDateIncio && !grProgramado && !grEfetivo) {
+      newOpe = operacional;
+    }
+
+    this.setState({ operacionalFiltrada: newOpe, isLoading: false });
+  };
+
   render() {
     const popupboxConfig = {
       fadeIn: true,
       fadeInSpeed: 500,
     };
 
-    const { isLoading, operacional } = this.state;
+    const {
+      isLoading,
+      operacionalFiltrada,
+      filtroAtivo,
+      startDate,
+      endDate,
+      ataDateIncio,
+      grProgramado,
+    } = this.state;
 
     return (
       <div>
@@ -128,7 +231,10 @@ class Operacional extends Component {
               Operacional
             </h1>
             <div className="last-wrap">
-              <div className="btn-filter-nfs" onClick={this.btnFilter}>
+              <div
+                className={`btn-filter-nfs ${filtroAtivo ? 'active' : ''}`}
+                onClick={this.btnFilter}
+              >
                 <div className="icon-filter">
                   <span />
                   <span />
@@ -139,7 +245,76 @@ class Operacional extends Component {
             </div>
           </div>
 
-          <FilterOperacional />
+          <div className={`filter-box ${filtroAtivo ? 'active' : ''}`}>
+            <form className="formoperacional" onSubmit={this.handleFormSubit}>
+              <div className="item">
+                <label>Palavra Chave:</label>
+                <input
+                  type="text"
+                  id="idproduto"
+                  onChange={this.handleQueryInput}
+                />
+              </div>
+
+              <div className="item">
+                <label>Produto:</label>
+                <input
+                  type="text"
+                  id="idproduto"
+                  onChange={this.handleProduto}
+                />
+              </div>
+
+              <div className="item">
+                <label>ATA:</label>
+
+                <DatePicker
+                  locale="pt-BR"
+                  selected={ataDateIncio}
+                  selectsStart
+                  startDate={ataDateIncio}
+                  onChange={this.handleChangeDateAta}
+                  dateFormat="d MMMM , yyyy "
+                />
+              </div>
+
+              <div className="item">
+                <label>GR Programado:</label>
+
+                <DatePicker
+                  locale="pt-BR"
+                  selected={grProgramado}
+                  selectsStart
+                  onChange={this.handleChangeGrProgramado}
+                  startDate={grProgramado}
+                  endDate={endDate}
+                  dateFormat="d MMMM , yyyy "
+                />
+              </div>
+              <div className="item">
+                <label>GR Efetivo:</label>
+
+                <DatePicker
+                  locale="pt-BR"
+                  selected={endDate}
+                  selectsEnd
+                  onChange={this.handleChangeGrEfetivo}
+                  startDate={startDate}
+                  endDate={endDate}
+                  dateFormat="d MMMM , yyyy "
+                  minDate={startDate}
+                />
+              </div>
+
+              <div className="item">
+                <label> &nbsp; </label>
+                <button type="submit" className="btn">
+                  Filtrar
+                </button>
+              </div>
+            </form>
+          </div>
+
           <PopupboxContainer {...popupboxConfig} />
           <div className="list-ope">
             <header className="header-list-ope">
@@ -157,7 +332,7 @@ class Operacional extends Component {
 
             {isLoading && <Loading />}
 
-            {operacional.map(ope => (
+            {operacionalFiltrada.map(ope => (
               <div className="item" key={ope.uuid}>
                 <span className="critico" />
                 <p className="po">{ope.po.order_reference}</p>
