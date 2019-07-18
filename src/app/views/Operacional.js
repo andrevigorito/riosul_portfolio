@@ -3,6 +3,8 @@ import { PopupboxManager, PopupboxContainer } from 'react-popupbox';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import ptBR from 'date-fns/locale/pt-BR';
 
+import { compareAsc, parseISO, isSameDay } from 'date-fns';
+
 import API from '../services/api';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -23,7 +25,9 @@ class Operacional extends Component {
     filtroAtivo: false,
     produtoFiltro: '',
     queryFilter: '',
-    ataDateIncio: new Date(),
+    ataDateIncio: '',
+    grProgramado: '',
+    grEfetivo: '',
   };
 
   async componentDidMount() {
@@ -135,32 +139,71 @@ class Operacional extends Component {
     });
   };
 
+  handleChangeGrProgramado = date => {
+    this.setState({
+      grProgramado: date,
+    });
+  };
+
+  handleChangeGrEfetivo = date => {
+    this.setState({
+      grEfetivo: date,
+    });
+  };
+
   handleFormSubit = e => {
     e.preventDefault();
 
-    const { queryFilter, operacional, produtoFiltro } = this.state;
+    this.setState({ isLoading: true });
 
-    let newOpe;
+    const {
+      queryFilter,
+      operacional,
+      produtoFiltro,
+      ataDateIncio,
+      grProgramado,
+      grEfetivo,
+    } = this.state;
+
+    let newOpe = operacional;
 
     if (produtoFiltro) {
-      newOpe = operacional.filter(
+      newOpe = newOpe.filter(
         ope => ope.po.product.product_id.indexOf(produtoFiltro) > -1
       );
     }
-    
+
     if (queryFilter) {
-      newOpe = operacional.filter(
+      newOpe = newOpe.filter(
         ope =>
           ope.po.order_reference.indexOf(queryFilter) > -1 ||
           ope.po.product.product_description.indexOf(queryFilter) > -1
       );
     }
 
-    if (!queryFilter && !produtoFiltro) {
+    if (ataDateIncio) {
+      newOpe = newOpe.filter(
+        ope => isSameDay(parseISO(ope.ata_date), ataDateIncio) === true
+      );
+    }
+    
+    if (grProgramado) {
+      newOpe = newOpe.filter(
+        ope => isSameDay(parseISO(ope.gr_requested_date), grProgramado) === true
+      );
+    }
+
+    if (grEfetivo) {
+      newOpe = newOpe.filter(
+        ope => isSameDay(parseISO(ope.gr_actual), grEfetivo) === true
+      );
+    }
+
+    if (!queryFilter && !produtoFiltro && !ataDateIncio && !grProgramado && !grEfetivo) {
       newOpe = operacional;
     }
 
-    this.setState({ operacionalFiltrada: newOpe });
+    this.setState({ operacionalFiltrada: newOpe, isLoading: false });
   };
 
   render() {
@@ -173,10 +216,10 @@ class Operacional extends Component {
       isLoading,
       operacionalFiltrada,
       filtroAtivo,
-      date,
       startDate,
       endDate,
       ataDateIncio,
+      grProgramado,
     } = this.state;
 
     return (
@@ -221,41 +264,41 @@ class Operacional extends Component {
                   onChange={this.handleProduto}
                 />
               </div>
-              
+
               <div className="item">
                 <label>ATA:</label>
 
                 <DatePicker
                   locale="pt-BR"
-                  selected={date}
+                  selected={ataDateIncio}
                   selectsStart
                   startDate={ataDateIncio}
                   onChange={this.handleChangeDateAta}
                   dateFormat="d MMMM , yyyy "
                 />
               </div>
-              
+
               <div className="item">
                 <label>GR Programado:</label>
 
                 <DatePicker
                   locale="pt-BR"
-                  selected={startDate}
+                  selected={grProgramado}
                   selectsStart
-                  onChange={this.handleChangeStart}
-                  startDate={startDate}
+                  onChange={this.handleChangeGrProgramado}
+                  startDate={grProgramado}
                   endDate={endDate}
                   dateFormat="d MMMM , yyyy "
                 />
               </div>
               <div className="item">
-                <label>GR Efeitvo:</label>
+                <label>GR Efetivo:</label>
 
                 <DatePicker
                   locale="pt-BR"
                   selected={endDate}
                   selectsEnd
-                  onChange={this.handleChangeEnd}
+                  onChange={this.handleChangeGrEfetivo}
                   startDate={startDate}
                   endDate={endDate}
                   dateFormat="d MMMM , yyyy "
