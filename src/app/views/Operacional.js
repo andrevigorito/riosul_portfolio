@@ -274,7 +274,7 @@ class Operacional extends Component {
                   selectsStart
                   startDate={ataDateIncio}
                   onChange={this.handleChangeDateAta}
-                  dateFormat="d MMMM , yyyy "
+                  dateFormat="dd/MM/yyyy"
                 />
               </div>
 
@@ -288,7 +288,7 @@ class Operacional extends Component {
                   onChange={this.handleChangeGrProgramado}
                   startDate={grProgramado}
                   endDate={endDate}
-                  dateFormat="d MMMM , yyyy "
+                  dateFormat="dd/MM/yyyy"
                 />
               </div>
               <div className="item">
@@ -301,7 +301,7 @@ class Operacional extends Component {
                   onChange={this.handleChangeGrEfetivo}
                   startDate={startDate}
                   endDate={endDate}
-                  dateFormat="d MMMM , yyyy "
+                  dateFormat="dd/MM/yyyy"
                   minDate={startDate}
                 />
               </div>

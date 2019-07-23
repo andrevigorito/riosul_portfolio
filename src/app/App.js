@@ -103,7 +103,7 @@ class App extends Component {
             <Route path="/operacional" exact component={Operacional} />
           )}
 
-          {isAuth && <Route path="/" exact component={ProductContainer} />}
+          {isAuth && <Route path="/" exact component={Operacional} />}
         </BrowserRouter>
       </div>
     );
