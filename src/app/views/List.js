@@ -73,37 +73,31 @@ class List extends Component {
 
                   <div className="info">
                     <div className="list-gra">
-                      {product.pos.map(po => (
+                      {product.items.map(po => (
                         <div
                           className={po.alert ? 'item-gra alert' : 'item-gra'}
-                          key={po.uuid}
+                          // key={po.uuid}
                         >
                           <p>
-                            <img src={iconRgc} alt="" /> {po.order_reference}
+                            <img src={iconRgc} alt="" />{' '}
+                            {new Date(po.gr_actual).toLocaleDateString()}
                           </p>
                           <p>
                             <img src={iconRgp} alt="" />{' '}
-                            {po.po_items
-                              .reduce((total, obj) => obj.qty + total, 0)
-                              .toLocaleString()}
+                            {po.total ? po.total.toLocaleString() : ''}
                           </p>
-                          {adicionaTotal(
-                            po.po_items.reduce(
-                              (total, obj) => obj.qty + total,
-                              0
-                            )
-                          )}
                         </div>
                       ))}
                     </div>
-
-                    <div className="item-gra">
+                    <div className="item-total">
                       <p>
                         <strong>Total</strong>
                       </p>
                       <p>
                         <img src={iconRgp} alt="" />
-                        {total.toLocaleString()}
+                        {product.totalProduto
+                          ? product.totalProduto.toLocaleString()
+                          : ''}
                       </p>
                       {zeraTotal()}
                     </div>
