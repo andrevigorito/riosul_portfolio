@@ -42,7 +42,7 @@ class Menu extends Component {
             <nav>
               <Route>
                 {/* <Link to="/meuperfil">Meu Perfil</Link>    */}
-                <Link onClick={this.btnMenu} to="/dashboard">
+                {/* <Link onClick={this.btnMenu} to="/dashboard">
                   Dashboard
                 </Link>
                 <Link onClick={this.btnMenu} to="/gerencial">
@@ -53,6 +53,9 @@ class Menu extends Component {
                 </Link>
                 <Link onClick={this.btnMenu} to="/import">
                   Import
+                </Link> */}
+                <Link onClick={this.btnMenu} to="/usuarios">
+                  Usuários
                 </Link>
                 <Link onClick={this.btnMenu} to="/alertas">
                   Alertas

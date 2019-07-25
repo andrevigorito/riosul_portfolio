@@ -12,6 +12,7 @@ import ProductContainer from './views/ProductContainer';
 import Dashboard from './views/Dashboard';
 import Import from './views/Import';
 import Alertas from './views/Alertas';
+import Usuarios from './views/Usuarios';
 import Operacional from './views/Operacional';
 
 // Components
@@ -99,6 +100,7 @@ class App extends Component {
           {isAuth && <Route path="/dashboard" exact component={Dashboard} />}
           {isAuth && <Route path="/import" exact component={Import} />}
           {isAuth && <Route path="/alertas" exact component={Alertas} />}
+          {isAuth && <Route path="/usuarios" exact component={Usuarios} />}
           {isAuth && (
             <Route path="/operacional" exact component={Operacional} />
           )}
