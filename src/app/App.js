@@ -27,6 +27,7 @@ import './css/main.scss';
 class App extends Component {
   state = {
     isAuth: false,
+    username: '',
   };
 
   componentDidMount() {
@@ -60,6 +61,7 @@ class App extends Component {
 
       this.setState({
         isAuth: true,
+        username: email,
       });
 
       if (lembrar) {
@@ -87,7 +89,7 @@ class App extends Component {
   };
 
   render() {
-    const { isAuth } = this.state;
+    const { isAuth, username } = this.state;
     return (
       <div className="App">
         <BrowserRouter>
@@ -102,7 +104,11 @@ class App extends Component {
 
           {isAuth ? (
             <div>
-              <Menu onLogout={this.handleLogout} />
+              <Menu
+                onLogout={this.handleLogout}
+                username={username}
+                empresa=""
+              />
               <Header />
               <button type="button" onClick={this.notify}>
                 Notify !

@@ -11,6 +11,8 @@ import iconLogout from '../../img/icons/icon-logout.png';
 class Menu extends Component {
   static propTypes = {
     onLogout: PropTypes.func.isRequired,
+    username: PropTypes.string.isRequired,
+    empresa: PropTypes.string.isRequired,
   };
 
   btnMenu = () => {
@@ -21,7 +23,7 @@ class Menu extends Component {
   };
 
   render() {
-    const { onLogout } = this.props;
+    const { onLogout, username, empresa } = this.props;
 
     return (
       <div className="main-menu">
@@ -34,9 +36,9 @@ class Menu extends Component {
             </div>
             <div className="user">
               <img src={imgUser} alt="" />
-              <p>Josieli Machado</p>
+              <p>{username}</p>
               <p>
-                <small>Grupo Toniato</small>
+                <small>{empresa}</small>
               </p>
             </div>
             <nav>
