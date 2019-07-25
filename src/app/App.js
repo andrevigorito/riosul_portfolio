@@ -12,6 +12,7 @@ import ProductContainer from './views/ProductContainer';
 import Dashboard from './views/Dashboard';
 import Import from './views/Import';
 import Alertas from './views/Alertas';
+import Usuarios from './views/Usuarios';
 import Operacional from './views/Operacional';
 
 // Components
@@ -25,8 +26,17 @@ import './css/main.scss';
 
 class App extends Component {
   state = {
-    isAuth: true,
+    isAuth: false,
   };
+
+  componentDidMount() {
+    const userStored = localStorage.getItem('USER');
+    if (userStored) {
+      this.setState({
+        isAuth: true,
+      });
+    }
+  }
 
   notify = () => {
     toast.error('PO Alterada cod: 0002213', {
@@ -40,25 +50,39 @@ class App extends Component {
     });
   };
 
-  handleLogin = (email, passwd) => {
-    API.post(
-      `auth/login`,
-      { username: email, password: passwd },
-      { headers: { 'Content-Type': 'application/json' } }
-    )
-      .then(() => {
-        this.setState({
-          isAuth: true,
-        });
-      })
-      .catch(error => {
-        console.log(error);
+  handleLogin = async (email, passwd, lembrar = false) => {
+    try {
+      const logado = await API.post(
+        `auth/login`,
+        { username: email, password: passwd },
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+
+      this.setState({
+        isAuth: true,
       });
+
+      if (lembrar) {
+        this.saveLocalStorage(email, logado.data.uuid);
+      }
+    } catch (err) {
+      console.log(err);
+      return err.response.status;
+    }
+    return true;
   };
 
   handleLogout = () => {
     this.setState({
       isAuth: false,
+    });
+    localStorage.removeItem('USER');
+  };
+
+  saveLocalStorage = (USERNAME, UUID) => {
+    localStorage.setItem('USER', {
+      USERNAME,
+      UUID,
     });
   };
 
@@ -99,6 +123,7 @@ class App extends Component {
           {isAuth && <Route path="/dashboard" exact component={Dashboard} />}
           {isAuth && <Route path="/import" exact component={Import} />}
           {isAuth && <Route path="/alertas" exact component={Alertas} />}
+          {isAuth && <Route path="/usuarios" exact component={Usuarios} />}
           {isAuth && (
             <Route path="/operacional" exact component={Operacional} />
           )}
