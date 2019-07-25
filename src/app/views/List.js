@@ -24,9 +24,10 @@ class List extends Component {
     const { isLoading, products, onDetail } = this.props;
     let total = 0;
 
-    const adicionaTotal = valor => {
-      total += valor;
-    };
+    // const adicionaTotal = valor => {
+    //   total += valor;
+    // };
+    console.log(total);
 
     const zeraTotal = () => {
       total = 0;

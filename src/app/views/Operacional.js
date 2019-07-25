@@ -3,7 +3,7 @@ import { PopupboxManager, PopupboxContainer } from 'react-popupbox';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import ptBR from 'date-fns/locale/pt-BR';
 
-import { compareAsc, parseISO, isSameDay } from 'date-fns';
+import { parseISO, isSameDay } from 'date-fns';
 
 import API from '../services/api';
 import 'react-datepicker/dist/react-datepicker.css';
