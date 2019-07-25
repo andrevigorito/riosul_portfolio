@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import API from '../../services/api';
+// import { PopupboxManager, PopupboxContainer } from 'react-popupbox';
+import swal from '@sweetalert/with-react';
 
-// Images
-import iconTitleAlert from '../../img/icons/title-alert.png';
+import API from '../../services/api';
 
 // Components
 import Loading from '../components/Loading';
 
 // styles
 import { Box, UserList } from './styles';
+// import { Box, UserList, Popup } from './styles';
 
 class Usuarios extends Component {
   state = {
@@ -48,6 +49,42 @@ class Usuarios extends Component {
     // btn.classList.toggle('active');
   };
 
+  // openPopupbox = () => {
+  //   const content = (
+  //     <Popup>
+  //       <div className="content">
+  //         <h2>Alterar usuário</h2>
+
+  //         <div className="list-justificativas">
+  //           <div className="item">
+  //             <div className="user">
+  //               <input type="checkbox" />
+  //               <p>Romero Almeida</p>
+  //               <p>12/07/2019 08:16:21</p>
+  //               <p>XO - AGENDAMENTO</p>
+  //             </div>
+  //           </div>
+  //         </div>
+  //       </div>
+  //       <div className="wrap-btns">
+  //         <div className="btnclose" onClick={PopupboxManager.close}>
+  //           x
+  //         </div>
+  //         <button type="button" className="btn abonar">
+  //           Abonar
+  //         </button>
+  //         <button type="button" className="btn">
+  //           Justificativas
+  //         </button>
+  //         <button type="button" className="btn">
+  //           Adicionar
+  //         </button>
+  //       </div>
+  //     </Popup>
+  //   );
+  //   PopupboxManager.open({ content });
+  // };
+
   addUser = async () => {
     const { newusername, newpassword, newadmin } = this.state;
 
@@ -59,13 +96,35 @@ class Usuarios extends Component {
       },
     });
 
-    // console.log(newUser);
+    console.log(newUser);
 
     window.location.reload();
   };
 
-  modifyUser = () => {
-    alert('abrir tela/popup de alteração');
+  deleteUser = async uuid => {
+    console.log(uuid);
+
+    await API.delete(`users/${uuid}`);
+
+    window.location.reload();
+  };
+
+  modifyUser = async uuid => {
+    // alert('Tela/popup de alteração ainda não implementado');
+    // this.openPopupbox();
+
+    const confirmDelete = await swal({
+      dangerMode: true,
+      text: 'Confirma a exclusão do usuário?',
+      buttons: {
+        cancel: 'Não',
+        confirm: 'Sim',
+      },
+    });
+
+    if (confirmDelete) {
+      this.deleteUser(uuid);
+    }
   };
 
   async loadUserList() {
@@ -80,6 +139,11 @@ class Usuarios extends Component {
   }
 
   render() {
+    // const popupboxConfig = {
+    //   fadeIn: true,
+    //   fadeInSpeed: 500,
+    // };
+
     const {
       isLoading,
       users,
@@ -92,10 +156,7 @@ class Usuarios extends Component {
       <div>
         <div className="center">
           <div className="page-header">
-            <h1>
-              <img src={iconTitleAlert} alt="" />
-              Usuários
-            </h1>
+            <h1>Usuários</h1>
             <div className="last-wrap">
               <div className="btn-filter-nfs" onClick={this.btnFilter}>
                 <div className="icon-filter">
@@ -172,6 +233,7 @@ class Usuarios extends Component {
               </div>
             </div>
 
+            {/* <PopupboxContainer {...popupboxConfig} /> */}
             <UserList>
               <div className="header">
                 {/* <p>Nome</p> */}
@@ -194,10 +256,10 @@ class Usuarios extends Component {
                   <p className="alertmsg">
                     <button
                       type="button"
-                      onClick={this.modifyUser}
-                      className="btn alterar"
+                      onClick={() => this.modifyUser(usuario.uuid)}
+                      className="btn excluir"
                     >
-                      Alterar
+                      Excluir
                     </button>
                   </p>
                 </div>

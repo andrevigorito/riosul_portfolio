@@ -9,6 +9,9 @@ export const UserList = styled.div`
     line-height: 20px;
   }
 
+  .btn.excluir {
+    background-color: #ff5757;
+  }
   .header {
     padding: 10px 20px;
     display: grid;
@@ -128,7 +131,6 @@ export const Box = styled.div`
       }
     }
     .nfs {
-
       margin: 30px 10px 0px 10px;
       input {
         margin-right: 5px;
@@ -168,7 +170,6 @@ export const Box = styled.div`
   @media (max-width: 720px) {
     form {
       .nfs {
-
         margin: 10px 10px 0px 10px;
         display: flex;
         justify-content: space-between;
@@ -188,17 +189,155 @@ export const Box = styled.div`
           height: 40px;
           width: 100%;
         }
-          input[type='email'] {
-            height: 40px;
-            width: 100%;
+        input[type='email'] {
+          height: 40px;
+          width: 100%;
+        }
+        input[type='password'] {
+          height: 40px;
+          width: 100%;
+        }
+        .btn {
+          width: 100%;
+        }
+      }
+    }
+  }
+`;
+
+export const Popup = styled.div`
+  width: 860px;
+  display: flex;
+  h2 {
+    font-size: 22px;
+    margin-bottom: 40px;
+  }
+  .content {
+    width: 70%;
+    background: #fff;
+    padding: 40px 60px;
+  }
+  .wrap-btns {
+    width: 30%;
+    background: #ccc;
+    position: relative;
+    padding: 40px 0;
+    .btnclose {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #4b4e60;
+      color: #fff;
+      cursor: pointer;
+      font-size: 14px;
+    }
+  }
+  .form-just {
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+    input,
+    select,
+    textarea {
+      width: 100%;
+      height: 50px;
+      padding: 0 20px;
+      border: 0;
+      border: solid 1px #c2c2c2;
+      box-sizing: border-box;
+      border-radius: 6px;
+    }
+    textarea {
+      height: 100px;
+      resize: none;
+      outline: none;
+      padding: 20px;
+    }
+    .row {
+      display: grid;
+      margin-bottom: 20px;
+      &.c2 {
+        grid-template-columns: 1fr 1fr;
+        grid-column-gap: 20px;
+      }
+      .item {
+        width: 100%;
+      }
+    }
+    .btn {
+      height: 50px;
+    }
+  }
+  .list-justificativas {
+    .item {
+      border-bottom: solid 1px #292d41;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+      &:last-child {
+        border-bottom: none;
+      }
+      p {
+        font-size: 14px;
+        color: #292d41;
+        line-height: 20px;
+        margin-bottom: 20px;
+      }
+      .user {
+        display: flex;
+        align-items: center;
+        p {
+          font-weight: bold;
+          margin-right: 20px;
+          margin-bottom: 0;
+          &:last-child {
+            margin-right: 0;
           }
-          input[type='password'] {
-            height: 40px;
-            width: 100%;
-            }
-            .btn {
-              width: 100%;
-            }
+        }
+        input[type='checkbox'] {
+          width: 18px;
+          height: 18px;
+          appearance: none;
+          padding: 0;
+          border: solid 2px #dac9c9;
+          background-position: center;
+          cursor: pointer;
+          margin-right: 20px;
+          &:checked {
+            background: url(${imgChecked}) no-repeat center;
+            border: solid 2px #292d41;
+          }
+        }
+      }
+    }
+  }
+
+  .wrap-btns {
+    background: #292d41;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    button {
+      width: 120px;
+      height: 50px;
+      margin-bottom: 10px;
+      transition: all ease 0.1s;
+      &.abonar {
+        margin-bottom: 60px;
+        background: #1ab1bc;
+      }
+      &:hover {
+        background: transparent;
+        border: solid 1px #fff;
+      }
     }
   }
 `;
