@@ -131,7 +131,7 @@ class Usuarios extends Component {
                     <div className="item">
                       <label> &nbsp; </label>
                       <button
-                        type="submit"
+                        type="button"
                         onClick={this.addUser}
                         className="btn"
                       >
