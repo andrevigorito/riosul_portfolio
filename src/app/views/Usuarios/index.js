@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import API from '../../services/api';
+import API from '../../services/api';
 
 // Images
 import iconTitleAlert from '../../img/icons/title-alert.png';
@@ -8,43 +8,33 @@ import iconTitleAlert from '../../img/icons/title-alert.png';
 import Loading from '../components/Loading';
 
 // styles
-import { Box } from './styles';
+import { Box, UserList } from './styles';
 
 class Usuarios extends Component {
   state = {
-    users: [
-      {
-        uuid: '999',
-        nome: 'Teste de Oliveira freitas',
-        email: 'teste@email.com.br',
-        acesso: 'Administrador',
-        data: '05-06-2019',
-      },
-    ],
+    users: [],
     isLoading: false,
-    name: '',
-    email: '',
-    password: '',
+    newusername: '',
+    newpassword: '',
+    newadmin: false,
     addUserForm: false,
   };
 
-  componentDidMount() {
-    // tem que buscar os USUARIOS
-    // this.setState({ isLoading: true });
-    // API.get(`products/alerts`).then(res => {
-    //   const alerts = res.data;
-    //   console.log(alerts);
-    //   this.setState({
-    //     alerts,
-    //     isLoading: false,
-    //   });
-    // });
+  async componentDidMount() {
+    this.loadUserList();
   }
 
   handleChange = field => e => {
     this.setState({
       [field]: e.target.value,
     });
+    // console.log(this.state.newadmin);
+  };
+
+  handleChangeAdmin = () => {
+    this.setState(prevState => ({
+      newadmin: !prevState.newadmin,
+    }));
   };
 
   btnFilter = () => {
@@ -58,16 +48,46 @@ class Usuarios extends Component {
     // btn.classList.toggle('active');
   };
 
-  addUser = () => {
-    alert('cadastrado');
+  addUser = async () => {
+    const { newusername, newpassword, newadmin } = this.state;
+
+    const newUser = await API.post(`users`, {
+      user: {
+        username: newusername,
+        password: newpassword,
+        admin: newadmin,
+      },
+    });
+
+    // console.log(newUser);
+
+    window.location.reload();
   };
 
   modifyUser = () => {
     alert('abrir tela/popup de alteração');
   };
 
+  async loadUserList() {
+    // tem que buscar os USUARIOS
+    this.setState({ isLoading: true });
+    const users = await API.get(`users`);
+    // console.log(users.data);
+    this.setState({
+      users: users.data,
+      isLoading: false,
+    });
+  }
+
   render() {
-    const { isLoading, users, addUserForm } = this.state;
+    const {
+      isLoading,
+      users,
+      addUserForm,
+      newusername,
+      newpassword,
+      newadmin,
+    } = this.state;
     return (
       <div>
         <div className="center">
@@ -93,20 +113,22 @@ class Usuarios extends Component {
                 <Box className={addUserForm && 'active'}>
                   {/* <Box className="active"> */}
                   <form action="">
-                    <div className="item">
+                    {/* <div className="item">
                       <label>Nome:</label>
                       <input
                         type="text"
+                        value={name}
                         onChange={this.handleChange('name')}
                         placeholder="Nome Completo"
                         id="txtname"
                       />
-                    </div>
+                    </div> */}
                     <div className="item">
                       <label>E-mail:</label>
                       <input
                         type="email"
-                        onChange={this.handleChange('email')}
+                        value={newusername}
+                        onChange={this.handleChange('newusername')}
                         placeholder="teste@email.com.br"
                         id="txtemail"
                       />
@@ -116,7 +138,8 @@ class Usuarios extends Component {
                       <label>Senha:</label>
                       <input
                         type="password"
-                        onChange={this.handleChange('password')}
+                        value={newpassword}
+                        onChange={this.handleChange('newpassword')}
                         placeholder="Senha de Acesso"
                         id="txtpassword"
                       />
@@ -124,7 +147,13 @@ class Usuarios extends Component {
 
                     <div className="nfs">
                       <label>
-                        <input type="checkbox" name="" id="checkAdmin" />
+                        <input
+                          type="checkbox"
+                          name=""
+                          value={newadmin}
+                          onChange={this.handleChangeAdmin}
+                          id="checkAdmin"
+                        />
                         Administrador
                       </label>
                     </div>
@@ -143,10 +172,10 @@ class Usuarios extends Component {
               </div>
             </div>
 
-            <div className="list-alerts">
+            <UserList>
               <div className="header">
-                <p>Nome</p>
-                <p>Email</p>
+                {/* <p>Nome</p> */}
+                <p>Usuário</p>
                 <p>Acesso</p>
                 <p>Data Criação</p>
                 <p>Alterar</p>
@@ -154,11 +183,13 @@ class Usuarios extends Component {
               {isLoading && <Loading />}
               {users.map(usuario => (
                 <div className="item" key={usuario.uuid}>
-                  <p className="po">{usuario.nome}</p>
-                  <p className="po ">{usuario.email}</p>
-                  <p className="po">{usuario.acesso}</p>
+                  {/* <p className="po">{usuario.nome}</p> */}
+                  <p className="username">{usuario.username}</p>
+                  <p className="admin">
+                    {usuario.admin ? 'Administrador' : 'Usuário'}
+                  </p>
                   <p className="date">
-                    {new Date(usuario.data).toLocaleDateString()}
+                    {new Date(usuario.createdAt).toLocaleDateString()}
                   </p>
                   <p className="alertmsg">
                     <button
@@ -171,7 +202,7 @@ class Usuarios extends Component {
                   </p>
                 </div>
               ))}
-            </div>
+            </UserList>
           </div>
         </div>
       </div>

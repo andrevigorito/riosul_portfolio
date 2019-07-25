@@ -2,7 +2,49 @@ import styled from 'styled-components';
 
 import imgChecked from '../../img/icons/icon-check.png';
 
-export const Box = styled.form`
+const columnsSize = '2fr 2fr 1.5fr 1fr 1fr';
+export const UserList = styled.div`
+  p {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .header {
+    padding: 10px 20px;
+    display: grid;
+    align-items: center;
+    grid-template-columns: ${columnsSize};
+    grid-row-gap: 10px;
+    grid-column-gap: 10px;
+    @media (max-width: 620px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  .item {
+    background: #f7f7f7;
+    padding: 10px 20px;
+    margin-bottom: 4px;
+    font-size: 14px;
+    display: grid;
+    align-items: center;
+    grid-template-columns: ${columnsSize};
+    grid-row-gap: 10px;
+    grid-column-gap: 10px;
+    @media (max-width: 620px) {
+      grid-template-columns: 1fr;
+    }
+    .date {
+      &.altered {
+        color: red;
+      }
+      &.current {
+        color: #666;
+      }
+    }
+  }
+`;
+
+export const Box = styled.div`
   padding: 20px;
   background: #fff;
   border-radius: 6px;
