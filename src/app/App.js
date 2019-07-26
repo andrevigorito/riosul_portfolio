@@ -110,12 +110,6 @@ class App extends Component {
                 empresa=""
               />
               <Header />
-              <button type="button" onClick={this.notify}>
-                Notify !
-              </button>
-              <button type="button" onClick={this.notifySucess}>
-                Agora vai !
-              </button>
               <ToastContainer hideProgressBar autoClose={false} />
             </div>
           ) : null}

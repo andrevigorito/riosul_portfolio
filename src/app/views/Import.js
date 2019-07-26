@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import XLSX from 'xlsx';
 import io from 'socket.io-client';
-import { FilePicker } from 'react-file-picker';
 import { toast } from 'react-toastify';
 import API from '../services/api';
 
@@ -117,16 +116,7 @@ class Import extends Component {
               </Fragment>
             ) : (
               <Fragment>
-                <FilePicker
-                  extensions={['xlsx', 'xls']}
-                  onChange={fileObject => this.handleImportAtl(fileObject)}
-                  onError={errMsg =>
-                    this.notifyError('O arquivo não é uma planilha excel!')
-                  }
-                  style={{ marginBottom: 20 }}
-                >
-                  <button
-                    style={{
+                <input style={{
                       borderRadius: 6,
                       background: '#1ABC9C',
                       // padding: 10px 20px,
@@ -136,12 +126,9 @@ class Import extends Component {
                       paddingRight: 20,
                       fontSize: 14,
                       color: '#fff',
-                    }}
-                  >
-                    SELECIONE A PLANILHA ATL
-                  </button>
-                </FilePicker>
-
+                    }} type="file" onChange={ (event) => this.handleImportAtl(event.target.files)}
+                />
+             
                 <DragAndDrop
                   handleDrop={this.handleImportAtl}
                   style={{ marginTop: 10 }}
