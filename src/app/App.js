@@ -128,7 +128,7 @@ class App extends Component {
             <Route path="/operacional" exact component={Operacional} />
           )}
 
-          {isAuth && <Route path="/" exact component={Operacional} />}
+          {isAuth && <Route path="/" exact component={ProductContainer} />}
         </BrowserRouter>
       </div>
     );
