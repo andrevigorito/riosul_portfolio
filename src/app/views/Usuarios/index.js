@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 // import { PopupboxManager, PopupboxContainer } from 'react-popupbox';
 import swal from '@sweetalert/with-react';
 
@@ -8,7 +9,7 @@ import API from '../../services/api';
 import Loading from '../components/Loading';
 
 // styles
-import { Box, UserList } from './styles';
+import { Box, UserList, BtnCadastrar} from './styles';
 // import { Box, UserList, Popup } from './styles';
 
 class Usuarios extends Component {
@@ -158,14 +159,11 @@ class Usuarios extends Component {
           <div className="page-header">
             <h1>Usuários</h1>
             <div className="last-wrap">
-              <div className="btn-filter-nfs" onClick={this.btnFilter}>
-                <div className="icon-filter">
-                  <span />
-                  <span />
-                  <span />
-                </div>
+            <Link onClick={this.btnMenu} to="/usuarios/novo">
+              <BtnCadastrar>
                 Adicionar usuário
-              </div>
+              </BtnCadastrar>
+            </Link>
             </div>
           </div>
           <div>

@@ -42,7 +42,7 @@ html {
   article, aside, dialog, figure, footer, header, hgroup, nav, section, div {
     display: block;
   }
-  button, input[type="submit"], input[type="text"], select, {
+  button, input, input, select, {
 
 
     outline: none;
@@ -70,11 +70,11 @@ html {
   table, th, td {
     vertical-align: middle;
   }
-  
+
   blockquote before, blockquote after, q before, q after {
     content: '';
   }
-  
+
   a img {
     border: none;
   }
@@ -92,19 +92,19 @@ html {
     clear: both;
     display: block;
   }
-  
+
   .error {
     color: #9a0000 !important;
   }
-  
- 
-  
+
+
+
   @media print {
     body {
       font-size: 9px;
     }
   }
-  
+
 
 html{
   height: 100%;
