@@ -15,6 +15,7 @@ import Alertas from './views/Alertas';
 import Usuarios from './views/Usuarios';
 import NovoUsuario from './views/Usuarios/new';
 import Operacional from './views/Operacional';
+import Transit from './views/Transit';
 
 // Components
 import Menu from './views/components/Menu';
@@ -126,6 +127,7 @@ class App extends Component {
           {isAuth && <Route path="/alertas" exact component={Alertas} />}
           {isAuth && <Route path="/usuarios" exact component={Usuarios} />}
           {isAuth && <Route path="/usuarios/novo" exact component={NovoUsuario} />}
+          {isAuth && <Route path="/transit" exact component={Transit} />}
           {isAuth && (
             <Route path="/operacional" exact component={Operacional} />
           )}
