@@ -10,7 +10,7 @@
             .first{
                 display: flex;
                 padding-left: 40px;
-                
+
                 p{
                     text-align: left;
                     &:first-child{
@@ -56,7 +56,7 @@
                 box-shadow: 1px 10px 10px rgba($color: #000000, $alpha: 0.1)
             }
             .main-info{
-                
+
                 width: 140px;
                 text-align: left;
                 padding-right: 20px;
@@ -80,8 +80,8 @@
                 }
             }
             .info{
-                display: flex;
-                justify-content: space-between;
+                display: grid;
+                grid-template-columns: 7fr 1fr;
                 align-items: center;
                 width: calc(100% - 160px);
                 padding-left: 40px;
@@ -97,7 +97,7 @@
                     flex-direction: column;
                     justify-content: space-between;
                     margin: 10px 30px 10px 0;
-                    
+
                     &:last-child{
                         margin-right: 0;
                     }
@@ -131,7 +131,7 @@
                   flex-direction: column;
                   justify-content: space-between;
                   margin: 10px 30px 10px 0;
-                  
+
                   &:last-child{
                       margin-right: 0;
                   }
@@ -219,7 +219,7 @@
                 &:nth-child(2){
                     strong{
                         font-size: 22px;
-                        
+
                     }
                 }
                 &.emp{
@@ -265,7 +265,7 @@
                 display: flex;
                 align-items: center;
                 flex-wrap: wrap;
-                
+
             }
             .tit{
                 display: flex;
@@ -283,7 +283,7 @@
                 flex-direction: column;
                 justify-content: space-between;
                 margin: 10px 30px 10px 0;
-                
+
                 &:last-child{
                     margin-right: 0;
                 }
@@ -336,7 +336,7 @@
                 display: flex;
                 width: 100%;
                 margin-bottom: 20px;
-                
+
                 .w60{
                     width: 60%;
                     box-sizing: border-box;
@@ -360,7 +360,7 @@
                     background: url('http://webcol.systems/corteva/inbound/comex/img/icons/icon-po.png')#fff no-repeat 20px center;
                     box-shadow: 1px 7px 0px 0px rgba($color: #000000, $alpha: 0.1);
                 }
-                
+
                 .w60{
                     width: 60%;
                     box-sizing: border-box;
@@ -438,7 +438,7 @@
                                 color: #8B8D97;
                             }
                         }
-                       
+
                     }
                     .boll{
                         width: 20px;
@@ -460,7 +460,7 @@
                         border-radius: 6px;
                         display: flex;
                         align-items: flex-start;
-                        padding: 20px; 
+                        padding: 20px;
                         flex: 1;
                         margin-left: 20px;
                         position: relative;
@@ -485,7 +485,7 @@
                             font-size: 14px;
                             color: #292D41;
                             &.user{
-                                
+
                                 color: #707385;
                                 margin-bottom: 10px;
                             }
@@ -563,15 +563,15 @@
                     }
                 }
             }
-            
+
         }
         .panel {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.3s ease-out;
-            
+
         }
-        
+
     }
 
     .alterada{
