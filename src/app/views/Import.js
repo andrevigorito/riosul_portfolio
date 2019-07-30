@@ -1,3 +1,4 @@
+/* eslint no-nested-ternary: "off" */
 import React, { Component, Fragment } from 'react';
 import XLSX from 'xlsx';
 import io from 'socket.io-client';
@@ -100,17 +101,17 @@ class Import extends Component {
             </h1>
           </div>
           <center>
-            {this.state.isConverting ? (
+            {isConverting ? (
               <Fragment>
                 <Loading />
                 <h2>CONVERTENDO PLANILHA EXCEL...</h2>
               </Fragment>
-            ) : this.state.isSending ? (
+            ) : isSending ? (
               <Fragment>
                 <Loading />
                 <h2>ENVIANDO DADOS PARA O SERVIDOR...</h2>
               </Fragment>
-            ) : this.state.isWaiting ? (
+            ) : isWaiting ? (
               <Fragment>
                 <Loading />
                 <h2>ENVIADO COM SUCESSO! AGUARDANDO RESPOSTA DO SERVIDOR...</h2>
