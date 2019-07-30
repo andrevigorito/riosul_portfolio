@@ -43,7 +43,7 @@ class List extends Component {
               <header className="headerlist">
                 <div className="first">
                   <p>ID / Produto</p>
-                  <p>GR Atual</p>
+                  <p>GR Programado</p>
                 </div>
                 <div className="last">
                   <p>
@@ -77,7 +77,7 @@ class List extends Component {
                       {product.items.map(po => (
                         <div
                           className={po.alert ? 'item-gra alert' : 'item-gra'}
-                          // key={po.uuid}
+                          key={po.uuid}
                         >
                           <p>
                             <img src={iconRgc} alt="" />{' '}
