@@ -28,26 +28,7 @@ class Import extends Component {
     this.unregisterToSocket();
   }
 
-  handleImportAtl = async file => {
-    this.setState({ isConverting: true });
-    const workbook = await this.getWorkbookFromFile(file[0] ? file[0] : file);
-    const first_worksheet = workbook.Sheets[workbook.SheetNames[0]];
-    const data = await XLSX.utils.sheet_to_json(first_worksheet, { header: 0 });
-    this.setState({ isConverting: false });
-    this.sendImportATL(data);
-  };
-
-  sendImportATL(data) {
-    this.setState({ isSending: true });
-    API.post(`products`, data, {
-      headers: { 'Content-Type': 'application/json' },
-    }).then(res => {
-      this.setState({ isSending: false, isWaiting: true });
-      this.notifyWarn('IMPORTAÇÃO ATL ENVIADA! AGUARDANDO CONCLUSÃO!');
-    });
-  }
-
-  async getWorkbookFromFile(excelFile) {
+  static getWorkbookFromFile(excelFile) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = event => {
@@ -56,6 +37,25 @@ class Import extends Component {
         resolve(workbook);
       };
       reader.readAsBinaryString(excelFile);
+    });
+  }
+
+  handleImportAtl = async file => {
+    this.setState({ isConverting: true });
+    const workbook = await this.getWorkbookFromFile(file[0] ? file[0] : file);
+    const firstWorksheet = workbook.Sheets[workbook.SheetNames[0]];
+    const data = await XLSX.utils.sheet_to_json(firstWorksheet, { header: 0 });
+    this.setState({ isConverting: false });
+    this.sendImportATL(data);
+  };
+
+  sendImportATL(data) {
+    this.setState({ isSending: true });
+    API.post(`products`, data, {
+      headers: { 'Content-Type': 'application/json' },
+    }).then(() => {
+      this.setState({ isSending: false, isWaiting: true });
+      this.notifyWarn('IMPORTAÇÃO ATL ENVIADA! AGUARDANDO CONCLUSÃO!');
     });
   }
 
@@ -89,6 +89,7 @@ class Import extends Component {
   };
 
   render() {
+    const { isConverting, isSending, isWaiting } = this.state;
     return (
       <div>
         <div className="center">
@@ -116,19 +117,22 @@ class Import extends Component {
               </Fragment>
             ) : (
               <Fragment>
-                <input style={{
-                      borderRadius: 6,
-                      background: '#1ABC9C',
-                      // padding: 10px 20px,
-                      paddingTop: 10,
-                      paddingBottom: 10,
-                      paddingLeft: 20,
-                      paddingRight: 20,
-                      fontSize: 14,
-                      color: '#fff',
-                    }} type="file" onChange={ (event) => this.handleImportAtl(event.target.files)}
+                <input
+                  style={{
+                    borderRadius: 6,
+                    background: '#1ABC9C',
+                    // padding: 10px 20px,
+                    paddingTop: 10,
+                    paddingBottom: 10,
+                    paddingLeft: 20,
+                    paddingRight: 20,
+                    fontSize: 14,
+                    color: '#fff',
+                  }}
+                  type="file"
+                  onChange={event => this.handleImportAtl(event.target.files)}
                 />
-             
+
                 <DragAndDrop
                   handleDrop={this.handleImportAtl}
                   style={{ marginTop: 10 }}

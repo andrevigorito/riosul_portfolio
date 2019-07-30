@@ -125,7 +125,9 @@ class App extends Component {
           {isAuth && <Route path="/import" exact component={Import} />}
           {isAuth && <Route path="/alertas" exact component={Alertas} />}
           {isAuth && <Route path="/usuarios" exact component={Usuarios} />}
-          {isAuth && <Route path="/usuarios/novo" exact component={NovoUsuario} />}
+          {isAuth && (
+            <Route path="/usuarios/novo" exact component={NovoUsuario} />
+          )}
           {isAuth && (
             <Route path="/operacional" exact component={Operacional} />
           )}
