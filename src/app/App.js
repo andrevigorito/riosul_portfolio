@@ -15,6 +15,9 @@ import Alertas from './views/Alertas';
 import Usuarios from './views/Usuarios';
 import NovoUsuario from './views/Usuarios/new';
 import Operacional from './views/Operacional';
+import AddTransitTime from './views/AddTransit';
+import EditTransitTime from './views/EditTransit';
+import TransitTimeList from './views/TransitTimeList';
 
 // Components
 import Menu from './views/components/Menu';
@@ -27,7 +30,7 @@ import './css/main.scss';
 
 class App extends Component {
   state = {
-    isAuth: false,
+    isAuth: true,
     username: '',
   };
 
@@ -94,43 +97,63 @@ class App extends Component {
     return (
       <div className="App">
         <BrowserRouter>
-          {!isAuth && (
-            <Route
-              path="*"
-              render={props => (
-                <Login {...props} handleLogin={this.handleLogin} />
-              )}
-            />
-          )}
-
-          {isAuth ? (
-            <div>
-              <Menu
-                onLogout={this.handleLogout}
-                username={username}
-                empresa=""
+            {!isAuth && (
+              <Route
+                path="*"
+                render={props => (
+                  <Login {...props} handleLogin={this.handleLogin} />
+                )}
               />
-              <Header />
-              <ToastContainer hideProgressBar autoClose={false} />
-            </div>
-          ) : null}
+            )}
 
-          {isAuth && (
-            <Route path="/gerencial/:uuid" exact component={Detalhe} />
-          )}
-          {isAuth && (
-            <Route path="/gerencial" exact component={ProductContainer} />
-          )}
-          {isAuth && <Route path="/dashboard" exact component={Dashboard} />}
-          {isAuth && <Route path="/import" exact component={Import} />}
-          {isAuth && <Route path="/alertas" exact component={Alertas} />}
-          {isAuth && <Route path="/usuarios" exact component={Usuarios} />}
-          {isAuth && <Route path="/usuarios/novo" exact component={NovoUsuario} />}
-          {isAuth && (
-            <Route path="/operacional" exact component={Operacional} />
-          )}
+            {isAuth ? (
+              <div>
+                <Menu
+                  onLogout={this.handleLogout}
+                  username={username}
+                  empresa=""
+                />
+                <Header />
+                <ToastContainer hideProgressBar autoClose={false} />
+              </div>
+            ) : null}
 
-          {isAuth && <Route path="/" exact component={ProductContainer} />}
+            {isAuth && (
+              <Route path="/gerencial/:uuid" exact component={Detalhe} />
+            )}
+            {isAuth && (
+              <Route path="/gerencial" exact component={ProductContainer} />
+            )}
+            {isAuth && <Route path="/dashboard" exact component={Dashboard} />}
+            {isAuth && <Route path="/import" exact component={Import} />}
+            {isAuth && <Route path="/alertas" exact component={Alertas} />}
+            {isAuth && <Route path="/usuarios" exact component={Usuarios} />}
+            {isAuth && (
+              <Route path="/usuarios/novo" exact component={NovoUsuario} />
+            )}
+            {isAuth && (
+              <Route path="/transit" exact component={TransitTimeList} />
+            )}
+            {isAuth && (
+              <Route
+                path="/novo/transit/"
+                exact
+                component={AddTransitTime}
+              />
+            )}
+            {isAuth && (
+              <Route
+                path="/transit/:uuid"
+                exact
+                component={EditTransitTime}
+                isPrivate
+              />
+            )}
+            {isAuth && (
+              <Route path="/operacional" exact component={Operacional} />
+            )}
+
+            {isAuth && <Route path="/" exact component={ProductContainer} />}
         </BrowserRouter>
       </div>
     );
