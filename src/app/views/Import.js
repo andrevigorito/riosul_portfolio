@@ -1,7 +1,6 @@
 /* eslint no-nested-ternary: "off" */
 import React, { Component, Fragment } from 'react';
 import XLSX from 'xlsx';
-import io from 'socket.io-client';
 import { toast } from 'react-toastify';
 import API from '../services/api';
 
@@ -12,22 +11,12 @@ import iconTitleDash from '../img/icons/title-dash.png';
 import Loading from './components/Loading';
 import DragAndDrop from './components/DragAndDrop';
 
-const socket = io('https://toniato.herokuapp.com');
-
 class Import extends Component {
   state = {
     isConverting: false,
     isSending: false,
     isWaiting: false,
   };
-
-  componentDidMount() {
-    this.registerToSocket();
-  }
-
-  componentWillUnmount() {
-    this.unregisterToSocket();
-  }
 
   async getWorkbookFromFile(excelFile) {
     return new Promise((resolve, reject) => {
@@ -60,16 +49,6 @@ class Import extends Component {
     });
   }
 
-  registerToSocket = () => {
-    socket.on('productsImport', () => {
-      this.setState({ isWaiting: false });
-      this.notifySucess('IMPORTAÇÃO ATL CONCLUÍDA!');
-    });
-  };
-
-  unregisterToSocket = () => {
-    socket.removeListener('productsImport');
-  };
 
   notifySucess = msg => {
     toast.success(msg, {
