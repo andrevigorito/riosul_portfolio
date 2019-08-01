@@ -367,10 +367,10 @@ class Operacional extends Component {
                   </p>
                   <div className="status alert">
                     <p>{ope.status}</p>{' '}
-                    <div
+                    {/* <div
                       onClick={this.openPopupbox}
                       className="icon-justificativa"
-                    />
+                    /> */}
                   </div>
                 </div>
               </Link>

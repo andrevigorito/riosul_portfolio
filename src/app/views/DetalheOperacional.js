@@ -109,7 +109,6 @@ class DetalheOperacional extends Component {
                           <div className="infouser">
                             <img src={iconUser} alt="" />
                             <div className="info">
-                              <p className="user">Roberta Beltran</p>
                               <p>{deop.last_historic}</p>
                             </div>
                           </div>
