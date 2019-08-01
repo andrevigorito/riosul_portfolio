@@ -3,6 +3,7 @@ import React, { Component, Fragment } from 'react';
 import XLSX from 'xlsx';
 import { toast } from 'react-toastify';
 import API from '../services/api';
+import io from 'socket.io-client';
 
 // Images
 import iconTitleDash from '../img/icons/title-dash.png';
@@ -11,11 +12,35 @@ import iconTitleDash from '../img/icons/title-dash.png';
 import Loading from './components/Loading';
 import DragAndDrop from './components/DragAndDrop';
 
+const socket = io('https://webcol.herokuapp.com');
+
 class Import extends Component {
   state = {
     isConverting: false,
     isSending: false,
     isWaiting: false,
+  };
+  
+  componentDidMount(){
+    this.registerToSocket();
+  }
+  
+  componentWillUnmount(){
+    this.unregisterToSocket();
+  }
+  
+  registerToSocket = () => {
+   
+
+    socket.on('productsImport', () => {
+      // console.log('poItemAlert do WebSocket...', newAlert);
+      this.notifySucessText('Importação ATL concluída!');
+    });
+    
+  };
+
+  unregisterToSocket = () => {
+    socket.removeListener('productsImport');
   };
 
   async getWorkbookFromFile(excelFile) {
