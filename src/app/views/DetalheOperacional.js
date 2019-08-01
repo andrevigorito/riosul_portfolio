@@ -6,8 +6,7 @@ import API from '../services/api';
 import Loading from './components/Loading';
 
 // Images
-
-import iconTitleDash from '../img/icons/title-dash.png';
+import iconOperacional from '../img/icons/title-ope.png';
 import iconUser from '../img/user-header.png';
 import iconRemetente from '../img/icons/icon-nf-remetente.png';
 import iconMap from '../img/icons/icon-nf-map.png';
@@ -44,7 +43,7 @@ class DetalheOperacional extends Component {
         <div className="center">
           <div className="page-header">
             <h1>
-              <img src={iconTitleDash} alt="" />
+              <img src={iconOperacional} alt="" />
               Operacional
             </h1>
             <div className="last-wrap">
