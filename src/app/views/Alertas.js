@@ -42,8 +42,8 @@ class Alertas extends Component {
   };
 
   render() {
-    const { useruuid } = this.props;
-    console.log(`prop useruuid -> ${useruuid}`);
+    // const { useruuid } = this.props;
+    // console.log(`prop useruuid -> ${useruuid}`);
 
     const { isLoading, alerts } = this.state;
     return (

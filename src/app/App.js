@@ -91,25 +91,11 @@ class App extends Component {
     socket.removeListener('productsImport');
   };
 
-  showUnreadAlerts = async () => {
-    const useruuid = this.getUserUuidFromState();
-    const alerts = await API.get(`alerts/user/unread/${useruuid}`);
-    alerts.forEach(alert => {
-      this.notifySucess(alert);
-    });
-  };
-
-  notifyError = () => {
-    toast.error('PO Alterada cod: 0002213', {
-      position: toast.POSITION.BOTTOM_RIGHT,
-    });
-  };
-
   notifySucess = alertObj => {
     toast.success(alertObj.message, {
       position: toast.POSITION.BOTTOM_RIGHT,
       // alterar
-      onClose: () => this.markAlertAsRead(alertObj),
+      onClick: () => this.markAlertAsRead(alertObj),
     });
   };
 
@@ -121,11 +107,11 @@ class App extends Component {
 
   markAlertAsRead = async alertObj => {
     const useruuid = this.getUserUuidFromState();
-    const teste = await API.put(`alerts/read/`, {
+    await API.put(`alerts/read/`, {
       useruuid,
       alertuuid: alertObj.uuid,
     });
-    console.log(teste);
+    // console.log(teste);
   };
 
   handleLogin = async (email, passwd, lembrar = false) => {
@@ -136,17 +122,18 @@ class App extends Component {
         { headers: { 'Content-Type': 'application/json' } }
       );
 
+      if (lembrar) {
+        this.saveLocalStorage(email, logado.data.uuid);
+      }
+
       this.setState({
         isAuth: true,
         username: email,
         useruuid: logado.data.uuid,
       });
-
-      if (lembrar) {
-        this.saveLocalStorage(email, logado.data.uuid);
-      }
+      // console.log('logado.data', logado.data);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       return err.response.status;
     }
     return true;
