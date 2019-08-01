@@ -223,8 +223,7 @@ class Operacional extends Component {
       isLoading,
       operacionalFiltrada,
       filtroAtivo,
-      startDate,
-      endDate,
+      grEfetivo,
       ataDateIncio,
       grProgramado,
     } = this.state;
@@ -294,7 +293,6 @@ class Operacional extends Component {
                   selectsStart
                   onChange={this.handleChangeGrProgramado}
                   startDate={grProgramado}
-                  endDate={endDate}
                   dateFormat="dd/MM/yyyy"
                 />
               </div>
@@ -303,13 +301,12 @@ class Operacional extends Component {
 
                 <DatePicker
                   locale="pt-BR"
-                  selected={endDate}
+                  selected={grEfetivo}
                   selectsEnd
                   onChange={this.handleChangeGrEfetivo}
-                  startDate={startDate}
-                  endDate={endDate}
+                  startDate={grEfetivo}
                   dateFormat="dd/MM/yyyy"
-                  minDate={startDate}
+
                 />
               </div>
 
