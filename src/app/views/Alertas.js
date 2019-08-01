@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import API from '../services/api';
 
 // Images
@@ -9,20 +10,27 @@ import Loading from './components/Loading';
 import FilterAlert from './components/FilterAlert';
 
 class Alertas extends Component {
+  static propTypes = {
+    useruuid: PropTypes.string.isRequired,
+  };
+
   state = {
     alerts: [],
     isLoading: false,
   };
 
-  componentDidMount() {
+  async componentDidMount() {
+    const { useruuid } = this.props;
+    // console.log(`prop useruuid -> ${this.props}`);
+
+    // const useruuid = '12430f8a-e492-4efb-a8cd-bb2b2784567c';
     this.setState({ isLoading: true });
-    API.get(`products/alerts`).then(res => {
-      const alerts = res.data;
-      console.log(alerts);
-      this.setState({
-        alerts,
-        isLoading: false,
-      });
+    const res = await API.get(`alerts/user/all/${useruuid}`);
+    console.log(res);
+
+    this.setState({
+      alerts: res.data,
+      isLoading: false,
     });
   }
 
@@ -34,6 +42,9 @@ class Alertas extends Component {
   };
 
   render() {
+    const { useruuid } = this.props;
+    console.log(`prop useruuid -> ${useruuid}`);
+
     const { isLoading, alerts } = this.state;
     return (
       <div>
@@ -59,28 +70,28 @@ class Alertas extends Component {
 
           <div className="list-alerts">
             <div className="header">
-              <p>Data</p>
-              <p>PO / Linha</p>
-              <p>GR Inicial</p>
-              <p>GR Atual</p>
-              <p>Mensagem do Alerta</p>
+              <p>Data Alerta</p>
+              <p>Mensagem</p>
+              <p>Lido</p>
+              <p>Data Leitura</p>
             </div>
             {isLoading && <Loading />}
             {alerts.map(alerta => (
               <div className="item" key={alerta.uuid}>
-                <p className="date current ">
-                  {new Date(alerta.last_update).toLocaleDateString()}
+                <p className="date current">
+                  {new Date(alerta.createdAt).toLocaleDateString()}
                 </p>
+                <p className="po">{alerta.message}</p>
                 <p className="po">
-                  {alerta.po.order_reference} / {alerta.item}
+                  {alerta.userAlerts[0].read ? 'Sim' : 'Não'}
                 </p>
-                <p className="date ">
-                  {new Date(alerta.gr_requested_date).toLocaleDateString()}
+                <p className="altered date">
+                  {alerta.userAlerts[0].read
+                    ? new Date(
+                        alerta.userAlerts[0].updatedAt
+                      ).toLocaleDateString()
+                    : ''}
                 </p>
-                <p className="altered date ">
-                  {new Date(alerta.eta_date).toLocaleDateString()}
-                </p>
-                <p className="alertmsg">{alerta.alertMsg}</p>
               </div>
             ))}
           </div>
