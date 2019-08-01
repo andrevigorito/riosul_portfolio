@@ -1,9 +1,8 @@
-/* eslint no-nested-ternary: "off" */
 import React, { Component, Fragment } from 'react';
 import XLSX from 'xlsx';
+import io from 'socket.io-client';
 import { toast } from 'react-toastify';
 import API from '../services/api';
-import io from 'socket.io-client';
 
 // Images
 import iconTitleDash from '../img/icons/title-dash.png';
@@ -21,6 +20,33 @@ class Import extends Component {
     isWaiting: false,
   };
 
+  componentDidMount() {
+    this.registerToSocket();
+  }
+
+  componentWillUnmount() {
+    this.unregisterToSocket();
+  }
+
+  handleImportAtl = async file => {
+    this.setState({ isConverting: true });
+    const workbook = await this.getWorkbookFromFile(file[0] ? file[0] : file);
+    const first_worksheet = workbook.Sheets[workbook.SheetNames[0]];
+    const data = await XLSX.utils.sheet_to_json(first_worksheet, { header: 0 });
+    this.setState({ isConverting: false });
+    this.sendImportATL(data);
+  };
+
+  sendImportATL(data) {
+    this.setState({ isSending: true });
+    API.post(`products`, data, {
+      headers: { 'Content-Type': 'application/json' },
+    }).then(res => {
+      this.setState({ isSending: false, isWaiting: true });
+      this.notifyWarn('IMPORTAÇÃO ATL ENVIADA! AGUARDANDO CONCLUSÃO!');
+    });
+  }
+
   async getWorkbookFromFile(excelFile) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -33,25 +59,16 @@ class Import extends Component {
     });
   }
 
-  handleImportAtl = async file => {
-    this.setState({ isConverting: true });
-    const workbook = await this.getWorkbookFromFile(file[0] ? file[0] : file);
-    const firstWorksheet = workbook.Sheets[workbook.SheetNames[0]];
-    const data = await XLSX.utils.sheet_to_json(firstWorksheet, { header: 0 });
-    this.setState({ isConverting: false });
-    this.sendImportATL(data);
+  registerToSocket = () => {
+    socket.on('productsImport', () => {
+      this.setState({ isWaiting: false });
+      this.notifySucess('IMPORTAÇÃO ATL CONCLUÍDA!');
+    });
   };
 
-  sendImportATL(data) {
-    this.setState({ isSending: true });
-    API.post(`products`, data, {
-      headers: { 'Content-Type': 'application/json' },
-    }).then(() => {
-      this.setState({ isSending: false, isWaiting: true });
-      this.notifyWarn('IMPORTAÇÃO ATL ENVIADA! AGUARDANDO CONCLUSÃO!');
-    });
-  }
-
+  unregisterToSocket = () => {
+    socket.removeListener('productsImport');
+  };
 
   notifySucess = msg => {
     toast.success(msg, {
@@ -72,7 +89,6 @@ class Import extends Component {
   };
 
   render() {
-    const { isConverting, isSending, isWaiting } = this.state;
     return (
       <div>
         <div className="center">
@@ -83,39 +99,36 @@ class Import extends Component {
             </h1>
           </div>
           <center>
-            {isConverting ? (
+            {this.state.isConverting ? (
               <Fragment>
                 <Loading />
                 <h2>CONVERTENDO PLANILHA EXCEL...</h2>
               </Fragment>
-            ) : isSending ? (
+            ) : this.state.isSending ? (
               <Fragment>
                 <Loading />
                 <h2>ENVIANDO DADOS PARA O SERVIDOR...</h2>
               </Fragment>
-            ) : isWaiting ? (
+            ) : this.state.isWaiting ? (
               <Fragment>
                 <Loading />
                 <h2>ENVIADO COM SUCESSO! AGUARDANDO RESPOSTA DO SERVIDOR...</h2>
               </Fragment>
             ) : (
               <Fragment>
-                <input
-                  style={{
-                    borderRadius: 6,
-                    background: '#1ABC9C',
-                    // padding: 10px 20px,
-                    paddingTop: 10,
-                    paddingBottom: 10,
-                    paddingLeft: 20,
-                    paddingRight: 20,
-                    fontSize: 14,
-                    color: '#fff',
-                  }}
-                  type="file"
-                  onChange={event => this.handleImportAtl(event.target.files)}
+                <input style={{
+                      borderRadius: 6,
+                      background: '#1ABC9C',
+                      // padding: 10px 20px,
+                      paddingTop: 10,
+                      paddingBottom: 10,
+                      paddingLeft: 20,
+                      paddingRight: 20,
+                      fontSize: 14,
+                      color: '#fff',
+                    }} type="file" onChange={ (event) => this.handleImportAtl(event.target.files)}
                 />
-
+             
                 <DragAndDrop
                   handleDrop={this.handleImportAtl}
                   style={{ marginTop: 10 }}
