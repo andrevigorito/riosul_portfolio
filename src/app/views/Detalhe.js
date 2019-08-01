@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 // Images
-import iconRgc from '../img/icons/rg-c.png';
-import iconRgp from '../img/icons/rg-p.png';
-import iconTotal from '../img/icons/total.png';
+
 import iconTitleDash from '../img/icons/title-dash.png';
 import iconUser from '../img/user-header.png';
 import iconRemetente from '../img/icons/icon-nf-remetente.png';
@@ -27,13 +25,13 @@ class Detalhe extends Component {
 
     for (i = 0; i < acc.length; i++) {
       acc[i].addEventListener("click", function() {
-          this.classList.toggle("active");
-          let panel = this.nextElementSibling;
-          if (panel.style.maxHeight){
-          panel.style.maxHeight = null;
-          } else {
-          panel.style.maxHeight = panel.scrollHeight + "px";
-          } 
+        this.classList.toggle("active");
+        let panel = this.nextElementSibling;
+        if (panel.style.maxHeight){
+        panel.style.maxHeight = null;
+        } else {
+        panel.style.maxHeight = panel.scrollHeight + "px";
+        }
       });
     }
   }
@@ -41,15 +39,15 @@ class Detalhe extends Component {
   render() {
     const { onRemoveProduct, product } = this.props;
 
-    let total = 0;
+    // let total = 0;
 
-    const adicionaTotal = valor => {
-      total += valor;
-    };
+    // const adicionaTotal = valor => {
+    //   total += valor;
+    // };
 
-    const zeraTotal = () => {
-      total = 0;
-    };
+    // const zeraTotal = () => {
+    //   total = 0;
+    // };
 
     return (
       <div>
@@ -83,61 +81,23 @@ class Detalhe extends Component {
                 </div>
               </header>
 
-              <div className="boxgra">
-                <div className="first">
-                  <div className="tit">
-                    <img src={iconTitleDash} alt="" />
-                    <p>GR Atual</p>
-                  </div>
-
-                  {product.pos.map(po => (
-                    <div
-                      className={po.alert ? 'item-gra alert' : 'item-gra'}
-                      key={po.uuid}
-                    >
-                      <p>
-                        <img src={iconRgc} alt="" /> {po.order_reference}
-                      </p>
-                      <p>
-                        <img src={iconRgp} alt="" />{' '}
-                        {po.po_items
-                          .reduce((total, obj) => obj.qty + total, 0)
-                          .toLocaleString()}
-                      </p>
-                      {adicionaTotal(
-                        po.po_items.reduce((total, obj) => obj.qty + total, 0)
-                      )}
-                    </div>
-                  ))}
-                </div>
-                <div className="total">
-                  <img src={iconTotal} alt="" />
-                  <p>
-                    Total: <strong>{total.toLocaleString()}</strong>
-                  </p>
-                  {zeraTotal}
-                </div>
-              </div>
-
               <div className="list-po">
                 <div className="header">
-                  <p className="w60">PO</p>
-                  <p className="w20">Qtd.</p>
-                  <p className="w20">Valor</p>
+                  <p>PO</p>
+                  <p>Item</p>
+                  <p>GR Programado</p>
+                  <p>Qtd.</p>
+                  <p>Valor</p>
                 </div>
 
                 {product.pos.map(po => (
                   <div key={po.uuid}>
                     <div className="item accordion">
-                      <p className="w60">{po.order_reference}</p>
-                      <p className="w20">
-                        {po.po_items.reduce((total, obj) => obj.qty + total, 0)}
-                      </p>
-                      <p className="w20">
-                        {po.po_items.reduce(
-                          (total, obj) => obj.invoice_value + total,
-                          0
-                        )}
+                      <p>{po.order_reference}</p>
+                      <p>{po.po_items.item}</p>
+                      <p>{new Date(po.po_items.gr_actual).toLocaleDateString()}</p>
+                      <p>{po.po_items.qty}</p>
+                      <p>{po.po_items.reduce((total, obj) => obj.invoice_value + total, 0)}
                       </p>
                     </div>
 
@@ -146,15 +106,8 @@ class Detalhe extends Component {
                         <div className="content-po " key={accordion.uuid}>
                           <header>
                             <div className="gra">
-                              <p>GR Atual</p>
-                              <p>
-                                {' '}
-                                {accordion.gr_requested_date
-                                  ? new Date(
-                                      accordion.gr_requested_date
-                                    ).toLocaleDateString()
-                                  : '-'}
-                              </p>
+                              <p>Modal:</p>
+                              <p>{accordion.modal}</p>
                             </div>
                             <div className="historico">
                               <div className="hist-tit">
@@ -183,42 +136,32 @@ class Detalhe extends Component {
                             <div className="box">
                               <div className="icon">
                                 <img src={iconRemetente} alt="" />
+                                <p>Remetente</p>
                               </div>
                               <div className="info">
                                 <div className="row">
-                                  <p>Item:</p>
-                                  <p>{accordion.item}</p>
+                                  <p>Razão Social:</p>
+                                  <p>{accordion.shipper}</p>
                                 </div>
                                 <div className="row">
-                                  <p>QTD. Produto:</p>
-                                  <p>{accordion.qty}</p>
-                                </div>
-                                <div className="row">
-                                  <p>QTD. Container:</p>
-                                  <p>{accordion.container_qty}</p>
-                                </div>
-                                <div className="row">
-                                  <p>Peso:</p>
-                                  <p>{accordion.net_weight_kg} KG</p>
+                                  <p>Origem:</p>
+                                  <p>{accordion.shipper_address}</p>
                                 </div>
                               </div>
                             </div>
                             <div className="box">
                               <div className="icon">
                                 <img src={iconMap} alt="" />
+                                <p>Destinatário</p>
                               </div>
                               <div className="info">
                                 <div className="row">
-                                  <p>Origem:</p>
+                                  <p>Razão Social:</p>
                                   <p>{accordion.origin}</p>
                                 </div>
                                 <div className="row">
                                   <p>Destino:</p>
                                   <p>{accordion.destination}</p>
-                                </div>
-                                <div className="row">
-                                  <p>Transportador:</p>
-                                  <p>{accordion.carrier}</p>
                                 </div>
                               </div>
                             </div>
@@ -232,6 +175,7 @@ class Detalhe extends Component {
                                   }
                                   alt=""
                                 />
+                                <p>Previsões</p>
                               </div>
                               <div className="info">
                                 <div className="row">
@@ -245,7 +189,7 @@ class Detalhe extends Component {
                                   </p>
                                 </div>
                                 <div className="row">
-                                  <p>ATD - Real. Embarque:</p>
+                                  <p>ATD - Prev. Chegada:</p>
                                   <p>
                                     {accordion.ata_date
                                       ? new Date(
@@ -255,7 +199,7 @@ class Detalhe extends Component {
                                   </p>
                                 </div>
                                 <div className="row">
-                                  <p>ETA - Prev. Entrega:</p>
+                                  <p>GR - Prev. Entrega:</p>
                                   <p>
                                     {' '}
                                     {accordion.eta_date
@@ -265,20 +209,21 @@ class Detalhe extends Component {
                                       : '-'}
                                   </p>
                                 </div>
-                                <div className="row">
-                                  <p>ATA - Real. Entrega:</p>
-                                  <p>
-                                    {accordion.ata_date
-                                      ? new Date(
-                                          accordion.ata_date
-                                        ).toLocaleDateString()
-                                      : '-'}
-                                  </p>
-                                </div>
-                                <div className="row">
-                                  <p>Entrega na Planta:</p>
-                                  <p>29/03/2019</p>
-                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="box-transportadora">
+                            <p className="tit">Tranportadora: <span>{accordion.carrier}</span></p>
+                            <div className="line-status">
+                              <div className="position">
+                                <div className={accordion.process_status === '1 - PRE-Embarque' ? 'boll atual' : 'boll'}></div>
+                                <div className={accordion.process_status === '2 - Em Transito' ? 'boll atual' : 'boll'}></div>
+                                <div className={accordion.process_status === '3 - PRE-Embarque' ? 'boll atual' : 'boll'}></div>
+                              </div>
+                              <div className="legenda">
+                                <p>Embarque</p>
+                                <p>Chegada Porto/Aeroporto</p>
+                                <p>Chegada na Planta</p>
                               </div>
                             </div>
                           </div>
