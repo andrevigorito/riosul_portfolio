@@ -27,7 +27,6 @@ class List extends Component {
     // const adicionaTotal = valor => {
     //   total += valor;
     // };
-    console.log(total);
 
     const zeraTotal = () => {
       total = 0;
