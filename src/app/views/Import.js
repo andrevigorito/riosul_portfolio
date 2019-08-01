@@ -20,28 +20,6 @@ class Import extends Component {
     isSending: false,
     isWaiting: false,
   };
-  
-  componentDidMount(){
-    this.registerToSocket();
-  }
-  
-  componentWillUnmount(){
-    this.unregisterToSocket();
-  }
-  
-  registerToSocket = () => {
-   
-
-    socket.on('productsImport', () => {
-      // console.log('poItemAlert do WebSocket...', newAlert);
-      this.notifySucessText('Importação ATL concluída!');
-    });
-    
-  };
-
-  unregisterToSocket = () => {
-    socket.removeListener('productsImport');
-  };
 
   async getWorkbookFromFile(excelFile) {
     return new Promise((resolve, reject) => {
