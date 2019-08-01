@@ -16,7 +16,7 @@ class Alertas extends Component {
 
   componentDidMount() {
     this.setState({ isLoading: true });
-    API.get(`products/alerts`).then(res => {
+    API.get(`alerts`).then(res => {
       const alerts = res.data;
       console.log(alerts);
       this.setState({

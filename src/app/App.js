@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import API from './services/api';
 
@@ -115,6 +115,8 @@ class App extends Component {
             </div>
           ) : null}
 
+          <Switch>
+          
           {isAuth && (
             <Route path="/gerencial/:uuid" exact component={Detalhe} />
           )}
@@ -131,6 +133,9 @@ class App extends Component {
           )}
 
           {isAuth && <Route path="/" exact component={ProductContainer} />}
+          
+          </Switch>
+          
         </BrowserRouter>
       </div>
     );
