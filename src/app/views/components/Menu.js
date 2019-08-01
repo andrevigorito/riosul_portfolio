@@ -59,6 +59,9 @@ class Menu extends Component {
                 <Link onClick={this.btnMenu} to="/usuarios">
                   Usuários
                 </Link>
+                <Link onClick={this.btnMenu} to="/transit">
+                  Transit Time
+                </Link>
                 <Link onClick={this.btnMenu} to="/alertas">
                   Alertas
                 </Link>
