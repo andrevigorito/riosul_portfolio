@@ -35,7 +35,7 @@ const socket = io('https://webcol.herokuapp.com');
 
 class App extends Component {
   state = {
-    isAuth: true,
+    isAuth: false,
     username: '',
     useruuid: '',
   };
