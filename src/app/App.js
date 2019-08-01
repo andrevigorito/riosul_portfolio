@@ -16,6 +16,9 @@ import Alertas from './views/Alertas';
 import Usuarios from './views/Usuarios';
 import NovoUsuario from './views/Usuarios/new';
 import Operacional from './views/Operacional';
+import AddTransitTime from './views/AddTransit';
+import EditTransitTime from './views/EditTransit';
+import TransitTimeList from './views/TransitTimeList';
 
 // Components
 import Menu from './views/components/Menu';
@@ -32,7 +35,7 @@ const socket = io('https://webcol.herokuapp.com');
 
 class App extends Component {
   state = {
-    isAuth: false,
+    isAuth: true,
     username: '',
     useruuid: '',
   };
@@ -224,6 +227,20 @@ class App extends Component {
           {isAuth && <Route path="/usuarios" exact component={Usuarios} />}
           {isAuth && (
             <Route path="/usuarios/novo" exact component={NovoUsuario} />
+          )}
+          {isAuth && (
+            <Route path="/transit" exact component={TransitTimeList} />
+          )}
+          {isAuth && (
+            <Route path="/novo/transit/" exact component={AddTransitTime} />
+          )}
+          {isAuth && (
+            <Route
+              path="/transit/:uuid"
+              exact
+              component={EditTransitTime}
+              isPrivate
+            />
           )}
           {isAuth && (
             <Route path="/operacional" exact component={Operacional} />
