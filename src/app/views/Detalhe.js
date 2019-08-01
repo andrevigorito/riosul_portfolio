@@ -39,15 +39,15 @@ class Detalhe extends Component {
   render() {
     const { onRemoveProduct, product } = this.props;
 
-    let total = 0;
+    // let total = 0;
 
-    const adicionaTotal = valor => {
-      total += valor;
-    };
+    // const adicionaTotal = valor => {
+    //   total += valor;
+    // };
 
-    const zeraTotal = () => {
-      total = 0;
-    };
+    // const zeraTotal = () => {
+    //   total = 0;
+    // };
 
     return (
       <div>
@@ -95,14 +95,9 @@ class Detalhe extends Component {
                     <div className="item accordion">
                       <p>{po.order_reference}</p>
                       <p>{po.po_items.item}</p>
-                      <p>{new Date(po.gr_actual).toLocaleDateString()}</p>
-                      <p>
-                        {po.po_items.reduce((total, obj) => obj.qty + total, 0)}
-                      </p>
-                      <p>
-                        {po.po_items.reduce(
-                          (total, obj) => obj.invoice_value + total, 0
-                        )}
+                      <p>{new Date(po.po_items.gr_actual).toLocaleDateString()}</p>
+                      <p>{po.po_items.qty}</p>
+                      <p>{po.po_items.reduce((total, obj) => obj.invoice_value + total, 0)}
                       </p>
                     </div>
 
@@ -224,13 +219,11 @@ class Detalhe extends Component {
                                 <div className={accordion.process_status === '1 - PRE-Embarque' ? 'boll atual' : 'boll'}></div>
                                 <div className={accordion.process_status === '2 - Em Transito' ? 'boll atual' : 'boll'}></div>
                                 <div className={accordion.process_status === '3 - PRE-Embarque' ? 'boll atual' : 'boll'}></div>
-                                <div className={accordion.process_status === '4 - Faturamento' ? 'boll atual' : 'boll'}></div>
                               </div>
                               <div className="legenda">
                                 <p>Embarque</p>
                                 <p>Chegada Porto/Aeroporto</p>
                                 <p>Chegada na Planta</p>
-                                <p>Faturamento</p>
                               </div>
                             </div>
                           </div>

@@ -15,6 +15,7 @@ import Alertas from './views/Alertas';
 import Usuarios from './views/Usuarios';
 import NovoUsuario from './views/Usuarios/new';
 import Operacional from './views/Operacional';
+import DetalheOperacional from './views/DetalheOperacional';
 
 // Components
 import Menu from './views/components/Menu';
@@ -126,9 +127,8 @@ class App extends Component {
           {isAuth && <Route path="/alertas" exact component={Alertas} />}
           {isAuth && <Route path="/usuarios" exact component={Usuarios} />}
           {isAuth && <Route path="/usuarios/novo" exact component={NovoUsuario} />}
-          {isAuth && (
-            <Route path="/operacional" exact component={Operacional} />
-          )}
+          {isAuth && <Route path="/operacional" exact component={Operacional} />}
+          {isAuth && <Route path="/operacional/detalhe/:uuid" exact component={DetalheOperacional} />}
 
           {isAuth && <Route path="/" exact component={ProductContainer} />}
         </BrowserRouter>

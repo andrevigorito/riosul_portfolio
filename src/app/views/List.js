@@ -21,7 +21,7 @@ class List extends Component {
   };
 
   render() {
-    const { isLoading, products, onDetail } = this.props;
+    const { isLoading, products} = this.props;
     let total = 0;
 
     // const adicionaTotal = valor => {
@@ -61,7 +61,7 @@ class List extends Component {
                 <div
                   className="item"
                   key={product.uuid}
-                  onClick={() => onDetail(product.uuid)}
+                  // onClick={() => onDetail(product.uuid)}
                 >
                   <div className="main-info">
                     <p className="emp">{product.consignee.split(' ')[0]}</p>

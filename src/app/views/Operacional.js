@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { PopupboxManager, PopupboxContainer } from 'react-popupbox';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import ptBR from 'date-fns/locale/pt-BR';
@@ -186,7 +187,7 @@ class Operacional extends Component {
         ope => isSameDay(parseISO(ope.ata_date), ataDateIncio) === true
       );
     }
-    
+
     if (grProgramado) {
       newOpe = newOpe.filter(
         ope => isSameDay(parseISO(ope.gr_requested_date), grProgramado) === true
@@ -199,7 +200,13 @@ class Operacional extends Component {
       );
     }
 
-    if (!queryFilter && !produtoFiltro && !ataDateIncio && !grProgramado && !grEfetivo) {
+    if (
+      !queryFilter &&
+      !produtoFiltro &&
+      !ataDateIncio &&
+      !grProgramado &&
+      !grEfetivo
+    ) {
       newOpe = operacional;
     }
 
@@ -333,38 +340,40 @@ class Operacional extends Component {
             {isLoading && <Loading />}
 
             {operacionalFiltrada.map(ope => (
-              <div className="item" key={ope.uuid}>
-                <span className="critico" />
-                <p className="po">{ope.po.order_reference}</p>
-                <p className="produto">{ope.po.product.product_id}</p>
-                <p className="descricao">
-                  {ope.po.product.product_description}
-                </p>
-                <p className="qtd">{ope.qty}</p>
-                <p className="pd">{ope.plant_id}</p>
-                <p className="ata">
-                  {ope.ata_date
-                    ? new Date(ope.ata_date).toLocaleDateString()
-                    : '-'}
-                </p>
-                <p className="grp">
-                  {ope.gr_requested_date
-                    ? new Date(ope.gr_requested_date).toLocaleDateString()
-                    : '-'}
-                </p>
-                <p className="gre">
-                  {ope.gr_actual
-                    ? new Date(ope.gr_actual).toLocaleDateString()
-                    : '-'}
-                </p>
-                <div className="status alert">
-                  <p>{ope.status}</p>{' '}
-                  <div
-                    onClick={this.openPopupbox}
-                    className="icon-justificativa"
-                  />
+              <Link to={`operacional/detalhe/${ope.uuid}`} key={ope.uuid}>
+                <div className="item" key={ope.uuid}>
+                  <span className="critico" />
+                  <p className="po">{ope.po.order_reference}</p>
+                  <p className="produto">{ope.po.product.product_id}</p>
+                  <p className="descricao">
+                    {ope.po.product.product_description}
+                  </p>
+                  <p className="qtd">{ope.qty}</p>
+                  <p className="pd">{ope.plant_id}</p>
+                  <p className="ata">
+                    {ope.ata_date
+                      ? new Date(ope.ata_date).toLocaleDateString()
+                      : '-'}
+                  </p>
+                  <p className="grp">
+                    {ope.gr_requested_date
+                      ? new Date(ope.gr_requested_date).toLocaleDateString()
+                      : '-'}
+                  </p>
+                  <p className="gre">
+                    {ope.gr_actual
+                      ? new Date(ope.gr_actual).toLocaleDateString()
+                      : '-'}
+                  </p>
+                  <div className="status alert">
+                    <p>{ope.status}</p>{' '}
+                    <div
+                      onClick={this.openPopupbox}
+                      className="icon-justificativa"
+                    />
+                  </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
