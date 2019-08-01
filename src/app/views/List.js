@@ -21,7 +21,7 @@ class List extends Component {
   };
 
   render() {
-    const { isLoading, products, onDetail } = this.props;
+    const { isLoading, products} = this.props;
     let total = 0;
 
     // const adicionaTotal = valor => {
@@ -42,7 +42,7 @@ class List extends Component {
               <header className="headerlist">
                 <div className="first">
                   <p>ID / Produto</p>
-                  <p>GR Atual</p>
+                  <p>GR Programado</p>
                 </div>
                 <div className="last">
                   <p>
@@ -60,7 +60,7 @@ class List extends Component {
                 <div
                   className="item"
                   key={product.uuid}
-                  onClick={() => onDetail(product.uuid)}
+                  // onClick={() => onDetail(product.uuid)}
                 >
                   <div className="main-info">
                     <p className="emp">{product.consignee.split(' ')[0]}</p>
@@ -76,7 +76,7 @@ class List extends Component {
                       {product.items.map(po => (
                         <div
                           className={po.alert ? 'item-gra alert' : 'item-gra'}
-                          // key={po.uuid}
+                          key={po.uuid}
                         >
                           <p>
                             <img src={iconRgc} alt="" />{' '}

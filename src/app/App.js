@@ -16,6 +16,7 @@ import Alertas from './views/Alertas';
 import Usuarios from './views/Usuarios';
 import NovoUsuario from './views/Usuarios/new';
 import Operacional from './views/Operacional';
+import DetalheOperacional from './views/DetalheOperacional';
 import AddTransitTime from './views/AddTransit';
 import EditTransitTime from './views/EditTransit';
 import TransitTimeList from './views/TransitTimeList';
@@ -232,6 +233,7 @@ class App extends Component {
           {isAuth && (
             <Route path="/operacional" exact component={Operacional} />
           )}
+          {isAuth && <Route path="/operacional/detalhe/:uuid" exact component={DetalheOperacional} />}
 
           {isAuth && <Route path="/" exact component={ProductContainer} />}
         </BrowserRouter>
