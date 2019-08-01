@@ -67,7 +67,7 @@ class App extends Component {
 
     socket.on('productsImport', () => {
       // console.log('poItemAlert do WebSocket...', newAlert);
-      this.notifySucessText('IMPORTAÇÃO ATL CONCLUÍDA!');
+      this.notifySucessText('Importação ATL concluída!');
     });
 
     socket.on('newAlert', newAlert => {
