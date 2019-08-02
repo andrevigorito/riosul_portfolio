@@ -34,7 +34,7 @@ class Operacional extends Component {
   async componentDidMount() {
     this.setState({ isLoading: true });
 
-    const response = await API.get('poItems/1');
+    const response = await API.get('poItems/pag/1');
     const { data: operacional } = response;
 
     this.setState({
