@@ -65,7 +65,6 @@ class Operacional extends Component {
 
     const response = await API.get(`poItems/pag/${this.state.page}`);
     const { data: operacional } = response;
-    console.log(response)
 
     this.setState({
       operacional,
@@ -348,6 +347,12 @@ class Operacional extends Component {
               </div>
             </form>
           </div>
+          
+          <Pagination 
+              page={this.state.page}
+              onAfter={() => this.handleAfter}
+              onBefore={() => this.handleBefore}
+            />
 
           <PopupboxContainer {...popupboxConfig} />
           <div className="list-ope">
@@ -364,11 +369,7 @@ class Operacional extends Component {
               <p className="status">Status / Just.</p>
             </header>
             
-            <Pagination 
-              page={this.state.page}
-              onAfter={() => this.handleAfter}
-              onBefore={() => this.handleBefore}
-            />
+            
             
             {isLoading && <Loading />}
 
