@@ -1,0 +1,48 @@
+.list-planilhas{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+  .item{
+    font-size: 14px;
+    padding: 10px 20px;
+    border: solid 1px #ddd;
+    margin: 0 10px;
+    border-radius: 6px;
+    transition: .2s;
+    cursor: pointer;
+    &:hover, &.active{
+      background: #1abc9c;
+      border: solid 1px #1abc9c;
+      color: #fff;
+    }
+
+  }
+}
+
+.box-import{
+  input{
+    border-radius: 6px;
+    background: #ddd;
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #fff;
+    margin-bottom: 20px;
+    display: block;
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
+  }
+  .box-drop{
+    height: 300px;
+    width: 600px;
+    border: solid 1px #ddd;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    p{
+      font-size: 16px;
+    }
+  }
+}

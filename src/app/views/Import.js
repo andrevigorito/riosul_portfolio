@@ -97,7 +97,12 @@ class Import extends Component {
               Import
             </h1>
           </div>
-          <center>
+          <div className='list-planilhas'>
+            <div className='item active'>Planilha ATL</div>
+            <div className='item'>Planilha SAP DOW</div>
+            <div className='item'>Planilha SAP DUPONT</div>
+          </div>
+          <center className='box-import'>
             {this.state.isConverting ? (
               <Fragment>
                 <Loading />
@@ -115,37 +120,15 @@ class Import extends Component {
               </Fragment>
             ) : (
               <Fragment>
-                <input style={{
-                      borderRadius: 6,
-                      background: '#1ABC9C',
-                      // padding: 10px 20px,
-                      paddingTop: 10,
-                      paddingBottom: 10,
-                      paddingLeft: 20,
-                      paddingRight: 20,
-                      fontSize: 14,
-                      color: '#fff',
-                    }} type="file" onChange={ (event) => this.handleImportAtl(event.target.files)}
+                <input
+                  type="file"
+                  onChange={event => this.handleImportAtl(event.target.files)}
                 />
-             
-                <DragAndDrop
-                  handleDrop={this.handleImportAtl}
-                  style={{ marginTop: 10 }}
-                >
-                  <div
-                    style={{
-                      height: 300,
-                      width: 800,
-                      borderColor: '#1ABC9C',
-                      borderWidth: '1px',
-                      borderStyle: 'dashed',
-                      backgroundColor: 'white',
-                      display: 'flex',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <p style={{ flex: 1, fontSize: 14 }}>
-                      ou arraste a planilha para este local
+
+                <DragAndDrop handleDrop={this.handleImportAtl}>
+                  <div className='box-drop'>
+                    <p>
+                      Arraste a planilha para este local...
                     </p>
                   </div>
                 </DragAndDrop>
