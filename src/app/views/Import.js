@@ -29,12 +29,17 @@ class Import extends Component {
   }
 
   handleImportAtl = async file => {
-    this.setState({ isConverting: true });
-    const workbook = await this.getWorkbookFromFile(file[0] ? file[0] : file);
-    const first_worksheet = workbook.Sheets[workbook.SheetNames[0]];
-    const data = await XLSX.utils.sheet_to_json(first_worksheet, { header: 0 });
-    this.setState({ isConverting: false });
-    this.sendImportATL(data);
+    let name = file[0].name.split('.');
+    if(name[1] === 'xlsx' || name[1] === 'xls'){
+      this.setState({ isConverting: true });
+      const workbook = await this.getWorkbookFromFile(file[0]);
+      const first_worksheet = workbook.Sheets[workbook.SheetNames[0]];
+      const data = await XLSX.utils.sheet_to_json(first_worksheet, { header: 0 });
+      this.setState({ isConverting: false });
+      this.sendImportATL(data);
+    }else{
+      this.notifyError('NÃO É UM ARQUIVO VÁLIDO!');
+    }
   };
 
   sendImportATL(data) {
