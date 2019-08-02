@@ -14,6 +14,7 @@ import iconOperacional from '../img/icons/title-ope.png';
 
 // Components
 import Loading from './components/Loading';
+import Pagination from './components/Pagination';
 
 registerLocale('pt-BR', ptBR);
 // import FilterOperacional from './components/FilterOperacional';
@@ -34,8 +35,9 @@ class Operacional extends Component {
   async componentDidMount() {
     this.setState({ isLoading: true });
 
-    const response = await API.get('poItems');
+    const response = await API.get('poItems/1');
     const { data: operacional } = response;
+    console.log(response)
 
     this.setState({
       operacional,
@@ -372,6 +374,8 @@ class Operacional extends Component {
                 </div>
               </Link>
             ))}
+
+            <Pagination />
           </div>
         </div>
       </div>

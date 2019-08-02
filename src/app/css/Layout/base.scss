@@ -108,7 +108,7 @@
             }
         }
 	}
-	
+
 }
 
 .filter-box{
@@ -185,7 +185,7 @@
 				width: 180px;
 				background: url(../img/icons/icon-calendar.png)no-repeat 90%;
 			}
-			
+
 		}
 		.react-datepicker__input-container input{
 			width: 180px;
@@ -242,7 +242,7 @@
 	}
 	@media (max-width: 720px){
 		form{
-			
+
 			.nfs{
 				display: flex;
 				justify-content: space-between;
@@ -293,5 +293,32 @@ h1{
 			margin-right: 10px;
 	}
 }
+.pagination{
+  display: flex;
+  margin: 20px 0 40px;
+  .arrow{
+    padding: 0 15px;
+    background: #fff;
+    height: 45px;
+    border: solid 1px #ddd;
+    transition: .2s;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    border-right: none;
+    cursor: pointer;
+    &.prev{
+      border-radius: 6px 0 0 6px;
+      border-right: none;
+    }
+    &.next{
+      border-radius: 0 6px 6px 0;
+      border-right: solid 1px #ddd;
+    }
+    &:hover{
+      background: #1abc9c;
+      color: #fff;
+    }
 
-
+  }
+}
