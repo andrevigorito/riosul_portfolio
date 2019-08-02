@@ -348,12 +348,6 @@ class Operacional extends Component {
             </form>
           </div>
           
-          <Pagination 
-              page={this.state.page}
-              onAfter={() => this.handleAfter}
-              onBefore={() => this.handleBefore}
-            />
-
           <PopupboxContainer {...popupboxConfig} />
           <div className="list-ope">
             <header className="header-list-ope">
@@ -369,11 +363,11 @@ class Operacional extends Component {
               <p className="status">Status / Just.</p>
             </header>
             
+            {isLoading ? 
             
-            
-            {isLoading && <Loading />}
-
-            {operacionalFiltrada.map(ope => (
+            <Loading />
+            :
+            operacionalFiltrada.map(ope => (
               <Link to={`operacional/detalhe/${ope.uuid}`} key={ope.uuid}>
                 <div className="item" key={ope.uuid}>
                   <span className="critico" />
@@ -409,7 +403,12 @@ class Operacional extends Component {
                 </div>
               </Link>
             ))}
-
+            
+            <Pagination 
+              page={this.state.page}
+              onAfter={() => this.handleAfter}
+              onBefore={() => this.handleBefore}
+            />
             
           </div>
         </div>
