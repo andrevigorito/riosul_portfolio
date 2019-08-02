@@ -46,7 +46,6 @@ class Operacional extends Component {
       page: prevState.page+1
     }));
   }
-
   
   componentDidUpdate(prevProps, prevState) {
     const { page } = this.state;
