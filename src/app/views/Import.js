@@ -43,7 +43,6 @@ class Import extends Component {
       headers: { 'Content-Type': 'application/json' },
     }).then(res => {
       this.setState({ isSending: false, isWaiting: true });
-      this.notifyWarn('IMPORTAÇÃO ATL ENVIADA! AGUARDANDO CONCLUSÃO!');
     });
   }
 
