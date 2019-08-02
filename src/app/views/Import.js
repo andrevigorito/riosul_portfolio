@@ -43,6 +43,7 @@ class Import extends Component {
       headers: { 'Content-Type': 'application/json' },
     }).then(res => {
       this.setState({ isSending: false, isWaiting: true });
+      this.notifyWarn('IMPORTAÇÃO ATL ENVIADA! AGUARDANDO CONCLUSÃO!');
     });
   }
 
@@ -61,7 +62,6 @@ class Import extends Component {
   registerToSocket = () => {
     socket.on('productsImport', () => {
       this.setState({ isWaiting: false });
-      this.notifySucess('IMPORTAÇÃO ATL CONCLUÍDA!');
     });
   };
 
