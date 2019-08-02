@@ -30,12 +30,40 @@ class Operacional extends Component {
     ataDateIncio: '',
     grProgramado: '',
     grEfetivo: '',
+    page: 1,
   };
+  
+  handleBefore = () => {
+    if(this.state.page > 1){
+      this.setState(prevState => ({
+        page: prevState.page-1
+      }));
+    }
+  }
 
-  async componentDidMount() {
+  handleAfter = () => {
+    this.setState(prevState => ({
+      page: prevState.page+1
+    }));
+  }
+
+  
+  componentDidUpdate(prevProps, prevState) {
+    const { page } = this.state;
+    if(page !== prevState.page){
+        this.getPoItems();
+    }
+  }
+  
+
+  componentDidMount() {
+    this.getPoItems();
+  }
+  
+  async getPoItems(){
     this.setState({ isLoading: true });
 
-    const response = await API.get('poItems/pag/1');
+    const response = await API.get(`poItems/pag/${this.state.page}`);
     const { data: operacional } = response;
     console.log(response)
 
@@ -335,7 +363,13 @@ class Operacional extends Component {
               <p className="gre">GR Efet.</p>
               <p className="status">Status / Just.</p>
             </header>
-
+            
+            <Pagination 
+              page={this.state.page}
+              onAfter={() => this.handleAfter}
+              onBefore={() => this.handleBefore}
+            />
+            
             {isLoading && <Loading />}
 
             {operacionalFiltrada.map(ope => (
@@ -375,7 +409,7 @@ class Operacional extends Component {
               </Link>
             ))}
 
-            <Pagination />
+            
           </div>
         </div>
       </div>

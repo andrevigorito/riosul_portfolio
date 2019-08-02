@@ -2,16 +2,23 @@
 import React, { Component } from 'react';
 
 class Pagination extends Component {
+  
+  
+  
   render() {
+    
+    const { onBefore, onAfter, page } = this.props;
+    
     return (
       <div className="pagination">
-        <div className="arrow prev">Anterior</div>
-        <div className="arrow">1</div>
-        <div className="arrow">2</div>
-        <div className="arrow">3</div>
-        <div className="arrow next">Próxima</div>
+        <div className="arrow prev" onClick={onBefore()} >Anterior</div>
+        
+        <div className="arrow">{page}</div>
+        
+        <div className="arrow next" onClick={onAfter()} >Próxima</div>
       </div>
     );
+    
   }
 }
 
