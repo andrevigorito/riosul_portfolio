@@ -34,7 +34,7 @@ class Operacional extends Component {
 
   handleBefore = () => {
     const { page } = this.state;
-    
+
     if (page > 1) {
       this.setState(prevState => ({
         page: prevState.page - 1,
