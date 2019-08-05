@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import Cropper from 'react-easy-crop';
 import { Redirect } from 'react-router-dom';
 import { NewUsuario, BtnMostrar } from './styles';
 import API from '../../services/api';
@@ -9,14 +9,32 @@ class NovoUsuario extends Component {
   state = {
     newusername: '',
     newpassword: '',
+    newfoto: '',
     newadmin: false,
     type: 'password',
     redirect: false,
+    crop: { x: 0, y: 0 },
+    aspect: 4 / 4,
+  };
+
+  onCropChange = crop => {
+    this.setState({ crop });
+  };
+
+  onCropComplete = (croppedArea, croppedAreaPixels) => {
+    console.log(croppedArea, croppedAreaPixels);
   };
 
   handleChange = field => e => {
     this.setState({
       [field]: e.target.value,
+    });
+    // console.log(this.state.newadmin);
+  };
+
+  getPhoto = field => e => {
+    this.setState({
+      [field]: e.target.files[0],
     });
     // console.log(this.state.newadmin);
   };
@@ -41,29 +59,32 @@ class NovoUsuario extends Component {
     this.redirect();
   };
 
-  showHide = (e) => {
+  showHide = e => {
     e.preventDefault();
     e.stopPropagation();
     this.setState({
-      type: this.state.type === 'text' ? 'password' : 'text'
-    })
-  }
+      type: this.state.type === 'text' ? 'password' : 'text',
+    });
+  };
 
   redirect = () => {
     this.setState({
-      redirect: true
-    })
-   }
+      redirect: true,
+    });
+  };
 
   render() {
-    // eslint-disable-next-line prettier/prettier
-    if(this.state.redirect) {
-      return <Redirect to="/usuarios/" />
+    // eslint-disable-next-line react/destructuring-assignment
+    if (this.state.redirect) {
+      return <Redirect to="/usuarios/" />;
     }
     const {
       newusername,
       newpassword,
       newadmin,
+      newfoto,
+      crop,
+      aspect,
     } = this.state;
     return (
       <div className="center">
@@ -91,7 +112,30 @@ class NovoUsuario extends Component {
                 placeholder="Digite a senha"
                 id="txtpassword"
               />
-              <BtnMostrar type="button" className={this.state.type === 'text' ? 'hide' : 'show'} onClick={this.showHide} />
+              <BtnMostrar
+                type="button"
+                className={this.state.type === 'text' ? 'hide' : 'show'}
+                onClick={this.showHide}
+              />
+            </div>
+            <div className="item">
+              <label>Foto de perfil:</label>
+              <input
+                type="file"
+                id="imguser"
+                value={newfoto}
+                onChange={this.getPhoto('newfoto')}
+              />
+            </div>
+            <div className="item iCropper">
+              <Cropper
+                image={newfoto}
+                crop={crop}
+                aspect={aspect}
+                onCropChange={this.onCropChange}
+                onCropComplete={this.onCropComplete}
+                onZoomChange={this.onZoomChange}
+              />
             </div>
             <div className="nfs item">
               <label>
@@ -105,6 +149,7 @@ class NovoUsuario extends Component {
                 Administrador
               </label>
             </div>
+
             <div className="item">
               <button type="button" onClick={this.addUser} className="btn">
                 Cadastrar
