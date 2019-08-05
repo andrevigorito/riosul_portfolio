@@ -165,11 +165,6 @@ class Operacional extends Component {
   };
 
   render() {
-    const popupboxConfig = {
-      fadeIn: true,
-      fadeInSpeed: 500,
-    };
-
     const {
       isLoading,
       operacionalFiltrada,
