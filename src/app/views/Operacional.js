@@ -46,6 +46,7 @@ class Operacional extends Component {
       page: prevState.page+1
     }));
   }
+
   
   componentDidUpdate(prevProps, prevState) {
     const { page } = this.state;
@@ -407,6 +408,7 @@ class Operacional extends Component {
               page={this.state.page}
               onAfter={() => this.handleAfter}
               onBefore={() => this.handleBefore}
+              
             />
             
           </div>

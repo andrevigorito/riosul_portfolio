@@ -12,9 +12,11 @@ class Pagination extends Component {
     return (
       <div className="pagination">
         <div className="arrow prev" onClick={onBefore()} >Anterior</div>
+        
         {page > 1 && <div className="arrow" onClick={onBefore()}>{page-1}</div>}
         <div className="arrow">{page}</div>
         <div className="arrow" onClick={onAfter()}>{page+1}</div>
+        
         <div className="arrow next" onClick={onAfter()} >Próxima</div>
       </div>
     );
