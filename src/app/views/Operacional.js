@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { PopupboxManager, PopupboxContainer } from 'react-popupbox';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import ptBR from 'date-fns/locale/pt-BR';
 
@@ -32,7 +31,7 @@ class Operacional extends Component {
     grEfetivo: '',
     page: 1,
   };
-  
+
   handleBefore = () => {
     if(this.state.page > 1){
       this.setState(prevState => ({
@@ -46,19 +45,19 @@ class Operacional extends Component {
       page: prevState.page+1
     }));
   }
-  
+
   componentDidUpdate(prevProps, prevState) {
     const { page } = this.state;
     if(page !== prevState.page){
         this.getPoItems();
     }
   }
-  
+
 
   componentDidMount() {
     this.getPoItems();
   }
-  
+
   async getPoItems(){
     this.setState({ isLoading: true });
 
@@ -77,82 +76,6 @@ class Operacional extends Component {
     this.setState({ filtroAtivo: !filtroAtivo });
   };
 
-  openPopupbox = () => {
-    const content = (
-      <div className="lb-justificativa">
-        <div className="content">
-          <h2>Justificativa</h2>
-          {/* <div className='form-just'>
-                    <div className='row c2'>
-                        <div className='item'>
-                            <label>Tipo de Justificativa</label>
-                            <select>
-                                <option>Teste</option>
-                            </select>
-                        </div>
-                        <div className='item'>
-                            <label>E-mail</label>
-                            <input type='text' />
-                        </div>
-                    </div>
-                    <div className='row'>
-                        <div className='item'>
-                            <label>Justificativa</label>
-                            <textarea></textarea>
-                        </div>
-                    </div>
-                    <button type="button" className='btn'>Enviar</button>
-                </div> */}
-
-          <div className="list-justificativas">
-            <div className="item">
-              <p>
-                Nulla vel placerat dolor. Etiam feugiat odio malesuada
-                pellentesque vulputate. Nulla convallis varius erat quis
-                vestibulum. Donec vitae ipsum vel elit porttitor porttitor quis
-                eu sem.
-              </p>
-              <div className="user">
-                <input type="checkbox" />
-                <p>Romero Almeida</p>
-                <p>12/07/2019 08:16:21</p>
-                <p>XO - AGENDAMENTO</p>
-              </div>
-            </div>
-            <div className="item">
-              <p>
-                Nulla vel placerat dolor. Etiam feugiat odio malesuada
-                pellentesque vulputate. Nulla convallis varius erat quis
-                vestibulum. Donec vitae ipsum vel elit porttitor porttitor quis
-                eu sem.
-              </p>
-              <div className="user">
-                <input type="checkbox" />
-                <p>Romero Almeida</p>
-                <p>12/07/2019 08:16:21</p>
-                <p>XO - AGENDAMENTO</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="wrap-btns">
-          <div className="btnclose" onClick={PopupboxManager.close}>
-            x
-          </div>
-          <button type="button" className="btn abonar">
-            Abonar
-          </button>
-          <button type="button" className="btn">
-            Justificativas
-          </button>
-          <button type="button" className="btn">
-            Adicionar
-          </button>
-        </div>
-      </div>
-    );
-    PopupboxManager.open({ content });
-  };
 
   handleQueryInput = e => {
     this.setState({ queryFilter: e.target.value });
@@ -346,8 +269,6 @@ class Operacional extends Component {
               </div>
             </form>
           </div>
-          
-          <PopupboxContainer {...popupboxConfig} />
           <div className="list-ope">
             <header className="header-list-ope">
               <p className="critico">Crit.</p>
@@ -361,9 +282,9 @@ class Operacional extends Component {
               <p className="gre">GR Efet.</p>
               <p className="status">Status / Just.</p>
             </header>
-            
-            {isLoading ? 
-            
+
+            {isLoading ?
+
             <Loading />
             :
             operacionalFiltrada.map(ope => (
@@ -402,13 +323,13 @@ class Operacional extends Component {
                 </div>
               </Link>
             ))}
-            
-            <Pagination 
+
+            <Pagination
               page={this.state.page}
               onAfter={() => this.handleAfter}
               onBefore={() => this.handleBefore}
             />
-            
+
           </div>
         </div>
       </div>

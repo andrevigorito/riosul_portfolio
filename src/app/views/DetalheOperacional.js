@@ -20,6 +20,8 @@ class DetalheOperacional extends Component {
   state = {
     deop: [],
     isLoading: false,
+    modalJust: false,
+    modalAddJust: true,
   };
 
   async componentDidMount() {
@@ -84,136 +86,217 @@ class DetalheOperacional extends Component {
                 </header>
 
                 <div className="list-po">
-                  <div>
-                    <div className="content-po ">
-                      <header>
-                        <div className="gra">
-                          <p>Modal:</p>
-                          <p>{deop.modal}</p>
+                  <div className="content-po ">
+                    <header>
+                      <div className="gra">
+                        <p>Modal:</p>
+                        <p>{deop.modal}</p>
+                      </div>
+                      <div className="historico">
+                        <div className="hist-tit">
+                          <p>Último Histórico</p>
+                          <p className="date">
+                            {deop.last_update
+                              ? new Date(deop.last_update).toLocaleDateString()
+                              : '-'}
+                          </p>
                         </div>
-                        <div className="historico">
-                          <div className="hist-tit">
-                            <p>Último Histórico</p>
-                            <p className="date">
-                              {deop.last_update
-                                ? new Date(
-                                    deop.last_update
-                                  ).toLocaleDateString()
-                                : '-'}
-                            </p>
-                          </div>
-                          <div className="boll">
-                            <span />
-                          </div>
-                          <div className="infouser">
-                            <img src={iconUser} alt="" />
-                            <div className="info">
-                              <p>{deop.last_historic}</p>
-                            </div>
-                          </div>
+                        <div className="boll">
+                          <span />
                         </div>
-                      </header>
-                      <div className="boxs">
-                        <div className="box">
-                          <div className="icon">
-                            <img src={iconRemetente} alt="" />
-                            <p>Remetente</p>
-                          </div>
+                        <div className="infouser">
+                          <img src={iconUser} alt="" />
                           <div className="info">
-                            <div className="row">
-                              <p>Razão Social:</p>
-                              <p>{deop.shipper}</p>
-                            </div>
-                            <div className="row">
-                              <p>Origem:</p>
-                              <p>{deop.shipper_address}</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="box">
-                          <div className="icon">
-                            <img src={iconMap} alt="" />
-                            <p>Destinatário</p>
-                          </div>
-                          <div className="info">
-                            <div className="row">
-                              <p>Razão Social:</p>
-                              <p>1</p>
-                            </div>
-                            <div className="row">
-                              <p>Destino:</p>
-                              <p>{deop.destination}</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="box">
-                          <div className="icon">
-                            <img
-                              src={
-                                deop.modal === 'Ocean Import'
-                                  ? iconBarco
-                                  : iconAir
-                              }
-                              alt=""
-                            />
-                            <p>Previsões</p>
-                          </div>
-                          <div className="info">
-                            <div className="row">
-                              <p>ETD - Prev. Embarque:</p>
-                              <p>
-                                {new Date(deop.etd_date).toLocaleDateString()}
-                              </p>
-                            </div>
-                            <div className="row">
-                              <p>ATD - Prev. Chegada:</p>
-                              <p>
-                                {new Date(deop.atd_date).toLocaleDateString()}
-                              </p>
-                            </div>
-                            <div className="row">
-                              <p>GR - Prev. Entrega:</p>
-                              <p>
-                                {new Date(
-                                  deop.gr_requested_date
-                                ).toLocaleDateString()}
-                              </p>
-                            </div>
+                            <p>{deop.last_historic}</p>
                           </div>
                         </div>
                       </div>
-                      <div className="box-transportadora">
-                        <p className="tit">
-                          Tranportadora: <span>{deop.carrier}</span>
-                        </p>
-                        <div className="line-status">
-                          <div className="position">
-                            <div
-                              className={
-                                !deop.ata_date && !deop.gr_actual
-                                  ? 'boll atual'
-                                  : 'boll'
-                              }
-                            />
-                            <div
-                              className={
-                                deop.ata_date && !deop.gr_actual
-                                  ? 'boll atual'
-                                  : 'boll'
-                              }
-                            />
-                            <div
-                              className={deop.gr_actual ? 'boll atual' : 'boll'}
-                            />
+                    </header>
+                    <div className="boxs">
+                      <div className="box">
+                        <div className="icon">
+                          <img src={iconRemetente} alt="" />
+                          <p>Remetente</p>
+                        </div>
+                        <div className="info">
+                          <div className="row">
+                            <p>Razão Social:</p>
+                            <p>{deop.shipper}</p>
                           </div>
-                          <div className="legenda">
-                            <p>Embarque</p>
-                            <p>Chegada Porto/Aeroporto</p>
-                            <p>Chegada na Planta</p>
+                          <div className="row">
+                            <p>Origem:</p>
+                            <p>{deop.shipper_address}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="box">
+                        <div className="icon">
+                          <img src={iconMap} alt="" />
+                          <p>Destinatário</p>
+                        </div>
+                        <div className="info">
+                          <div className="row">
+                            <p>Razão Social:</p>
+                            <p>1</p>
+                          </div>
+                          <div className="row">
+                            <p>Destino:</p>
+                            <p>{deop.destination}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="box">
+                        <div className="icon">
+                          <img
+                            src={
+                              deop.modal === 'Ocean Import'
+                                ? iconBarco
+                                : iconAir
+                            }
+                            alt=""
+                          />
+                          <p>Previsões</p>
+                        </div>
+                        <div className="info">
+                          <div className="row">
+                            <p>ETD - Prev. Embarque:</p>
+                            <p>
+                              {new Date(deop.etd_date).toLocaleDateString()}
+                            </p>
+                          </div>
+                          <div className="row">
+                            <p>ATD - Prev. Chegada:</p>
+                            <p>
+                              {new Date(deop.atd_date).toLocaleDateString()}
+                            </p>
+                          </div>
+                          <div className="row">
+                            <p>GR - Prev. Entrega:</p>
+                            <p>
+                              {new Date(
+                                deop.gr_requested_date
+                              ).toLocaleDateString()}
+                            </p>
                           </div>
                         </div>
                       </div>
                     </div>
+                    <div className="box-transportadora">
+                      <p className="tit">
+                        Tranportadora: <span>{deop.carrier}</span>
+                      </p>
+                      <div className="line-status">
+                        <div className="position">
+                          <div
+                            className={
+                              !deop.ata_date && !deop.gr_actual
+                                ? 'boll atual'
+                                : 'boll'
+                            }
+                          />
+                          <div
+                            className={
+                              deop.ata_date && !deop.gr_actual
+                                ? 'boll atual'
+                                : 'boll'
+                            }
+                          />
+                          <div
+                            className={deop.gr_actual ? 'boll atual' : 'boll'}
+                          />
+                        </div>
+                        <div className="legenda">
+                          <p>Embarque</p>
+                          <p>Chegada Porto/Aeroporto</p>
+                          <p>Chegada na Planta</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="lb-justificativa">
+                  <div className="content">
+                    <h2>Justificativa</h2>
+                    {this.state.modalAddJust && (
+                      <div className="form-just">
+                        <div className="row c2">
+                          <div className="item">
+                            <label>Tipo de Justificativa</label>
+                            <select>
+                              <option>Teste</option>
+                            </select>
+                          </div>
+                          <div className="item">
+                            <label>E-mail</label>
+                            <input type="text" />
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="item">
+                            <label>Justificativa</label>
+                            <textarea />
+                          </div>
+                        </div>
+                        <button type="button" className="btn">
+                          Enviar
+                        </button>
+                      </div>
+                    )}
+                    {this.state.modalJust && (
+                      <div className="list-justificativas">
+                        <div className="item">
+                          <p>
+                            Nulla vel placerat dolor. Etiam feugiat odio
+                            malesuada pellentesque vulputate. Nulla convallis
+                            varius erat quis vestibulum. Donec vitae ipsum vel
+                            elit porttitor porttitor quis eu sem.
+                          </p>
+                          <div className="user">
+                            <input type="checkbox" />
+                            <p>Romero Almeida</p>
+                            <p>12/07/2019 08:16:21</p>
+                            <p>XO - AGENDAMENTO</p>
+                          </div>
+                        </div>
+                        <div className="item">
+                          <p>
+                            Nulla vel placerat dolor. Etiam feugiat odio
+                            malesuada pellentesque vulputate. Nulla convallis
+                            varius erat quis vestibulum. Donec vitae ipsum vel
+                            elit porttitor porttitor quis eu sem.
+                          </p>
+                          <div className="user">
+                            <input type="checkbox" />
+                            <p>Romero Almeida</p>
+                            <p>12/07/2019 08:16:21</p>
+                            <p>XO - AGENDAMENTO</p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  <div className="wrap-btns">
+                    <button type="button" className="btn abonar">
+                      Abonar
+                    </button>
+                    <button
+                      type="button"
+                      className="btn"
+                      onClick={() =>
+                        this.setState({ modalJust: false, modalAddJust: true })
+                      }
+                    >
+                      Adicionar
+                    </button>
+                    <button
+                      type="button"
+                      className="btn"
+                      onClick={() =>
+                        this.setState({ modalJust: true, modalAddJust: false })
+                      }
+                    >
+                      Justificativas
+                    </button>
                   </div>
                 </div>
               </div>
