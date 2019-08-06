@@ -9,9 +9,9 @@ class NovoUsuario extends Component {
   state = {
     newusername: '',
     newpassword: '',
-    newfoto: '',
     newadmin: false,
     type: 'password',
+    newfoto: '',
     redirect: false,
     crop: { x: 0, y: 0 },
     aspect: 4 / 4,
@@ -22,6 +22,7 @@ class NovoUsuario extends Component {
   };
 
   onCropComplete = (croppedArea, croppedAreaPixels) => {
+    // eslint-disable-next-line no-console
     console.log(croppedArea, croppedAreaPixels);
   };
 
@@ -32,12 +33,23 @@ class NovoUsuario extends Component {
     // console.log(this.state.newadmin);
   };
 
-  getPhoto = field => e => {
+  getPhoto = async file => {
+    const imageBase64 = await this.getBase64FromFile(file[0]);
     this.setState({
-      [field]: e.target.files[0],
+      newFoto: imageBase64
     });
-    // console.log(this.state.newadmin);
   };
+
+  async getBase64FromFile(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = event => {
+        const data = event.target.result;
+        resolve(data);
+      };
+      reader.readAsBinaryString(file);
+    });
+  }
 
   handleChangeAdmin = () => {
     this.setState(prevState => ({
@@ -124,7 +136,7 @@ class NovoUsuario extends Component {
                 type="file"
                 id="imguser"
                 value={newfoto}
-                onChange={this.getPhoto('newfoto')}
+                onChange={event => this.getPhoto(event.target.files)}
               />
             </div>
             <div className="item iCropper">
