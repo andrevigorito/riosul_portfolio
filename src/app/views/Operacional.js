@@ -149,7 +149,10 @@ class Operacional extends Component {
     };
 
     if (ataDateIncio) {
-      params.ata = format(ataDateIncio, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
+      params.ataDe = format(ataDateIncio, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
+    }
+    if (ataDateFim) {
+      params.ataFim = format(ataDateFim, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
     }
 
     if (grProgramado) {
@@ -158,9 +161,19 @@ class Operacional extends Component {
         "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"
       );
     }
+    if (grProgramadoFim) {
+      params.grResquestedDateFim = format(
+        grProgramadoFim,
+        "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"
+      );
+    }
 
     if (grEfetivo) {
       params.grAtual = format(grEfetivo, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
+    }
+
+    if (grEfetivoFim) {
+      params.grAtualFim = format(grEfetivoFim, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
     }
 
     const response = await API.get(`poItems`, { params });
