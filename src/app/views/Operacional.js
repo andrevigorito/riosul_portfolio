@@ -173,7 +173,9 @@ class Operacional extends Component {
             </h1>
             <div className="last-wrap">
               <div className="exportexcel">
-                <img src={imgExcel} alt="" />
+                <span>
+                  <img src={imgExcel} alt="" />
+                </span>
                 <p>Exportar Relatório</p>
               </div>
               <div
