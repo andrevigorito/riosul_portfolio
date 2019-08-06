@@ -11,6 +11,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 // Images
 import iconOperacional from '../img/icons/title-ope.png';
+import imgExcel from '../img/excel.png';
 
 // Components
 import Loading from './components/Loading';
@@ -82,60 +83,6 @@ class Operacional extends Component {
     this.setState({ filtroAtivo: !filtroAtivo });
   };
 
-  openPopupbox = () => {
-    const content = (
-      <div className="lb-justificativa">
-        <div className="content">
-          <h2>Justificativa</h2>
-          <div className="list-justificativas">
-            <div className="item">
-              <p>
-                Nulla vel placerat dolor. Etiam feugiat odio malesuada
-                pellentesque vulputate. Nulla convallis varius erat quis
-                vestibulum. Donec vitae ipsum vel elit porttitor porttitor quis
-                eu sem.
-              </p>
-              <div className="user">
-                <input type="checkbox" />
-                <p>Romero Almeida</p>
-                <p>12/07/2019 08:16:21</p>
-                <p>XO - AGENDAMENTO</p>
-              </div>
-            </div>
-            <div className="item">
-              <p>
-                Nulla vel placerat dolor. Etiam feugiat odio malesuada
-                pellentesque vulputate. Nulla convallis varius erat quis
-                vestibulum. Donec vitae ipsum vel elit porttitor porttitor quis
-                eu sem.
-              </p>
-              <div className="user">
-                <input type="checkbox" />
-                <p>Romero Almeida</p>
-                <p>12/07/2019 08:16:21</p>
-                <p>XO - AGENDAMENTO</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="wrap-btns">
-          <div className="btnclose" onClick={PopupboxManager.close}>
-            x
-          </div>
-          <button type="button" className="btn abonar">
-            Abonar
-          </button>
-          <button type="button" className="btn">
-            Justificativas
-          </button>
-          <button type="button" className="btn">
-            Adicionar
-          </button>
-        </div>
-      </div>
-    );
-    PopupboxManager.open({ content });
-  };
 
   handleQueryInput = e => {
     this.setState({ po: e.target.value });
@@ -206,11 +153,6 @@ class Operacional extends Component {
   };
 
   render() {
-    const popupboxConfig = {
-      fadeIn: true,
-      fadeInSpeed: 500,
-    };
-
     const {
       isLoading,
       operacional,
@@ -230,6 +172,10 @@ class Operacional extends Component {
               Operacional
             </h1>
             <div className="last-wrap">
+              <div className="exportexcel">
+                <img src={imgExcel} alt="" />
+                <p>Exportar Relatório</p>
+              </div>
               <div
                 className={`btn-filter-nfs ${filtroAtivo ? 'active' : ''}`}
                 onClick={this.btnFilter}
@@ -312,7 +258,6 @@ class Operacional extends Component {
             </form>
           </div>
 
-          <PopupboxContainer {...popupboxConfig} />
           <div className="list-ope">
             <header className="header-list-ope">
               <p className="critico">Crit.</p>

@@ -5,33 +5,66 @@
 	justify-content: space-between;
 	margin-bottom: 30px;
 	form{
-        input{
-            background: none;
-            border: 0;
-            padding: 0 0 0 30px;
-            border-bottom: solid 1px #000;
-            height: 30px;
-            font-size: 14px;
-            font-family: $font;
-            font-weight: 300;
-            color: #8B8D97;
-            box-sizing: border-box;
-            &.date{
-                    background:url(/img/icons/icon-calendar.png) no-repeat left;
-                    width: 130px;
-                    margin-left: 20px;
-            }
-            &.search{
-                    background:url(/img/icons/icon-search.png) no-repeat left;
-                    width: 220px;
-                    margin-left: 20px;
-            }
+    input{
+        background: none;
+        border: 0;
+        padding: 0 0 0 30px;
+        border-bottom: solid 1px #000;
+        height: 30px;
+        font-size: 14px;
+        font-family: $font;
+        font-weight: 300;
+        color: #8B8D97;
+        box-sizing: border-box;
+        &.date{
+          background:url(/img/icons/icon-calendar.png) no-repeat left;
+          width: 130px;
+          margin-left: 20px;
         }
+        &.search{
+          background:url(/img/icons/icon-search.png) no-repeat left;
+          width: 220px;
+          margin-left: 20px;
+        }
+    }
 	}
 	.last-wrap{
-        display: flex;
-        align-items: center;
-	}
+      display: flex;
+      align-items: center;
+  }
+  .exportexcel{
+    height: 40px;
+    width: 40px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    padding: 0 10px;
+    background: #f9f9f9;
+    transition: all ease .4s;
+    margin-right: 10px;
+    img{
+      height: 25px;
+      transition: all ease .2s;
+    }
+    p{
+      font-size: 12px;
+      margin-left: 10px;
+      opacity: 0;
+      transition: all ease .2s;
+      visibility: hidden;
+      margin: 0;
+
+    }
+    &:hover{
+      width: 180px;
+      p{
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
 	.btnvoltar{
 		display: flex;
 		align-items: center;
