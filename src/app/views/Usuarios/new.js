@@ -3,6 +3,7 @@ import Cropper from 'react-easy-crop';
 import { Redirect } from 'react-router-dom';
 import { NewUsuario, BtnMostrar } from './styles';
 import API from '../../services/api';
+import { ImagePicker } from 'react-file-picker'
 
 // eslint-disable-next-line react/prefer-stateless-function
 class NovoUsuario extends Component {
@@ -33,23 +34,12 @@ class NovoUsuario extends Component {
     // console.log(this.state.newadmin);
   };
 
-  getPhoto = async file => {
-    const imageBase64 = await this.getBase64FromFile(file[0]);
+  getPhoto = file => {
     this.setState({
-      newFoto: imageBase64
+      newFoto: file
     });
   };
 
-  async getBase64FromFile(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = event => {
-        const data = event.target.result;
-        resolve(data);
-      };
-      reader.readAsBinaryString(file);
-    });
-  }
 
   handleChangeAdmin = () => {
     this.setState(prevState => ({
@@ -132,12 +122,16 @@ class NovoUsuario extends Component {
             </div>
             <div className="item">
               <label>Foto de perfil:</label>
-              <input
-                type="file"
-                id="imguser"
-                value={newfoto}
-                onChange={event => this.getPhoto(event.target.files)}
-              />
+              <ImagePicker
+                extensions={['jpg', 'jpeg', 'png']}
+                dims={{minWidth: 100, maxWidth: 500, minHeight: 100, maxHeight: 500}}
+                onChange={base64 => (this.getPhoto(base64))}
+                onError={errMsg => (alert(errMsg))}
+              >
+                <button>
+                  Click to upload image
+                </button>
+              </ImagePicker>
             </div>
             <div className="item iCropper">
               <Cropper
