@@ -361,12 +361,21 @@ export const BtnCadastrar = styled.button`
 `;
 
 export const NewUsuario = styled.div`
+  display: flex;
+  justify-content: space-between;
+  .boxcroped {
+    width: calc(100% - 680px);
+    height: 355px;
+    position: relative;
+  }
   form {
     max-width: 640px;
+    width: 100%;
+    margin-right: 40px;
     .item {
       margin-bottom: 20px;
       position: relative;
-      &.iCropper{
+      &.iCropper {
         height: 400px;
       }
     }
