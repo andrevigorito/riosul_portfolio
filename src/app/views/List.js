@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import iconRgc from '../img/icons/rg-c.png';
 import iconRgp from '../img/icons/rg-p.png';
 
+import { format } from 'date-fns';
+
 // Components
 import PageHeader from './components/PageHeader';
 import Loading from './components/Loading';
@@ -18,10 +20,78 @@ class List extends Component {
 
   state = {
     title: 'Gerencial',
+    dupont: false,
+    dow: false,
+    produto: '',
+    startDate: '',
+    endDate: '',
+  };
+
+  btnFilter = () => {
+    const filter = document.querySelector('.filter-box');
+    filter.classList.toggle('active');
+    const btn = document.querySelector('.btn-filter-nfs');
+    btn.classList.toggle('active');
+  };
+
+  handleCheckboxDupont = () => {
+    const { dupont } = this.state;
+    this.setState({ dupont: !dupont });
+  };
+
+  handleChangeStart = date => {
+    this.setState({ startDate: date });
+  };
+
+  handleChangeEnd = date => {
+    this.setState({ endDate: date });
+  };
+
+  handleCheckboxDow = () => {
+    const { dow } = this.state;
+    this.setState({ dow: !dow });
+  };
+
+  handleFormSubit = () => {
+    const { dupont } = this.state;
+    this.setState({ dupont: !dupont });
+  };
+
+  handleProduto = e => {
+    this.setState({ produto: e.target.value });
+  };
+
+  handleFormSubit = e => {
+    e.preventDefault();
+    const { produto, dow, dupont, startDate, endDate } = this.state;
+
+    const { onFilter } = this.props;
+
+    const params = {
+      produto,
+    };
+
+    if (dow) {
+      params.dow = 'dow';
+    }
+
+    if (dupont) {
+      params.dupont = 'dupont';
+    }
+
+    if (startDate) {
+      params.dataDe = format(startDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
+    }
+
+    if (endDate) {
+      params.dataAte = format(endDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
+    }
+
+    onFilter(params);
   };
 
   render() {
-    const { isLoading, products} = this.props;
+    const { isLoading, products } = this.props;
     let total = 0;
 
     // const adicionaTotal = valor => {
@@ -80,7 +150,9 @@ class List extends Component {
                         >
                           <p>
                             <img src={iconRgc} alt="" />{' '}
-                            {new Date(po.gr_requested_date).toLocaleDateString()}
+                            {new Date(
+                              po.gr_requested_date
+                            ).toLocaleDateString()}
                           </p>
                           <p>
                             <img src={iconRgp} alt="" />{' '}
