@@ -4,7 +4,7 @@
 // Variaveis de reutilização
 $total: 1100;
 $cor: #292D41;
-$font: 'Open Sans', sans-serif; 
+$font: 'Open Sans', sans-serif;
 
 $verde: #1ABC9C;
 $azul: #3498DB;
@@ -36,3 +36,4 @@ $vermelho: #FF4E50;
 @import './Geral/relato';
 @import './Geral/alerta';
 @import './Geral/operacional';
+@import './Geral/import';

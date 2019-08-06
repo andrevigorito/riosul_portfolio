@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { PopupboxManager, PopupboxContainer } from 'react-popupbox';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import ptBR from 'date-fns/locale/pt-BR';
 
-import { parseISO, isSameDay } from 'date-fns';
+import { format } from 'date-fns';
 
 import API from '../services/api';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -13,6 +14,7 @@ import iconOperacional from '../img/icons/title-ope.png';
 
 // Components
 import Loading from './components/Loading';
+import Pagination from './components/Pagination';
 
 registerLocale('pt-BR', ptBR);
 // import FilterOperacional from './components/FilterOperacional';
@@ -20,25 +22,57 @@ registerLocale('pt-BR', ptBR);
 class Operacional extends Component {
   state = {
     operacional: [],
-    operacionalFiltrada: [],
     isLoading: false,
     filtroAtivo: false,
-    produtoFiltro: '',
-    queryFilter: '',
     ataDateIncio: '',
     grProgramado: '',
     grEfetivo: '',
+    page: 1,
+    po: '',
+    produto: '',
   };
 
-  async componentDidMount() {
+  handleBefore = () => {
+    const { page } = this.state;
+
+    if (page > 1) {
+      this.setState(prevState => ({
+        page: prevState.page - 1,
+      }));
+    }
+  };
+
+  handleAfter = () => {
+    this.setState(prevState => ({
+      page: prevState.page + 1,
+    }));
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    const { page } = this.state;
+    if (page !== prevState.page) {
+      this.getPoItems();
+    }
+  }
+
+  componentDidMount() {
+    this.getPoItems();
+  }
+
+  async getPoItems() {
     this.setState({ isLoading: true });
 
-    const response = await API.get('poItems');
+    const { page } = this.state;
+
+    const params = {
+      page,
+    };
+
+    const response = await API.get(`poItems`, { params });
     const { data: operacional } = response;
 
     this.setState({
       operacional,
-      operacionalFiltrada: operacional,
       isLoading: false,
     });
   }
@@ -53,28 +87,6 @@ class Operacional extends Component {
       <div className="lb-justificativa">
         <div className="content">
           <h2>Justificativa</h2>
-          {/* <div className='form-just'>
-                    <div className='row c2'>
-                        <div className='item'>
-                            <label>Tipo de Justificativa</label>
-                            <select>
-                                <option>Teste</option>
-                            </select>
-                        </div>
-                        <div className='item'>
-                            <label>E-mail</label>
-                            <input type='text' />
-                        </div>
-                    </div>
-                    <div className='row'>
-                        <div className='item'>
-                            <label>Justificativa</label>
-                            <textarea></textarea>
-                        </div>
-                    </div>
-                    <button type="button" className='btn'>Enviar</button>
-                </div> */}
-
           <div className="list-justificativas">
             <div className="item">
               <p>
@@ -126,17 +138,15 @@ class Operacional extends Component {
   };
 
   handleQueryInput = e => {
-    this.setState({ queryFilter: e.target.value });
+    this.setState({ po: e.target.value });
   };
 
   handleProduto = e => {
-    this.setState({ produtoFiltro: e.target.value });
+    this.setState({ produto: e.target.value });
   };
 
   handleChangeDateAta = date => {
-    this.setState({
-      ataDateIncio: date,
-    });
+    this.setState({ ataDateIncio: date });
   };
 
   handleChangeGrProgramado = date => {
@@ -151,59 +161,48 @@ class Operacional extends Component {
     });
   };
 
-  handleFormSubit = e => {
+  handleFormSubit = async e => {
     e.preventDefault();
 
     this.setState({ isLoading: true });
 
     const {
-      queryFilter,
-      operacional,
-      produtoFiltro,
+      page,
+      po,
+      produto,
       ataDateIncio,
       grProgramado,
       grEfetivo,
     } = this.state;
 
-    let newOpe = operacional;
-
-    if (produtoFiltro) {
-      newOpe = newOpe.filter(
-        ope => ope.po.product.product_id.indexOf(produtoFiltro) > -1
-      );
-    }
-
-    if (queryFilter) {
-      newOpe = newOpe.filter(
-        ope =>
-          ope.po.order_reference.indexOf(queryFilter) > -1 ||
-          ope.po.product.product_description.indexOf(queryFilter) > -1
-      );
-    }
+    const params = {
+      page,
+      po,
+      produto,
+    };
 
     if (ataDateIncio) {
-      newOpe = newOpe.filter(
-        ope => isSameDay(parseISO(ope.ata_date), ataDateIncio) === true
-      );
+      params.ata = format(ataDateIncio, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
     }
-    
+
     if (grProgramado) {
-      newOpe = newOpe.filter(
-        ope => isSameDay(parseISO(ope.gr_requested_date), grProgramado) === true
+      params.grResquestedDate = format(
+        grProgramado,
+        "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"
       );
     }
 
     if (grEfetivo) {
-      newOpe = newOpe.filter(
-        ope => isSameDay(parseISO(ope.gr_actual), grEfetivo) === true
-      );
+      params.grAtual = format(grEfetivo, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
     }
 
-    if (!queryFilter && !produtoFiltro && !ataDateIncio && !grProgramado && !grEfetivo) {
-      newOpe = operacional;
-    }
+    const response = await API.get(`poItems`, { params });
+    const operacional = response.data;
 
-    this.setState({ operacionalFiltrada: newOpe, isLoading: false });
+    this.setState({
+      operacional,
+      isLoading: false,
+    });
   };
 
   render() {
@@ -214,12 +213,12 @@ class Operacional extends Component {
 
     const {
       isLoading,
-      operacionalFiltrada,
+      operacional,
       filtroAtivo,
-      startDate,
-      endDate,
+      grEfetivo,
       ataDateIncio,
       grProgramado,
+      page,
     } = this.state;
 
     return (
@@ -248,11 +247,12 @@ class Operacional extends Component {
           <div className={`filter-box ${filtroAtivo ? 'active' : ''}`}>
             <form className="formoperacional" onSubmit={this.handleFormSubit}>
               <div className="item">
-                <label>Palavra Chave:</label>
+                <label>PO:</label>
                 <input
                   type="text"
                   id="idproduto"
                   onChange={this.handleQueryInput}
+                  autoComplete="false"
                 />
               </div>
 
@@ -287,7 +287,6 @@ class Operacional extends Component {
                   selectsStart
                   onChange={this.handleChangeGrProgramado}
                   startDate={grProgramado}
-                  endDate={endDate}
                   dateFormat="dd/MM/yyyy"
                 />
               </div>
@@ -296,13 +295,11 @@ class Operacional extends Component {
 
                 <DatePicker
                   locale="pt-BR"
-                  selected={endDate}
+                  selected={grEfetivo}
                   selectsEnd
                   onChange={this.handleChangeGrEfetivo}
-                  startDate={startDate}
-                  endDate={endDate}
+                  startDate={grEfetivo}
                   dateFormat="dd/MM/yyyy"
-                  minDate={startDate}
                 />
               </div>
 
@@ -330,42 +327,52 @@ class Operacional extends Component {
               <p className="status">Status / Just.</p>
             </header>
 
-            {isLoading && <Loading />}
+            {isLoading ? (
+              <Loading />
+            ) : (
+              operacional.map(ope => (
+                <Link to={`operacional/detalhe/${ope.uuid}`} key={ope.uuid}>
+                  <div className="item" key={ope.uuid}>
+                    <span className="critico" />
+                    <p className="po">{ope.po.order_reference}</p>
+                    <p className="produto">{ope.po.product.product_id}</p>
+                    <p className="descricao">
+                      {ope.po.product.product_description}
+                    </p>
+                    <p className="qtd">{ope.qty}</p>
+                    <p className="pd">{ope.plant_id}</p>
+                    <p className="ata">
+                      {ope.ata_date
+                        ? new Date(ope.ata_date).toLocaleDateString()
+                        : '-'}
+                    </p>
+                    <p className="grp">
+                      {ope.gr_requested_date
+                        ? new Date(ope.gr_requested_date).toLocaleDateString()
+                        : '-'}
+                    </p>
+                    <p className="gre">
+                      {ope.gr_actual
+                        ? new Date(ope.gr_actual).toLocaleDateString()
+                        : '-'}
+                    </p>
+                    <div className="status alert">
+                      <p>{ope.status}</p>{' '}
+                      {/* <div
+                      onClick={this.openPopupbox}
+                      className="icon-justificativa"
+                    /> */}
+                    </div>
+                  </div>
+                </Link>
+              ))
+            )}
 
-            {operacionalFiltrada.map(ope => (
-              <div className="item" key={ope.uuid}>
-                <span className="critico" />
-                <p className="po">{ope.po.order_reference}</p>
-                <p className="produto">{ope.po.product.product_id}</p>
-                <p className="descricao">
-                  {ope.po.product.product_description}
-                </p>
-                <p className="qtd">{ope.qty}</p>
-                <p className="pd">{ope.plant_id}</p>
-                <p className="ata">
-                  {ope.ata_date
-                    ? new Date(ope.ata_date).toLocaleDateString()
-                    : '-'}
-                </p>
-                <p className="grp">
-                  {ope.gr_requested_date
-                    ? new Date(ope.gr_requested_date).toLocaleDateString()
-                    : '-'}
-                </p>
-                <p className="gre">
-                  {ope.gr_actual
-                    ? new Date(ope.gr_actual).toLocaleDateString()
-                    : '-'}
-                </p>
-                <div className="status alert">
-                  <p>{ope.status}</p>{' '}
-                  <div
-                    onClick={this.openPopupbox}
-                    className="icon-justificativa"
-                  />
-                </div>
-              </div>
-            ))}
+            <Pagination
+              page={page}
+              onAfter={() => this.handleAfter}
+              onBefore={() => this.handleBefore}
+            />
           </div>
         </div>
       </div>
