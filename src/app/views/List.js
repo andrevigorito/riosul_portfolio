@@ -1,27 +1,104 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import { format } from 'date-fns';
 
 // Images
+import iconTitle from '../img/icons/title-gerencial.png';
 import iconRgc from '../img/icons/rg-c.png';
 import iconRgp from '../img/icons/rg-p.png';
 
 // Components
-import PageHeader from './components/PageHeader';
 import Loading from './components/Loading';
 
 class List extends Component {
   static propTypes = {
     isLoading: PropTypes.bool.isRequired,
     products: PropTypes.shape(PropTypes.any).isRequired,
-    onDetail: PropTypes.func.isRequired,
+    // onDetail: PropTypes.func.isRequired,
   };
 
   state = {
-    title: 'Gerencial',
+    dupont: false,
+    dow: false,
+    listaFiltrada: [],
+    produto: '',
+    startDate: '',
+    endDate: ''
+  };
+
+  btnFilter = () => {
+    const filter = document.querySelector('.filter-box');
+    filter.classList.toggle('active');
+    const btn = document.querySelector('.btn-filter-nfs');
+    btn.classList.toggle('active');
+  };
+
+  handleCheckboxDupont = () => {
+    const { dupont } = this.state;
+    this.setState({ dupont: !dupont });
+  };
+
+  handleChangeStart = date => {
+    this.setState({startDate:date})
+  }
+
+
+  handleChangeEnd = date => {
+    this.setState({endDate:date})
+  }
+
+  handleCheckboxDow = () => {
+    const { dow } = this.state;
+    this.setState({ dow: !dow });
+  };
+
+  handleFormSubit = e => {
+    e.preventDefault();
+    const { dupont } = this.state;
+    console.log(dupont);
+  };
+
+  handleProduto = e => {
+    this.setState({ produto: e.target.value });
+  };
+
+  handleFormSubit = e => {
+    e.preventDefault();
+    const { produto, dow, dupont, startDate, endDate } = this.state;
+
+    const { onFilter } = this.props;
+
+    const params = {
+      produto,
+    };
+
+    if (dow) {
+      params.dow = 'dow'
+    }
+
+    if (dupont) {
+      params.dupont = 'dupont'
+    }
+
+    if (startDate) {
+      params.dataDe = format(
+        startDate,
+        "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"
+      );
+    }
+
+    if (endDate) {
+      params.dataAre = format(endDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
+    }
+
+
+    onFilter(params);
   };
 
   render() {
-    const { isLoading, products} = this.props;
+    const { isLoading, products, onFilter } = this.props;
+    const { listaFiltrada } = this.state;
     let total = 0;
 
     // const adicionaTotal = valor => {
@@ -34,7 +111,93 @@ class List extends Component {
 
     return (
       <div>
-        <PageHeader title={this.title} />
+        <div className="center">
+          <div className="page-header">
+            <h1>
+              <img src={iconTitle} alt="" />
+              Gerencial
+            </h1>
+
+            <div className="last-wrap">
+              <div className="btn-filter-nfs" onClick={this.btnFilter}>
+                <div className="icon-filter">
+                  <span />
+                  <span />
+                  <span />
+                </div>
+                Filtrar
+              </div>
+            </div>
+          </div>
+
+          <div className="filter-box">
+            <form action="" onSubmit={this.handleFormSubit}>
+              <div className="nfs">
+                <label>
+                  <input
+                    type="checkbox"
+                    name=""
+                    id="dupont"
+                    onChange={this.handleCheckboxDupont}
+                  />
+                  DUPONT
+                </label>
+                <label>
+                  <input type="checkbox" name="" id="dow" onChange={this.handleCheckboxDow} />
+                  DOW
+                </label>
+              </div>
+              <div className="item">
+                <label>ID / Produto:</label>
+                <input type="text" id="idproduto" onChange={this.handleProduto} />
+              </div>
+              <div className="item">
+                <label>Data início:</label>
+                {/* <input type="text" className="datepicker-here date" data-language="pt-BR" id="data-inicio" /> */}
+                <DatePicker
+                  locale="pt-BR"
+                  selected={this.state.startDate}
+                  selectsStart
+                  onChange={this.handleChangeStart}
+                  startDate={this.state.startDate}
+                  endDate={this.state.endDate}
+                  dateFormat="dd/MM/yyyy"
+                />
+              </div>
+              <div className="item">
+                <label>Data fim:</label>
+                {/* <input type="text" className="datepicker-here date" data-language="pt-BR" id="data-fim" /> */}
+                <DatePicker
+                  locale="pt-BR"
+                  selected={this.state.endDate}
+                  selectsEnd
+                  onChange={this.handleChangeEnd}
+                  startDate={this.state.startDate}
+                  endDate={this.state.endDate}
+                  dateFormat="dd/MM/yyyy"
+                  // minDate={this.state.startDate}
+                />
+              </div>
+              <div className="item">
+                <label>Urgente:</label>
+                <div className="boxurgente">
+                  <label>
+                    <input type="checkbox" name="" id="urgente-sim" />Y
+                  </label>
+                  <label>
+                    <input type="checkbox" name="" id="urgente-nao" />N
+                  </label>
+                </div>
+              </div>
+              <div className="item">
+                <label> &nbsp; </label>
+                <button type="submit" className="btn" >
+                  Filtrar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
 
         <div className="center">
           <div className="content-regerencial">
@@ -80,7 +243,9 @@ class List extends Component {
                         >
                           <p>
                             <img src={iconRgc} alt="" />{' '}
-                            {new Date(po.gr_requested_date).toLocaleDateString()}
+                            {new Date(
+                              po.gr_requested_date
+                            ).toLocaleDateString()}
                           </p>
                           <p>
                             <img src={iconRgp} alt="" />{' '}
