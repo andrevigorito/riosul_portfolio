@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Grid, Row, Col } from 'react-flexbox-grid';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import ptBR from 'date-fns/locale/pt-BR';
 
@@ -50,7 +51,7 @@ class Operacional extends Component {
     this.setState(prevState => ({
       page: prevState.page + 1,
     }));
-  }
+  };
 
   componentDidUpdate(prevProps, prevState) {
     const { page } = this.state;
@@ -63,7 +64,7 @@ class Operacional extends Component {
     this.getPoItems();
   }
 
-  async getPoItems(){
+  async getPoItems() {
     this.setState({ isLoading: true });
 
     const { page } = this.state;
@@ -429,6 +430,7 @@ class Operacional extends Component {
               </Grid>
             </form>
           </div>
+
           <div className="list-ope">
             <header className="header-list-ope">
               <p className="critico">Crit.</p>
@@ -443,54 +445,52 @@ class Operacional extends Component {
               <p className="status">Status / Just.</p>
             </header>
 
-            {isLoading ?
-
-            <Loading />
-            :
-            operacionalFiltrada.map(ope => (
-              <Link to={`operacional/detalhe/${ope.uuid}`} key={ope.uuid}>
-                <div className="item" key={ope.uuid}>
-                  <span className="critico" />
-                  <p className="po">{ope.po.order_reference}</p>
-                  <p className="produto">{ope.po.product.product_id}</p>
-                  <p className="descricao">
-                    {ope.po.product.product_description}
-                  </p>
-                  <p className="qtd">{ope.qty}</p>
-                  <p className="pd">{ope.plant_id}</p>
-                  <p className="ata">
-                    {ope.ata_date
-                      ? new Date(ope.ata_date).toLocaleDateString()
-                      : '-'}
-                  </p>
-                  <p className="grp">
-                    {ope.gr_requested_date
-                      ? new Date(ope.gr_requested_date).toLocaleDateString()
-                      : '-'}
-                  </p>
-                  <p className="gre">
-                    {ope.gr_actual
-                      ? new Date(ope.gr_actual).toLocaleDateString()
-                      : '-'}
-                  </p>
-                  <div className="status alert">
-                    <p>{ope.status}</p>{' '}
-                    {/* <div
+            {isLoading ? (
+              <Loading />
+            ) : (
+              operacional.map(ope => (
+                <Link to={`operacional/detalhe/${ope.uuid}`} key={ope.uuid}>
+                  <div className="item" key={ope.uuid}>
+                    <span className="critico" />
+                    <p className="po">{ope.po.order_reference}</p>
+                    <p className="produto">{ope.po.product.product_id}</p>
+                    <p className="descricao">
+                      {ope.po.product.product_description}
+                    </p>
+                    <p className="qtd">{ope.qty}</p>
+                    <p className="pd">{ope.plant_id}</p>
+                    <p className="ata">
+                      {ope.ata_date
+                        ? new Date(ope.ata_date).toLocaleDateString()
+                        : '-'}
+                    </p>
+                    <p className="grp">
+                      {ope.gr_requested_date
+                        ? new Date(ope.gr_requested_date).toLocaleDateString()
+                        : '-'}
+                    </p>
+                    <p className="gre">
+                      {ope.gr_actual
+                        ? new Date(ope.gr_actual).toLocaleDateString()
+                        : '-'}
+                    </p>
+                    <div className="status alert">
+                      <p>{ope.status}</p>{' '}
+                      {/* <div
                       onClick={this.openPopupbox}
                       className="icon-justificativa"
                     /> */}
                     </div>
                   </div>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              ))
+            )}
 
             <Pagination
-              page={this.state.page}
+              page={page}
               onAfter={() => this.handleAfter}
               onBefore={() => this.handleBefore}
             />
-
           </div>
         </div>
       </div>
