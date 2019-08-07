@@ -16,7 +16,7 @@ import iconOperacional from '../img/icons/title-ope.png';
 // Components
 import Loading from './components/Loading';
 import Pagination from './components/Pagination';
-import ExportExcel from './components/ExportExcel'
+import ExportExcel from './components/ExportExcel';
 
 registerLocale('pt-BR', ptBR);
 // import FilterOperacional from './components/FilterOperacional';
@@ -102,7 +102,6 @@ class Operacional extends Component {
   };
 
   handleCheckbox = e => {
-
     const { status } = this.state;
 
     if (e.target.checked) {
@@ -183,7 +182,7 @@ class Operacional extends Component {
 
     if (status.length !== 0) {
       params.status = JSON.stringify(status);
-    };
+    }
 
     if (ataDateIncio) {
       params.ataDe = format(ataDateIncio, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
@@ -237,7 +236,46 @@ class Operacional extends Component {
     } = this.state;
 
     const csvData = operacional;
+    const arrayExcel = [];
+
+    operacional.forEach(op => {
+      const Item = op.item;
+      const ProdutoId = op.po.product.product_id;
+      const Descricao = op.po.product.product_description;
+      const Quantidade = op.qty;
+      const PlantaId = op.plant_id;
+      const GRRequested = op.gr_requested_date ? new Date(op.gr_requested_date).toLocaleDateString() : '-';
+      const GRActual = op.gr_actual ? new Date(op.gr_actual).toLocaleDateString() : '-';
+      const BookingConfirmationDate = op.booking_confirmation_date ? new Date(op.booking_confirmation_date).toLocaleDateString() : '-';
+      const ETDDate = op.etd_date ? new Date(op.etd_date).toLocaleDateString() : '-';
+      const ATDDate = op.atd_date ? new Date(op.atd_date).toLocaleDateString() : '-';
+      const ETArequestedDate = op.eta_requested_date ? new Date(op.eta_requested_date).toLocaleDateString() : '-';
+      const ATAdate = op.ata_date ? new Date(op.ata_date).toLocaleDateString() : '-';
+      const PortEntryDate = op.port_entry_date ? new Date(op.port_entry_date).toLocaleDateString() : '-';
+      const Status = op.status;
+
+      const objeto = {
+        Item,
+        ProdutoId,
+        Descricao,
+        Quantidade,
+        PlantaId,
+        GRRequested,
+        GRActual,
+        BookingConfirmationDate,
+        ETDDate,
+        ATDDate,
+        ETArequestedDate,
+        ATAdate,
+        PortEntryDate,
+        Status,
+      };
+      arrayExcel.push(objeto);
+    });
+
+    const csvData = arrayExcel;
     console.log(csvData)
+    console.log(operacional)
 
     return (
       <div>
@@ -248,7 +286,7 @@ class Operacional extends Component {
               Operacional
             </h1>
             <div className="last-wrap">
-              <CSVLink data={csvData}>
+              <CSVLink data={csvData} filename="webcol-operacional.csv">
                 <ExportExcel />
               </CSVLink>
               <div
@@ -315,29 +353,31 @@ class Operacional extends Component {
                         </label>
                         <label>
                           <input
-                          type="checkbox"
-                          name="ATRASADO"
-                          id="sts-foradoprazo"
-                          onChange={this.handleCheckbox}/>
+                            type="checkbox"
+                            name="ATRASADO"
+                            id="sts-foradoprazo"
+                            onChange={this.handleCheckbox}
+                          />
                           Fora do Prazo
                         </label>
                         <label>
                           <input
-                          type="checkbox"
-                          name="ABERTA"
-                          id="sts-emaberto"
-                          onChange={this.handleCheckbox}/>
+                            type="checkbox"
+                            name="ABERTA"
+                            id="sts-emaberto"
+                            onChange={this.handleCheckbox}
+                          />
                           Em Aberto
                         </label>
                         <label>
                           <input
-                          type="checkbox"
-                          name="SEM PRAZO"
-                          id="sts-ematraso"
-                          onChange={this.handleCheckbox}/>
+                            type="checkbox"
+                            name="SEM PRAZO"
+                            id="sts-ematraso"
+                            onChange={this.handleCheckbox}
+                          />
                           Sem Prazo
                         </label>
-
                       </div>
                     </div>
                   </Col>
