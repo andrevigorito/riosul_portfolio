@@ -235,7 +235,6 @@ class Operacional extends Component {
       page,
     } = this.state;
 
-    const csvData = operacional;
     const arrayExcel = [];
 
     operacional.forEach(op => {
