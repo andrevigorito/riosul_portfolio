@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { PopupboxManager, PopupboxContainer } from 'react-popupbox';
+import { CSVLink } from 'react-csv';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import ptBR from 'date-fns/locale/pt-BR';
 
@@ -11,11 +11,11 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 // Images
 import iconOperacional from '../img/icons/title-ope.png';
-import imgExcel from '../img/excel.png';
 
 // Components
 import Loading from './components/Loading';
 import Pagination from './components/Pagination';
+import ExportExcel from './components/ExportExcel'
 
 registerLocale('pt-BR', ptBR);
 // import FilterOperacional from './components/FilterOperacional';
@@ -82,7 +82,6 @@ class Operacional extends Component {
     const { filtroAtivo } = this.state;
     this.setState({ filtroAtivo: !filtroAtivo });
   };
-
 
   handleQueryInput = e => {
     this.setState({ po: e.target.value });
@@ -163,6 +162,9 @@ class Operacional extends Component {
       page,
     } = this.state;
 
+    const csvData = operacional;
+    console.log(csvData)
+
     return (
       <div>
         <div className="center">
@@ -172,12 +174,9 @@ class Operacional extends Component {
               Operacional
             </h1>
             <div className="last-wrap">
-              <div className="exportexcel">
-                <span>
-                  <img src={imgExcel} alt="" />
-                </span>
-                <p>Exportar Relatório</p>
-              </div>
+              <CSVLink data={csvData}>
+                <ExportExcel />
+              </CSVLink>
               <div
                 className={`btn-filter-nfs ${filtroAtivo ? 'active' : ''}`}
                 onClick={this.btnFilter}
