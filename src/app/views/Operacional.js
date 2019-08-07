@@ -33,6 +33,8 @@ class Operacional extends Component {
     page: 1,
     po: '',
     produto: '',
+    plantaDestino: '',
+    status: [],
   };
 
   handleBefore = () => {
@@ -93,6 +95,32 @@ class Operacional extends Component {
     this.setState({ produto: e.target.value });
   };
 
+  handlePlantaDestino = e => {
+    this.setState({ plantaDestino: e.target.value });
+  };
+
+  handleCheckbox = e => {
+
+    const { status } = this.state;  
+
+    if (e.target.checked) {
+      const statusExiste = status.find(s => s.status === e.target.name);
+  
+      if (!statusExiste) {
+        const data = {
+          status: e.target.name,
+        };
+    
+        this.setState({ status: [...status, data] });
+      }
+    } else {
+      const statusIndex = status.findIndex(s => s.status === e.target.name);
+
+      status.splice(statusIndex, 1);
+      this.setState({ status });
+    }
+  };
+
   handleChangeDateAta = date => {
     this.setState({ ataDateIncio: date });
   };
@@ -134,18 +162,25 @@ class Operacional extends Component {
       page,
       po,
       produto,
+      plantaDestino,
       ataDateIncio,
       ataDateFim,
       grProgramado,
       grProgramadoFim,
       grEfetivo,
       grEfetivoFim,
+      status,
     } = this.state;
 
     const params = {
       page,
       po,
       produto,
+      plantaDestino,
+    };
+
+    if (status.length !== 0) {
+      params.status = JSON.stringify(status);
     };
 
     if (ataDateIncio) {
@@ -253,7 +288,7 @@ class Operacional extends Component {
                       <input
                         type="text"
                         id="idproduto"
-                        onChange={this.handleProduto}
+                        onChange={this.handlePlantaDestino}
                       />
                     </div>
                   </Col>
@@ -264,23 +299,37 @@ class Operacional extends Component {
                         <label>
                           <input
                             type="checkbox"
-                            name=""
+                            name="NO PRAZO"
                             id="sts-dentrodoprazo"
+                            onChange={this.handleCheckbox}
                           />
                           Dentro do prazo
                         </label>
                         <label>
-                          <input type="checkbox" name="" id="sts-foradoprazo" />
+                          <input
+                          type="checkbox"
+                          name="ATRASADO"
+                          id="sts-foradoprazo"
+                          onChange={this.handleCheckbox}/>
                           Fora do Prazo
                         </label>
                         <label>
-                          <input type="checkbox" name="" id="sts-ematraso" />
-                          Em Atraso
-                        </label>
-                        <label>
-                          <input type="checkbox" name="" id="sts-emaberto" />
+                          <input
+                          type="checkbox"
+                          name="ABERTA"
+                          id="sts-emaberto"
+                          onChange={this.handleCheckbox}/>
                           Em Aberto
                         </label>
+                        <label>
+                          <input
+                          type="checkbox"
+                          name="SEM PRAZO"
+                          id="sts-ematraso"
+                          onChange={this.handleCheckbox}/>
+                          Sem Prazo
+                        </label>
+
                       </div>
                     </div>
                   </Col>
