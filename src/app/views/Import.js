@@ -11,7 +11,7 @@ import iconTitleDash from '../img/icons/title-dash.png';
 import Loading from './components/Loading';
 import DragAndDrop from './components/DragAndDrop';
 
-const socket = io('https://webcol.herokuapp.com');
+const socket = io('https://toniato.herokuapp.com');
 
 class Import extends Component {
   state = {

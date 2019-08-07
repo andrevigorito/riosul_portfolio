@@ -29,7 +29,6 @@ class ProductContainer extends Component {
     this.setState({ isLoading: true });
     API.get(`products`).then(res => {
       const products = res.data;
-      console.log(products);
       this.setState({
         products,
         isLoading: false,
@@ -47,6 +46,22 @@ class ProductContainer extends Component {
     await this.getProduct(uuid);
   }
 
+  async handleFilter(params) {
+    this.setState({ isLoading: true });
+
+    // const params = {
+    //   produto: 'D12768664',
+    // };
+    const response = await API.get(`products`, { params });
+
+    const products = response.data;
+
+    this.setState({
+      products,
+      isLoading: false,
+    });
+  }
+
   render() {
     const { products, product, isLoading } = this.state;
     return (
@@ -61,6 +76,7 @@ class ProductContainer extends Component {
             products={products}
             isLoading={isLoading}
             onDetail={uuid => this.handleDetail(uuid)}
+            onFilter={params => this.handleFilter(params)}
           />
         )}
       </div>

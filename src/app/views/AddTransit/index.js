@@ -3,6 +3,7 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import swal from '@sweetalert/with-react';
 
 import api from '../../services/api';
+import iconBack from '../../img/icons/back.png';
 
 import { ContentTransit } from './styles';
 
@@ -41,6 +42,12 @@ export default function AddTransitTime({ history }) {
     <div className="center">
       <div className="page-header">
         <h1>Transit Time</h1>
+        <div className="last-wrap">
+          <div className="btnvoltar" onClick={() => history.goBack()}>
+            <img src={iconBack} alt="" />
+            <p>Voltar</p>
+          </div>
+        </div>
       </div>
 
       <ContentTransit>

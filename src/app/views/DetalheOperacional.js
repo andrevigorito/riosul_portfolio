@@ -134,14 +134,15 @@ class DetalheOperacional extends Component {
                           <img src={iconMap} alt="" />
                           <p>Destinatário</p>
                         </div>
-                        <div className="info">
-                          <div className="row">
-                            <p>Razão Social:</p>
-                            <p>1</p>
-                          </div>
-                          <div className="row">
-                            <p>Destino:</p>
-                            <p>{deop.destination}</p>
+                          <div className="info">
+                            <div className="row">
+                              <p>Razão Social:</p>
+                              <p>{deop.shipper}</p>
+                            </div>
+                            <div className="row">
+                              <p>Origem:</p>
+                              <p>{deop.origin}</p>
+                            </div>
                           </div>
                         </div>
                       </div>
