@@ -19,12 +19,12 @@ class List extends Component {
   };
 
   state = {
+    title: 'Gerencial',
     dupont: false,
     dow: false,
-    listaFiltrada: [],
     produto: '',
     startDate: '',
-    endDate: ''
+    endDate: '',
   };
 
   btnFilter = () => {
@@ -40,23 +40,21 @@ class List extends Component {
   };
 
   handleChangeStart = date => {
-    this.setState({startDate:date})
-  }
-
+    this.setState({ startDate: date });
+  };
 
   handleChangeEnd = date => {
-    this.setState({endDate:date})
-  }
+    this.setState({ endDate: date });
+  };
 
   handleCheckboxDow = () => {
     const { dow } = this.state;
     this.setState({ dow: !dow });
   };
 
-  handleFormSubit = e => {
-    e.preventDefault();
+  handleFormSubit = () => {
     const { dupont } = this.state;
-    console.log(dupont);
+    this.setState({ dupont: !dupont });
   };
 
   handleProduto = e => {
@@ -74,31 +72,26 @@ class List extends Component {
     };
 
     if (dow) {
-      params.dow = 'dow'
+      params.dow = 'dow';
     }
 
     if (dupont) {
-      params.dupont = 'dupont'
+      params.dupont = 'dupont';
     }
 
     if (startDate) {
-      params.dataDe = format(
-        startDate,
-        "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"
-      );
+      params.dataDe = format(startDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
     }
 
     if (endDate) {
-      params.dataAre = format(endDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
+      params.dataAte = format(endDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
     }
-
 
     onFilter(params);
   };
 
   render() {
-    const { isLoading, products, onFilter } = this.props;
-    const { listaFiltrada } = this.state;
+    const { isLoading, products } = this.props;
     let total = 0;
 
     // const adicionaTotal = valor => {
@@ -143,13 +136,22 @@ class List extends Component {
                   DUPONT
                 </label>
                 <label>
-                  <input type="checkbox" name="" id="dow" onChange={this.handleCheckboxDow} />
+                  <input
+                    type="checkbox"
+                    name=""
+                    id="dow"
+                    onChange={this.handleCheckboxDow}
+                  />
                   DOW
                 </label>
               </div>
               <div className="item">
                 <label>ID / Produto:</label>
-                <input type="text" id="idproduto" onChange={this.handleProduto} />
+                <input
+                  type="text"
+                  id="idproduto"
+                  onChange={this.handleProduto}
+                />
               </div>
               <div className="item">
                 <label>Data início:</label>
@@ -191,7 +193,7 @@ class List extends Component {
               </div>
               <div className="item">
                 <label> &nbsp; </label>
-                <button type="submit" className="btn" >
+                <button type="submit" className="btn">
                   Filtrar
                 </button>
               </div>
