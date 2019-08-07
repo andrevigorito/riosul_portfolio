@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { PopupboxManager, PopupboxContainer } from 'react-popupbox';
+import { Grid, Row, Col } from 'react-flexbox-grid';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import ptBR from 'date-fns/locale/pt-BR';
 
@@ -25,11 +25,16 @@ class Operacional extends Component {
     isLoading: false,
     filtroAtivo: false,
     ataDateIncio: '',
+    ataDateFim: '',
     grProgramado: '',
+    grProgramadoFim: '',
     grEfetivo: '',
+    grEfetivoFim: '',
     page: 1,
     po: '',
     produto: '',
+    plantaDestino: '',
+    status: [],
   };
 
   handleBefore = () => {
@@ -82,61 +87,6 @@ class Operacional extends Component {
     this.setState({ filtroAtivo: !filtroAtivo });
   };
 
-  openPopupbox = () => {
-    const content = (
-      <div className="lb-justificativa">
-        <div className="content">
-          <h2>Justificativa</h2>
-          <div className="list-justificativas">
-            <div className="item">
-              <p>
-                Nulla vel placerat dolor. Etiam feugiat odio malesuada
-                pellentesque vulputate. Nulla convallis varius erat quis
-                vestibulum. Donec vitae ipsum vel elit porttitor porttitor quis
-                eu sem.
-              </p>
-              <div className="user">
-                <input type="checkbox" />
-                <p>Romero Almeida</p>
-                <p>12/07/2019 08:16:21</p>
-                <p>XO - AGENDAMENTO</p>
-              </div>
-            </div>
-            <div className="item">
-              <p>
-                Nulla vel placerat dolor. Etiam feugiat odio malesuada
-                pellentesque vulputate. Nulla convallis varius erat quis
-                vestibulum. Donec vitae ipsum vel elit porttitor porttitor quis
-                eu sem.
-              </p>
-              <div className="user">
-                <input type="checkbox" />
-                <p>Romero Almeida</p>
-                <p>12/07/2019 08:16:21</p>
-                <p>XO - AGENDAMENTO</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="wrap-btns">
-          <div className="btnclose" onClick={PopupboxManager.close}>
-            x
-          </div>
-          <button type="button" className="btn abonar">
-            Abonar
-          </button>
-          <button type="button" className="btn">
-            Justificativas
-          </button>
-          <button type="button" className="btn">
-            Adicionar
-          </button>
-        </div>
-      </div>
-    );
-    PopupboxManager.open({ content });
-  };
-
   handleQueryInput = e => {
     this.setState({ po: e.target.value });
   };
@@ -145,8 +95,38 @@ class Operacional extends Component {
     this.setState({ produto: e.target.value });
   };
 
+  handlePlantaDestino = e => {
+    this.setState({ plantaDestino: e.target.value });
+  };
+
+  handleCheckbox = e => {
+
+    const { status } = this.state;  
+
+    if (e.target.checked) {
+      const statusExiste = status.find(s => s.status === e.target.name);
+  
+      if (!statusExiste) {
+        const data = {
+          status: e.target.name,
+        };
+    
+        this.setState({ status: [...status, data] });
+      }
+    } else {
+      const statusIndex = status.findIndex(s => s.status === e.target.name);
+
+      status.splice(statusIndex, 1);
+      this.setState({ status });
+    }
+  };
+
   handleChangeDateAta = date => {
     this.setState({ ataDateIncio: date });
+  };
+
+  handleChangeDateAtaFim = date => {
+    this.setState({ ataDateFim: date });
   };
 
   handleChangeGrProgramado = date => {
@@ -155,9 +135,21 @@ class Operacional extends Component {
     });
   };
 
+  handleChangeGrProgramadoFim = date => {
+    this.setState({
+      grProgramadoFim: date,
+    });
+  };
+
   handleChangeGrEfetivo = date => {
     this.setState({
       grEfetivo: date,
+    });
+  };
+
+  handleChangeGrEfetivoFim = date => {
+    this.setState({
+      grEfetivoFim: date,
     });
   };
 
@@ -170,19 +162,32 @@ class Operacional extends Component {
       page,
       po,
       produto,
+      plantaDestino,
       ataDateIncio,
+      ataDateFim,
       grProgramado,
+      grProgramadoFim,
       grEfetivo,
+      grEfetivoFim,
+      status,
     } = this.state;
 
     const params = {
       page,
       po,
       produto,
+      plantaDestino,
+    };
+
+    if (status.length !== 0) {
+      params.status = JSON.stringify(status);
     };
 
     if (ataDateIncio) {
-      params.ata = format(ataDateIncio, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
+      params.ataDe = format(ataDateIncio, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
+    }
+    if (ataDateFim) {
+      params.ataFim = format(ataDateFim, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
     }
 
     if (grProgramado) {
@@ -191,9 +196,19 @@ class Operacional extends Component {
         "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"
       );
     }
+    if (grProgramadoFim) {
+      params.grResquestedDateFim = format(
+        grProgramadoFim,
+        "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"
+      );
+    }
 
     if (grEfetivo) {
       params.grAtual = format(grEfetivo, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
+    }
+
+    if (grEfetivoFim) {
+      params.grAtualFim = format(grEfetivoFim, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
     }
 
     const response = await API.get(`poItems`, { params });
@@ -206,18 +221,16 @@ class Operacional extends Component {
   };
 
   render() {
-    const popupboxConfig = {
-      fadeIn: true,
-      fadeInSpeed: 500,
-    };
-
     const {
       isLoading,
       operacional,
       filtroAtivo,
       grEfetivo,
+      grEfetivoFim,
       ataDateIncio,
+      ataDateFim,
       grProgramado,
+      grProgramadoFim,
       page,
     } = this.state;
 
@@ -246,73 +259,178 @@ class Operacional extends Component {
 
           <div className={`filter-box ${filtroAtivo ? 'active' : ''}`}>
             <form className="formoperacional" onSubmit={this.handleFormSubit}>
-              <div className="item">
-                <label>PO:</label>
-                <input
-                  type="text"
-                  id="idproduto"
-                  onChange={this.handleQueryInput}
-                  autoComplete="false"
-                />
-              </div>
+              <Grid>
+                <Row>
+                  <Col xs={12} md={2}>
+                    <div className="item">
+                      <label>PO:</label>
+                      <input
+                        type="text"
+                        id="idproduto"
+                        onChange={this.handleQueryInput}
+                        autoComplete="false"
+                      />
+                    </div>
+                  </Col>
+                  <Col xs={12} md={2}>
+                    <div className="item">
+                      <label>Produto:</label>
+                      <input
+                        type="text"
+                        id="idproduto"
+                        onChange={this.handleProduto}
+                      />
+                    </div>
+                  </Col>
+                  <Col xs={12} md={2}>
+                    <div className="item">
+                      <label>Planta Destino:</label>
+                      <input
+                        type="text"
+                        id="idproduto"
+                        onChange={this.handlePlantaDestino}
+                      />
+                    </div>
+                  </Col>
+                  <Col xs={12} md={6}>
+                    <div className="item">
+                      <label>Status:</label>
+                      <div className="boxstatus">
+                        <label>
+                          <input
+                            type="checkbox"
+                            name="NO PRAZO"
+                            id="sts-dentrodoprazo"
+                            onChange={this.handleCheckbox}
+                          />
+                          Dentro do prazo
+                        </label>
+                        <label>
+                          <input
+                          type="checkbox"
+                          name="ATRASADO"
+                          id="sts-foradoprazo"
+                          onChange={this.handleCheckbox}/>
+                          Fora do Prazo
+                        </label>
+                        <label>
+                          <input
+                          type="checkbox"
+                          name="ABERTA"
+                          id="sts-emaberto"
+                          onChange={this.handleCheckbox}/>
+                          Em Aberto
+                        </label>
+                        <label>
+                          <input
+                          type="checkbox"
+                          name="SEM PRAZO"
+                          id="sts-ematraso"
+                          onChange={this.handleCheckbox}/>
+                          Sem Prazo
+                        </label>
 
-              <div className="item">
-                <label>Produto:</label>
-                <input
-                  type="text"
-                  id="idproduto"
-                  onChange={this.handleProduto}
-                />
-              </div>
+                      </div>
+                    </div>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={12} md={3}>
+                    <div className="item">
+                      <label>ATA:</label>
+                      <span>
+                        <DatePicker
+                          locale="pt-BR"
+                          selected={ataDateIncio}
+                          selectsStart
+                          startDate={ataDateIncio}
+                          endDate={ataDateFim}
+                          onChange={this.handleChangeDateAta}
+                          dateFormat="dd/MM/yyyy"
+                          placeholderText="De"
+                        />
 
-              <div className="item">
-                <label>ATA:</label>
+                        <DatePicker
+                          locale="pt-BR"
+                          selected={ataDateFim}
+                          selectsEnd
+                          startDate={ataDateIncio}
+                          endDate={ataDateFim}
+                          onChange={this.handleChangeDateAtaFim}
+                          dateFormat="dd/MM/yyyy"
+                          placeholderText="Até"
+                        />
+                      </span>
+                    </div>
+                  </Col>
+                  <Col xs={12} md={3}>
+                    <div className="item">
+                      <label>GR Programado:</label>
+                      <span>
+                        <DatePicker
+                          locale="pt-BR"
+                          selected={grProgramado}
+                          selectsStart
+                          onChange={this.handleChangeGrProgramado}
+                          startDate={grProgramado}
+                          endDate={grProgramadoFim}
+                          dateFormat="dd/MM/yyyy"
+                          placeholderText="De"
+                        />
+                        <DatePicker
+                          locale="pt-BR"
+                          selected={grProgramadoFim}
+                          selectsEnd
+                          onChange={this.handleChangeGrProgramadoFim}
+                          startDate={grProgramado}
+                          endDate={grProgramadoFim}
+                          dateFormat="dd/MM/yyyy"
+                          placeholderText="Até"
+                        />
+                      </span>
+                    </div>
+                  </Col>
 
-                <DatePicker
-                  locale="pt-BR"
-                  selected={ataDateIncio}
-                  selectsStart
-                  startDate={ataDateIncio}
-                  onChange={this.handleChangeDateAta}
-                  dateFormat="dd/MM/yyyy"
-                />
-              </div>
-
-              <div className="item">
-                <label>GR Programado:</label>
-
-                <DatePicker
-                  locale="pt-BR"
-                  selected={grProgramado}
-                  selectsStart
-                  onChange={this.handleChangeGrProgramado}
-                  startDate={grProgramado}
-                  dateFormat="dd/MM/yyyy"
-                />
-              </div>
-              <div className="item">
-                <label>GR Efetivo:</label>
-
-                <DatePicker
-                  locale="pt-BR"
-                  selected={grEfetivo}
-                  selectsEnd
-                  onChange={this.handleChangeGrEfetivo}
-                  startDate={grEfetivo}
-                  dateFormat="dd/MM/yyyy"
-                />
-              </div>
-
-              <div className="item">
-                <label> &nbsp; </label>
-                <button type="submit" className="btn">
-                  Filtrar
-                </button>
-              </div>
+                  <Col xs={12} md={3}>
+                    <div className="item">
+                      <label>GR Efetivo:</label>
+                      <span>
+                        <DatePicker
+                          locale="pt-BR"
+                          selected={grEfetivo}
+                          selectsEnd
+                          onChange={this.handleChangeGrEfetivo}
+                          startDate={grEfetivo}
+                          endDate={grEfetivoFim}
+                          dateFormat="dd/MM/yyyy"
+                          placeholderText="De"
+                        />
+                        <DatePicker
+                          locale="pt-BR"
+                          selected={grEfetivoFim}
+                          selectsEnd
+                          onChange={this.handleChangeGrEfetivoFim}
+                          startDate={grEfetivo}
+                          endDate={grEfetivoFim}
+                          dateFormat="dd/MM/yyyy"
+                          placeholderText="Até"
+                        />
+                      </span>
+                    </div>
+                  </Col>
+                  <Col xs={12} md={3}>
+                    <div className="item">
+                      <label> &nbsp; </label>
+                      <button type="submit" className="btn">
+                        Filtrar
+                      </button>
+                    </div>
+                  </Col>
+                </Row>
+              </Grid>
             </form>
           </div>
 
-          <PopupboxContainer {...popupboxConfig} />
           <div className="list-ope">
             <header className="header-list-ope">
               <p className="critico">Crit.</p>
