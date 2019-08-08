@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Cropper from 'react-easy-crop';
+import { ImagePicker } from 'react-file-picker';
 import InputMask from 'react-input-mask';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { Redirect } from 'react-router-dom';
@@ -30,23 +31,12 @@ class NovoUsuario extends Component {
     console.log(croppedArea, croppedAreaPixels);
   };
 
-  getPhoto = async file => {
-    const imageBase64 = await this.getBase64FromFile(file[0]);
+  getPhoto = file => {
     this.setState({
-      newFoto: imageBase64,
+      newFoto: file,
     });
+    console.log('ddd')
   };
-
-  async getBase64FromFile(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = event => {
-        const data = event.target.result;
-        resolve(data);
-      };
-      reader.readAsBinaryString(file);
-    });
-  }
 
   handleChange = field => e => {
     this.setState({
@@ -191,6 +181,19 @@ class NovoUsuario extends Component {
                 <Col xs={12}>
                   <div className="item">
                     <label>Foto de perfil:</label>
+                    <ImagePicker
+                      extensions={['jpg', 'jpeg', 'png']}
+                      dims={{
+                        minWidth: 100,
+                        maxWidth: 500,
+                        minHeight: 100,
+                        maxHeight: 500,
+                      }}
+                      onChange={base64 => this.getPhoto(base64)}
+                      onError={errMsg => alert(errMsg)}
+                    >
+                      <button>Click to upload image</button>
+                    </ImagePicker>
                     <input
                       type="file"
                       id="imguser"
@@ -251,7 +254,11 @@ class NovoUsuario extends Component {
               <Row>
                 <Col xs={12}>
                   <div className="item">
-                    <button type="button" onClick={this.addUser} className="btn">
+                    <button
+                      type="button"
+                      onClick={this.addUser}
+                      className="btn"
+                    >
                       Cadastrar
                     </button>
                   </div>
