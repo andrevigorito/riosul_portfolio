@@ -16,7 +16,7 @@ class NovoUsuario extends Component {
     newtel: '',
     newadmin: false,
     type: 'password',
-    newfoto: '',
+    newFoto: '',
     redirect: false,
     crop: { x: 0, y: 0 },
     aspect: 4 / 4,
@@ -92,7 +92,7 @@ class NovoUsuario extends Component {
       newtel,
       newpassword,
       newadmin,
-      newfoto,
+      newFoto,
       crop,
       aspect,
     } = this.state;
@@ -197,7 +197,7 @@ class NovoUsuario extends Component {
                     <input
                       type="file"
                       id="imguser"
-                      value={newfoto}
+                      value={newFoto}
                       onChange={event => this.getPhoto(event.target.files)}
                     />
                   </div>
@@ -268,7 +268,7 @@ class NovoUsuario extends Component {
           </form>
           <div className="boxcroped">
             <Cropper
-              image={newfoto}
+              image={newFoto}
               crop={crop}
               aspect={aspect}
               onCropChange={this.onCropChange}
