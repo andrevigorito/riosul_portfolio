@@ -36,7 +36,7 @@ class NovoUsuario extends Component {
 
   getPhoto = file => {
     this.setState({
-      newFoto: file
+      newfoto: file
     });
   };
 
@@ -124,7 +124,7 @@ class NovoUsuario extends Component {
               <label>Foto de perfil:</label>
               <ImagePicker
                 extensions={['jpg', 'jpeg', 'png']}
-                dims={{minWidth: 100, maxWidth: 500, minHeight: 100, maxHeight: 500}}
+                dims={{minWidth: 100, maxWidth: 10000, minHeight: 100, maxHeight: 10000}}
                 onChange={base64 => (this.getPhoto(base64))}
                 onError={errMsg => (alert(errMsg))}
               >
