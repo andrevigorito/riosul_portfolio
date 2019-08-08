@@ -388,15 +388,19 @@ h1{
       border-radius: 0 6px 6px 0;
       border-right: solid 1px #ddd;
     }
-    &:hover{
+    &:hover, &.active{
       background: #1abc9c;
       color: #fff;
     }
-
-  }
-
-  .active {
-    background: #1abc9c;
-    color: #fff;
+    &:disabled{
+      background: #e6e6e6;
+      color: #999;
+      cursor: auto;
+      opacity: 0.5;
+      &:hover{
+        background: #e6e6e6;
+        color: #999;
+      }
+    }
   }
 }
