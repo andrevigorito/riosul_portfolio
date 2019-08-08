@@ -491,7 +491,7 @@ class Operacional extends Component {
               <p className="pd">P. Destino</p>
               <p className="ata">ATA</p>
               <p className="grp">GR Prog.</p>
-              <p className="gre">GR Atual.</p>
+              <p className="gre">GR Atual</p>
               <p className="status">Status / Just.</p>
             </header>
 
