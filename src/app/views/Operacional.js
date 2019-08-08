@@ -33,6 +33,7 @@ class Operacional extends Component {
     grEfetivo: '',
     grEfetivoFim: '',
     page: 1,
+    totalPages: 1,
     po: '',
     produto: '',
     plantaDestino: '',
@@ -55,8 +56,23 @@ class Operacional extends Component {
     }));
   };
 
+  handleFirst = () => {
+    this.setState({
+      page: 1,
+    });
+  };
+
+  handleLast = () => {
+    const { totalPages } = this.state;
+
+    this.setState({
+      page: totalPages,
+    });
+  };
+
   componentDidUpdate(prevProps, prevState) {
     const { page } = this.state;
+
     if (page !== prevState.page) {
       this.getPoItems();
     }
@@ -69,20 +85,74 @@ class Operacional extends Component {
   async getPoItems() {
     this.setState({ isLoading: true });
 
-    const { page } = this.state;
+    const {
+      po,
+      page,
+      produto,
+      plantaDestino,
+      ataDateIncio,
+      ataDateFim,
+      grProgramado,
+      grProgramadoFim,
+      grEfetivo,
+      grEfetivoFim,
+      status,
+    } = this.state;
 
     const params = {
       page,
+      po,
+      produto,
+      plantaDestino,
     };
 
+    if (status.length !== 0) {
+      params.status = JSON.stringify(status);
+    }
+
+    if (ataDateIncio) {
+      params.ataDe = format(ataDateIncio, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
+    }
+    if (ataDateFim) {
+      params.ataFim = format(ataDateFim, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
+    }
+
+    if (grProgramado) {
+      params.grResquestedDate = format(
+        grProgramado,
+        "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"
+      );
+    }
+    if (grProgramadoFim) {
+      params.grResquestedDateFim = format(
+        grProgramadoFim,
+        "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"
+      );
+    }
+
+    if (grEfetivo) {
+      params.grAtual = format(grEfetivo, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
+    }
+
+    if (grEfetivoFim) {
+      params.grAtualFim = format(grEfetivoFim, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
+    }
+
     const response = await API.get(`poItems`, { params });
-    const { data: operacional } = response;
+    const { data: operacional, total: totalPages } = response.data;
 
     this.setState({
       operacional,
       isLoading: false,
+      totalPages,
     });
   }
+
+  handleFormSubit = async e => {
+    e.preventDefault();
+
+    this.getPoItems();
+  };
 
   btnFilter = () => {
     const { filtroAtivo } = this.state;
@@ -154,73 +224,6 @@ class Operacional extends Component {
     });
   };
 
-  handleFormSubit = async e => {
-    e.preventDefault();
-
-    this.setState({ isLoading: true });
-
-    const {
-      page,
-      po,
-      produto,
-      plantaDestino,
-      ataDateIncio,
-      ataDateFim,
-      grProgramado,
-      grProgramadoFim,
-      grEfetivo,
-      grEfetivoFim,
-      status,
-    } = this.state;
-
-    const params = {
-      page,
-      po,
-      produto,
-      plantaDestino,
-    };
-
-    if (status.length !== 0) {
-      params.status = JSON.stringify(status);
-    }
-
-    if (ataDateIncio) {
-      params.ataDe = format(ataDateIncio, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
-    }
-    if (ataDateFim) {
-      params.ataFim = format(ataDateFim, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
-    }
-
-    if (grProgramado) {
-      params.grResquestedDate = format(
-        grProgramado,
-        "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"
-      );
-    }
-    if (grProgramadoFim) {
-      params.grResquestedDateFim = format(
-        grProgramadoFim,
-        "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"
-      );
-    }
-
-    if (grEfetivo) {
-      params.grAtual = format(grEfetivo, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
-    }
-
-    if (grEfetivoFim) {
-      params.grAtualFim = format(grEfetivoFim, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
-    }
-
-    const response = await API.get(`poItems`, { params });
-    const operacional = response.data;
-
-    this.setState({
-      operacional,
-      isLoading: false,
-    });
-  };
-
   render() {
     const {
       isLoading,
@@ -233,6 +236,7 @@ class Operacional extends Component {
       grProgramado,
       grProgramadoFim,
       page,
+      totalPages,
     } = this.state;
 
     const arrayExcel = [];
@@ -274,7 +278,6 @@ class Operacional extends Component {
 
     const csvData = arrayExcel;
     console.log(csvData)
-    console.log(operacional)
 
     return (
       <div>
@@ -537,6 +540,9 @@ class Operacional extends Component {
               page={page}
               onAfter={() => this.handleAfter}
               onBefore={() => this.handleBefore}
+              onFirst={() => this.handleFirst}
+              onLast={() => this.handleLast}
+              totalPages={totalPages}
             />
           </div>
         </div>
