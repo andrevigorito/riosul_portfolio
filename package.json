@@ -15,6 +15,7 @@
     "react-easy-crop": "^1.14.0",
     "react-file-picker": "0.0.6",
     "react-flexbox-grid": "^2.1.2",
+    "react-input-mask": "^2.0.4",
     "react-popupbox": "^2.0.8",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",

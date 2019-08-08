@@ -132,7 +132,7 @@ class Usuarios extends Component {
     // tem que buscar os USUARIOS
     this.setState({ isLoading: true });
     const users = await API.get(`users`);
-    // console.log(users.data);
+    console.log(users.data);
     this.setState({
       users: users.data,
       isLoading: false,
@@ -150,8 +150,11 @@ class Usuarios extends Component {
       users,
       addUserForm,
       newusername,
+      newname,
+      newtel,
       newpassword,
       newadmin,
+      newfoto,
     } = this.state;
     return (
       <div>
@@ -159,11 +162,9 @@ class Usuarios extends Component {
           <div className="page-header">
             <h1>Usuários</h1>
             <div className="last-wrap">
-            <Link onClick={this.btnMenu} to="/usuarios/novo">
-              <BtnCadastrar>
-                Adicionar usuário
-              </BtnCadastrar>
-            </Link>
+              <Link onClick={this.btnMenu} to="/usuarios/novo">
+                <BtnCadastrar>Adicionar usuário</BtnCadastrar>
+              </Link>
             </div>
           </div>
           <div>
