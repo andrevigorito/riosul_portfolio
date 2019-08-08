@@ -1,22 +1,18 @@
 import React, { Component } from 'react';
 import Cropper from 'react-easy-crop';
-import { ImagePicker } from 'react-file-picker';
-import InputMask from 'react-input-mask';
-import { Grid, Row, Col } from 'react-flexbox-grid';
 import { Redirect } from 'react-router-dom';
 import { NewUsuario, BtnMostrar } from './styles';
 import API from '../../services/api';
+import { ImagePicker } from 'react-file-picker'
 
 // eslint-disable-next-line react/prefer-stateless-function
 class NovoUsuario extends Component {
   state = {
-    newname: '',
     newusername: '',
     newpassword: '',
-    newtel: '',
     newadmin: false,
     type: 'password',
-    newfoto: '',
+    newFoto: '',
     redirect: false,
     crop: { x: 0, y: 0 },
     aspect: 4 / 4,
@@ -31,18 +27,17 @@ class NovoUsuario extends Component {
     console.log(croppedArea, croppedAreaPixels);
   };
 
-  getPhoto = file => {
+  handleChange = field => e => {
     this.setState({
-      newFoto: file,
+      [field]: e.target.value,
     });
-    console.log('ddd')
+    // console.log(this.state.newadmin);
   };
 
   getPhoto = file => {
     this.setState({
-      newfoto: file
+      newFoto: file
     });
-    // console.log(this.state.newadmin);
   };
 
 
@@ -53,13 +48,11 @@ class NovoUsuario extends Component {
   };
 
   addUser = async () => {
-    const { newusername, newpassword, newadmin, newtel, newname } = this.state;
+    const { newusername, newpassword, newadmin } = this.state;
 
     const newUser = await API.post(`users`, {
       user: {
         username: newusername,
-        name: newname,
-        tel: newtel,
         password: newpassword,
         admin: newadmin,
       },
@@ -89,11 +82,9 @@ class NovoUsuario extends Component {
     }
     const {
       newusername,
-      newname,
-      newtel,
       newpassword,
       newadmin,
-      newfoto,
+      newFoto,
       crop,
       aspect,
     } = this.state;
@@ -104,179 +95,73 @@ class NovoUsuario extends Component {
         </div>
         <NewUsuario>
           <form>
-            <Grid>
-              <Row>
-                <Col xs={12}>
-                  <div className="nfs item">
-                    <label>
-                      <input
-                        type="checkbox"
-                        name=""
-                        id="checkAdmin"
-                        value={newadmin}
-                        onChange={this.handleChangeAdmin}
-                      />
-                      Administrador
-                    </label>
-                  </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={12} md={6}>
-                  <div className="item">
-                    <label>Nome:</label>
-                    <input
-                      type="text"
-                      value={newname}
-                      onChange={this.handleChange('newname')}
-                      placeholder="Digite o seu nome"
-                      id="nu-name"
-                    />
-                  </div>
-                </Col>
-                <Col xs={12} md={6}>
-                  <div className="item">
-                    <label>Telefone:</label>
-                    <InputMask
-                      value={newtel}
-                      onChange={this.handleChange('newtel')}
-                      placeholder="Digite o seu telefone"
-                      mask="(99) 99999-9999"
-                      maskChar=" "
-                    />
-                  </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={12} md={6}>
-                  <div className="item">
-                    <label>E-mail:</label>
-                    <input
-                      type="email"
-                      value={newusername}
-                      onChange={this.handleChange('newusername')}
-                      placeholder="Digite o e-mail"
-                      id="txtemail"
-                    />
-                  </div>
-                </Col>
-                <Col xs={12} md={6}>
-                  <div className="item">
-                    <label>Senha:</label>
-                    <input
-                      type={this.state.type}
-                      value={newpassword}
-                      onChange={this.handleChange('newpassword')}
-                      placeholder="Digite a senha"
-                      id="txtpassword"
-                    />
-                    <BtnMostrar
-                      type="button"
-                      className={this.state.type === 'text' ? 'hide' : 'show'}
-                      onClick={this.showHide}
-                    />
-                  </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={12}>
-                  <div className="item">
-                    <label>Foto de perfil:</label>
-                    <ImagePicker
-                      extensions={['jpg', 'jpeg', 'png']}
-                      dims={{
-                        minWidth: 100,
-                        maxWidth: 500,
-                        minHeight: 100,
-                        maxHeight: 500,
-                      }}
-                      onChange={base64 => this.getPhoto(base64)}
-                      onError={errMsg => alert(errMsg)}
-                    >
-                      <button>Click to upload image</button>
-                    </ImagePicker>
-                    <input
-                      type="file"
-                      id="imguser"
-                      value={newfoto}
-                      onChange={event => this.getPhoto(event.target.files)}
-                    />
-                  </div>
-                </Col>
-              </Row>
+            <div className="item">
+              <label>E-mail:</label>
+              <input
+                type="email"
+                value={newusername}
+                onChange={this.handleChange('newusername')}
+                placeholder="Digite o e-mail"
+                id="txtemail"
+              />
+            </div>
+            <div className="item">
+              <label>Senha:</label>
+              <input
+                type={this.state.type}
+                value={newpassword}
+                onChange={this.handleChange('newpassword')}
+                placeholder="Digite a senha"
+                id="txtpassword"
+              />
+              <BtnMostrar
+                type="button"
+                className={this.state.type === 'text' ? 'hide' : 'show'}
+                onClick={this.showHide}
+              />
+            </div>
+            <div className="item">
+              <label>Foto de perfil:</label>
+              <ImagePicker
+                extensions={['jpg', 'jpeg', 'png']}
+                dims={{minWidth: 100, maxWidth: 10000, minHeight: 100, maxHeight: 10000}}
+                onChange={base64 => (this.getPhoto(base64))}
+                onError={errMsg => (alert(errMsg))}
+              >
+                <button>
+                  Click to upload image
+                </button>
+              </ImagePicker>
+            </div>
+            <div className="item iCropper">
+              <Cropper
+                image={newFoto}
+                crop={crop}
+                aspect={aspect}
+                onCropChange={this.onCropChange}
+                onCropComplete={this.onCropComplete}
+                onZoomChange={this.onZoomChange}
+              />
+            </div>
+            <div className="nfs item">
+              <label>
+                <input
+                  type="checkbox"
+                  name=""
+                  id="checkAdmin"
+                  value={newadmin}
+                  onChange={this.handleChangeAdmin}
+                />
+                Administrador
+              </label>
+            </div>
 
-              <Row>
-                <Col xs={12} md={3}>
-                  <div className="nfs item">
-                    <label>Notificações:</label>
-                    <label>
-                      <input
-                        type="checkbox"
-                        name=""
-                        id="notemail"
-                        // value={newadmin}
-                        // onChange={this.handleChangeAdmin}
-                      />
-                      E-mail
-                    </label>
-                  </div>
-                </Col>
-                <Col xs={12} md={3}>
-                  <div className="nfs item">
-                    <label>&nbsp;</label>
-                    <label>
-                      <input
-                        type="checkbox"
-                        name=""
-                        id="notwhats"
-                        // value={newadmin}
-                        // onChange={this.handleChangeAdmin}
-                      />
-                      WhatsApp
-                    </label>
-                  </div>
-                </Col>
-                <Col xs={12} md={3}>
-                  <div className="nfs item">
-                    <label>&nbsp;</label>
-                    <label>
-                      <input
-                        type="checkbox"
-                        name=""
-                        id="notsms"
-                        // value={newadmin}
-                        // onChange={this.handleChangeAdmin}
-                      />
-                      SMS
-                    </label>
-                  </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={12}>
-                  <div className="item">
-                    <button
-                      type="button"
-                      onClick={this.addUser}
-                      className="btn"
-                    >
-                      Cadastrar
-                    </button>
-                  </div>
-                </Col>
-              </Row>
-            </Grid>
+            <div className="item">
+              <button type="button" onClick={this.addUser} className="btn">
+                Cadastrar
+              </button>
+            </div>
           </form>
-          <div className="boxcroped">
-            <Cropper
-              image={newfoto}
-              crop={crop}
-              aspect={aspect}
-              onCropChange={this.onCropChange}
-              onCropComplete={this.onCropComplete}
-              onZoomChange={this.onZoomChange}
-            />
-          </div>
         </NewUsuario>
       </div>
     );
