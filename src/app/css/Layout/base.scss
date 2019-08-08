@@ -5,33 +5,77 @@
 	justify-content: space-between;
 	margin-bottom: 30px;
 	form{
-        input{
-            background: none;
-            border: 0;
-            padding: 0 0 0 30px;
-            border-bottom: solid 1px #000;
-            height: 30px;
-            font-size: 14px;
-            font-family: $font;
-            font-weight: 300;
-            color: #8B8D97;
-            box-sizing: border-box;
-            &.date{
-                    background:url(/img/icons/icon-calendar.png) no-repeat left;
-                    width: 130px;
-                    margin-left: 20px;
-            }
-            &.search{
-                    background:url(/img/icons/icon-search.png) no-repeat left;
-                    width: 220px;
-                    margin-left: 20px;
-            }
+    input{
+        background: none;
+        border: 0;
+        padding: 0 0 0 30px;
+        border-bottom: solid 1px #000;
+        height: 30px;
+        font-size: 14px;
+        font-family: $font;
+        font-weight: 300;
+        color: #8B8D97;
+        box-sizing: border-box;
+        &.date{
+          background:url(/img/icons/icon-calendar.png) no-repeat left;
+          width: 130px;
+          margin-left: 20px;
         }
+        &.search{
+          background:url(/img/icons/icon-search.png) no-repeat left;
+          width: 220px;
+          margin-left: 20px;
+        }
+    }
 	}
 	.last-wrap{
-        display: flex;
-        align-items: center;
-	}
+      display: flex;
+      align-items: center;
+  }
+  .exportexcel{
+    box-sizing: border-box;
+    height: 40px;
+    border-radius: 6px;
+    padding: 0 10px;
+    background: #f9f9f9;
+    transition: all ease .2s;
+    margin-right: 10px;
+    overflow: hidden;
+    position: relative;
+    span{
+      position: absolute;
+      width: 100%;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: translateY(-200%);
+      transition: all ease .2s;
+      margin-left: -10px;
+    }
+    img{
+      height: 25px;
+      transition: all ease .2s;
+
+    }
+    p{
+      font-size: 12px;
+      line-height: 40px;
+      transition: all ease .4s;
+      transform: translateY(0%);
+      color: #999;
+    }
+    &:hover{
+      background: #408c44;
+      span{
+        transform: translateY(0);
+      }
+      p{
+        transform: translateY(200%);
+        opacity: 1;
+      }
+    }
+  }
 	.btnvoltar{
 		display: flex;
 		align-items: center;
@@ -167,6 +211,22 @@
 					margin-right: 10px;
 				}
 			}
+    }
+    .boxstatus{
+
+			height: 50px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			label{
+				margin-bottom: 0;
+				display: flex;
+				align-items: center;
+				margin-right: 10px;
+				input{
+					margin-right: 10px;
+				}
+			}
 		}
 		input, select{
 			width: 240px;
@@ -192,7 +252,7 @@
 			background: url(../img/icons/icon-calendar.png)no-repeat 90%;
 		}
 		input[type="checkbox"]{
-			width: 18px;
+			width: 18px !important;
 			height: 18px;
 			appearance: none;
 			padding: 0;
@@ -217,6 +277,19 @@
 			}
 		}
 		&.formoperacional{
+      .row{
+        margin-bottom: 20px;
+        button{
+          width: 100%;
+        }
+      }
+      .item span {
+        display: flex;
+        justify-content: space-between;
+        .react-datepicker-wrapper{
+          width: 48%;
+        }
+      }
 			input{
 				width: 100%;
 			}
@@ -315,10 +388,19 @@ h1{
       border-radius: 0 6px 6px 0;
       border-right: solid 1px #ddd;
     }
-    &:hover{
+    &:hover, &.active{
       background: #1abc9c;
       color: #fff;
     }
-
+    &:disabled{
+      background: #e6e6e6;
+      color: #999;
+      cursor: auto;
+      opacity: 0.5;
+      &:hover{
+        background: #e6e6e6;
+        color: #999;
+      }
+    }
   }
 }
