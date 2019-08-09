@@ -120,29 +120,7 @@ class NovoUsuario extends Component {
                 onClick={this.showHide}
               />
             </div>
-            <div className="item">
-              <label>Foto de perfil:</label>
-              <ImagePicker
-                extensions={['jpg', 'jpeg', 'png']}
-                dims={{minWidth: 100, maxWidth: 10000, minHeight: 100, maxHeight: 10000}}
-                onChange={base64 => (this.getPhoto(base64))}
-                onError={errMsg => (alert(errMsg))}
-              >
-                <button>
-                  Click to upload image
-                </button>
-              </ImagePicker>
-            </div>
-            <div className="item iCropper">
-              <Cropper
-                image={newFoto}
-                crop={crop}
-                aspect={aspect}
-                onCropChange={this.onCropChange}
-                onCropComplete={this.onCropComplete}
-                onZoomChange={this.onZoomChange}
-              />
-            </div>
+            
             <div className="nfs item">
               <label>
                 <input
