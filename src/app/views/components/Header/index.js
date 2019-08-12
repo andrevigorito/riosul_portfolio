@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import API from '../../services/api';
+import API from '../../../services/api';
 
-import logo from '../../img/logo.png';
-import imgUser from '../../img/user-header.png';
+import logo from '../../../img/logo.png';
+import imgUser from '../../../img/user-header.png';
+
+import { UserImage } from './styles';
 
 export default function Header() {
   const [useruuid, setUserUuid] = useState(localStorage.getItem('USER_UUID'));
+  const [userPhoto, setUserPhoto] = useState(imgUser);
 
   async function markAlertAsRead(alertObj) {
     await API.put(`alerts/read/`, {
@@ -30,8 +33,19 @@ export default function Header() {
     });
   }
 
+  async function getUser() {
+    const response = await API.get(`users/${useruuid}`);
+
+    const { photo } = response.data;
+
+    if (photo !== 'photo') {
+      setUserPhoto(photo);
+    }
+  }
+
   useEffect(() => {
     async function load() {
+      await getUser();
       await setUserUuid(localStorage.getItem('USER_UUID'));
       await showUnreadAlerts();
     }
@@ -59,7 +73,7 @@ export default function Header() {
           </Route>
         </nav>
         <div className="user-header">
-          <img src={imgUser} className="logo" alt="" />
+          <UserImage src={userPhoto} className="logo" alt="" />
           <div className="icon-menu" onClick={btnMenu}>
             <span />
             <span />

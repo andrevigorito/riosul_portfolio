@@ -250,7 +250,7 @@ class Usuarios extends Component {
                     {usuario.admin ? 'Administrador' : 'Usuário'}
                   </p>
                   <p className="date">
-                    {new Date(usuario.createdAt).toLocaleDateString()}
+                    {new Date(usuario.createdAt).toLocaleString()}
                   </p>
                   <p className="alertmsg">
                     <button
