@@ -5,14 +5,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { Route, Link } from 'react-router-dom';
-import imgUser from '../../img/user-header.png';
-import iconLogout from '../../img/icons/icon-logout.png';
+import imgUser from '../../../img/user-header.png';
+import iconLogout from '../../../img/icons/icon-logout.png';
+
+import { UserImage } from './styles';
 
 class Menu extends Component {
   static propTypes = {
     onLogout: PropTypes.func.isRequired,
     username: PropTypes.string.isRequired,
     empresa: PropTypes.string.isRequired,
+    photo: PropTypes.string.isRequired,
   };
 
   btnMenu = () => {
@@ -23,7 +26,9 @@ class Menu extends Component {
   };
 
   render() {
-    const { onLogout, username, empresa } = this.props;
+    const { onLogout, username, empresa, photo } = this.props;
+
+    console.log(photo);
 
     return (
       <div className="main-menu">
@@ -35,7 +40,7 @@ class Menu extends Component {
               <span />
             </div>
             <div className="user">
-              <img src={imgUser} alt="" />
+              <UserImage src={photo} alt="" />
               <p>{username}</p>
               <p>
                 <small>{empresa}</small>

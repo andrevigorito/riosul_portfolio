@@ -22,8 +22,8 @@ import EditTransitTime from './views/EditTransit';
 import TransitTimeList from './views/TransitTimeList';
 
 // Components
-import Menu from './views/components/Menu';
-import Header from './views/components/Header';
+import Menu from './views/components/Menu/index';
+import Header from './views/components/Header/index';
 
 // Images
 
@@ -39,16 +39,19 @@ class App extends Component {
     isAuth: false,
     username: '',
     useruuid: '',
+    photo: '',
   };
 
   componentDidMount() {
     const username = localStorage.getItem('USER_USERNAME');
     const useruuid = localStorage.getItem('USER_UUID');
+    const photo = localStorage.getItem('USER_PHOTO');
     if (username && useruuid) {
       this.setState({
         isAuth: true,
         username,
         useruuid,
+        photo,
       });
     }
 
@@ -123,14 +126,17 @@ class App extends Component {
         { headers: { 'Content-Type': 'application/json' } }
       );
 
+      console.log(logado);
+
       if (lembrar) {
-        this.saveLocalStorage(email, logado.data.uuid);
+        this.saveLocalStorage(email, logado.data.uuid, logado.data.photo);
       }
 
       this.setState({
         isAuth: true,
         username: email,
         useruuid: logado.data.uuid,
+        photo: logado.data.photo,
       });
       // console.log('logado.data', logado.data);
     } catch (err) {
@@ -146,6 +152,7 @@ class App extends Component {
     });
     localStorage.removeItem('USER_USERNAME');
     localStorage.removeItem('USER_UUID');
+    localStorage.removeItem('USER_PHOTO');
     localStorage.removeItem('USER');
   };
 
@@ -153,9 +160,10 @@ class App extends Component {
    * Esse método de login DEVE SER MELHORADO, pois esta solução é temporária
    * e abre brechas de segurança.
    */
-  saveLocalStorage = (USERNAME, UUID) => {
+  saveLocalStorage = (USERNAME, UUID, PHOTO) => {
     localStorage.setItem('USER_USERNAME', USERNAME);
     localStorage.setItem('USER_UUID', UUID);
+    localStorage.setItem('USER_PHOTO', PHOTO);
   };
 
   /**
@@ -169,7 +177,7 @@ class App extends Component {
   };
 
   render() {
-    const { isAuth, username, useruuid } = this.state;
+    const { isAuth, username, useruuid, photo } = this.state;
 
     return (
       <div className="App">
@@ -189,6 +197,7 @@ class App extends Component {
                 onLogout={this.handleLogout}
                 username={username}
                 empresa=""
+                photo={photo}
               />
               <Header />
               <ToastContainer hideProgressBar autoClose={false} />
@@ -196,51 +205,54 @@ class App extends Component {
           ) : null}
 
           <Switch>
-          
-          {isAuth && (
-            <Route path="/gerencial/:uuid" exact component={Detalhe} />
-          )}
-          {isAuth && (
-            <Route path="/gerencial" exact component={ProductContainer} />
-          )}
-          {isAuth && <Route path="/dashboard" exact component={Dashboard} />}
-          {isAuth && <Route path="/import" exact component={Import} />}
-          {isAuth && (
-            <Route
-              path="/alertas"
-              exact
-              // useruuid={useruuid}
-              // component={Alertas}
-              render={props => <Alertas {...props} useruuid={useruuid} />}
-            />
-          )}
-          {isAuth && <Route path="/usuarios" exact component={Usuarios} />}
-          {isAuth && (
-            <Route path="/usuarios/novo" exact component={NovoUsuario} />
-          )}
-          {isAuth && (
-            <Route path="/transit" exact component={TransitTimeList} />
-          )}
-          {isAuth && (
-            <Route path="/novo/transit/" exact component={AddTransitTime} />
-          )}
-          {isAuth && (
-            <Route
-              path="/transit/:uuid"
-              exact
-              component={EditTransitTime}
-              isPrivate
-            />
-          )}
-          {isAuth && (
-            <Route path="/operacional" exact component={Operacional} />
-          )}
-          {isAuth && <Route path="/operacional/detalhe/:uuid" exact component={DetalheOperacional} />}
+            {isAuth && (
+              <Route path="/gerencial/:uuid" exact component={Detalhe} />
+            )}
+            {isAuth && (
+              <Route path="/gerencial" exact component={ProductContainer} />
+            )}
+            {isAuth && <Route path="/dashboard" exact component={Dashboard} />}
+            {isAuth && <Route path="/import" exact component={Import} />}
+            {isAuth && (
+              <Route
+                path="/alertas"
+                exact
+                // useruuid={useruuid}
+                // component={Alertas}
+                render={props => <Alertas {...props} useruuid={useruuid} />}
+              />
+            )}
+            {isAuth && <Route path="/usuarios" exact component={Usuarios} />}
+            {isAuth && (
+              <Route path="/usuarios/novo" exact component={NovoUsuario} />
+            )}
+            {isAuth && (
+              <Route path="/transit" exact component={TransitTimeList} />
+            )}
+            {isAuth && (
+              <Route path="/novo/transit/" exact component={AddTransitTime} />
+            )}
+            {isAuth && (
+              <Route
+                path="/transit/:uuid"
+                exact
+                component={EditTransitTime}
+                isPrivate
+              />
+            )}
+            {isAuth && (
+              <Route path="/operacional" exact component={Operacional} />
+            )}
+            {isAuth && (
+              <Route
+                path="/operacional/detalhe/:uuid"
+                exact
+                component={DetalheOperacional}
+              />
+            )}
 
-          {isAuth && <Route path="/" exact component={ProductContainer} />}
-          
+            {isAuth && <Route path="/" exact component={ProductContainer} />}
           </Switch>
-          
         </BrowserRouter>
       </div>
     );

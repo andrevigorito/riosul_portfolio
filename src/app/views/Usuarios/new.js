@@ -1,285 +1,244 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import Cropper from 'react-easy-crop';
-import { ImagePicker } from 'react-file-picker';
+
 import InputMask from 'react-input-mask';
 import { Grid, Row, Col } from 'react-flexbox-grid';
-import { Redirect } from 'react-router-dom';
 import { NewUsuario, BtnMostrar } from './styles';
-import API from '../../services/api';
+import getCroppedImg from './cropImage';
+import api from '../../services/api';
 
 // eslint-disable-next-line react/prefer-stateless-function
-class NovoUsuario extends Component {
-  state = {
-    newname: '',
-    newusername: '',
-    newpassword: '',
-    newtel: '',
-    newadmin: false,
-    type: 'password',
-    newFoto: '',
-    redirect: false,
-    crop: { x: 0, y: 0 },
-    aspect: 4 / 4,
-  };
 
-  onCropChange = crop => {
-    this.setState({ crop });
-  };
+export default function NovoUsuario({history }) {
+  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [phone, setPhone] = useState('');
+  const [photo, setPhoto] = useState('');
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState({});
+  const [isAdmin, setIsAdmin] = useState(false);
 
-  onCropComplete = (croppedArea, croppedAreaPixels) => {
-    // eslint-disable-next-line no-console
-    console.log(croppedArea, croppedAreaPixels);
-  };
+  const [mailAlert, setMailAlert] = useState(false);
+  const [wppAlert, setWppAlert] = useState(false);
+  const [smsAlert, setSmsAlert] = useState(false);
 
-  getPhoto = file => {
-    this.setState({
-      newFoto: file,
-    });
-    console.log('ddd')
-  };
+  const [type, setType] = useState('password');
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [aspect, setAspect] = useState(4 / 4);
 
-  handleChange = field => e => {
-    this.setState({
-      [field]: e.target.value,
-    });
-    // console.log(this.state.newadmin);
-  };
+  function getBase64(file, cb) {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => cb(reader.result);
+    reader.onerror = error => console.log('Error: ', error);
+  }
 
-  handleChangeAdmin = () => {
-    this.setState(prevState => ({
-      newadmin: !prevState.newadmin,
-    }));
-  };
+  async function addUser() {
+    const croppedPhoto = await getCroppedImg(photo, croppedAreaPixels);
 
-  addUser = async () => {
-    const { newusername, newpassword, newadmin, newtel, newname } = this.state;
-
-    const newUser = await API.post(`users`, {
+    const data = {
       user: {
-        username: newusername,
-        name: newname,
-        tel: newtel,
-        password: newpassword,
-        admin: newadmin,
+        username,
+        password,
+        name,
+        phone, // Deixar apenas numeros inteiros
+        admin: isAdmin,
+        mailAlert,
+        wppAlert,
+        smsAlert,
+        photo: croppedPhoto,
       },
-    });
-    console.log(newUser);
-    this.redirect();
-  };
+    };
 
-  showHide = e => {
+    const response = await api.post(`users`, data);
+    // console.log(data);
+    // verificar se deu tudo certo
+    if (response.status === 200) {
+      history.push('/usuarios');
+    }
+  }
+
+  function showHide(e) {
     e.preventDefault();
     e.stopPropagation();
-    this.setState({
-      type: this.state.type === 'text' ? 'password' : 'text',
-    });
-  };
 
-  redirect = () => {
-    this.setState({
-      redirect: true,
-    });
-  };
+    let newType;
 
-  render() {
-    // eslint-disable-next-line react/destructuring-assignment
-    if (this.state.redirect) {
-      return <Redirect to="/usuarios/" />;
+    if (type === 'text') {
+      newType = 'password';
+    } else {
+      newType = 'text';
     }
-    const {
-      newusername,
-      newname,
-      newtel,
-      newpassword,
-      newadmin,
-      newFoto,
-      crop,
-      aspect,
-    } = this.state;
-    return (
-      <div className="center">
-        <div className="page-header">
-          <h1>Novo Usuário</h1>
-        </div>
-        <NewUsuario>
-          <form>
-            <Grid>
-              <Row>
-                <Col xs={12}>
-                  <div className="nfs item">
-                    <label>
-                      <input
-                        type="checkbox"
-                        name=""
-                        id="checkAdmin"
-                        value={newadmin}
-                        onChange={this.handleChangeAdmin}
-                      />
-                      Administrador
-                    </label>
-                  </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={12} md={6}>
-                  <div className="item">
-                    <label>Nome:</label>
-                    <input
-                      type="text"
-                      value={newname}
-                      onChange={this.handleChange('newname')}
-                      placeholder="Digite o seu nome"
-                      id="nu-name"
-                    />
-                  </div>
-                </Col>
-                <Col xs={12} md={6}>
-                  <div className="item">
-                    <label>Telefone:</label>
-                    <InputMask
-                      value={newtel}
-                      onChange={this.handleChange('newtel')}
-                      placeholder="Digite o seu telefone"
-                      mask="(99) 99999-9999"
-                      maskChar=" "
-                    />
-                  </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={12} md={6}>
-                  <div className="item">
-                    <label>E-mail:</label>
-                    <input
-                      type="email"
-                      value={newusername}
-                      onChange={this.handleChange('newusername')}
-                      placeholder="Digite o e-mail"
-                      id="txtemail"
-                    />
-                  </div>
-                </Col>
-                <Col xs={12} md={6}>
-                  <div className="item">
-                    <label>Senha:</label>
-                    <input
-                      type={this.state.type}
-                      value={newpassword}
-                      onChange={this.handleChange('newpassword')}
-                      placeholder="Digite a senha"
-                      id="txtpassword"
-                    />
-                    <BtnMostrar
-                      type="button"
-                      className={this.state.type === 'text' ? 'hide' : 'show'}
-                      onClick={this.showHide}
-                    />
-                  </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={12}>
-                  <div className="item">
-                    <label>Foto de perfil:</label>
-                    <ImagePicker
-                      extensions={['jpg', 'jpeg', 'png']}
-                      dims={{
-                        minWidth: 100,
-                        maxWidth: 500,
-                        minHeight: 100,
-                        maxHeight: 500,
-                      }}
-                      onChange={base64 => this.getPhoto(base64)}
-                      onError={errMsg => alert(errMsg)}
-                    >
-                      <button>Click to upload image</button>
-                    </ImagePicker>
-                    <input
-                      type="file"
-                      id="imguser"
-                      value={newFoto}
-                      onChange={event => this.getPhoto(event.target.files)}
-                    />
-                  </div>
-                </Col>
-              </Row>
 
-              <Row>
-                <Col xs={12} md={3}>
-                  <div className="nfs item">
-                    <label>Notificações:</label>
-                    <label>
-                      <input
-                        type="checkbox"
-                        name=""
-                        id="notemail"
-                        // value={newadmin}
-                        // onChange={this.handleChangeAdmin}
-                      />
-                      E-mail
-                    </label>
-                  </div>
-                </Col>
-                <Col xs={12} md={3}>
-                  <div className="nfs item">
-                    <label>&nbsp;</label>
-                    <label>
-                      <input
-                        type="checkbox"
-                        name=""
-                        id="notwhats"
-                        // value={newadmin}
-                        // onChange={this.handleChangeAdmin}
-                      />
-                      WhatsApp
-                    </label>
-                  </div>
-                </Col>
-                <Col xs={12} md={3}>
-                  <div className="nfs item">
-                    <label>&nbsp;</label>
-                    <label>
-                      <input
-                        type="checkbox"
-                        name=""
-                        id="notsms"
-                        // value={newadmin}
-                        // onChange={this.handleChangeAdmin}
-                      />
-                      SMS
-                    </label>
-                  </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={12}>
-                  <div className="item">
-                    <button
-                      type="button"
-                      onClick={this.addUser}
-                      className="btn"
-                    >
-                      Cadastrar
-                    </button>
-                  </div>
-                </Col>
-              </Row>
-            </Grid>
-          </form>
-          <div className="boxcroped">
-            <Cropper
-              image={newFoto}
-              crop={crop}
-              aspect={aspect}
-              onCropChange={this.onCropChange}
-              onCropComplete={this.onCropComplete}
-              onZoomChange={this.onZoomChange}
-            />
-          </div>
-        </NewUsuario>
-      </div>
-    );
+    setType(newType);
   }
-}
 
-export default NovoUsuario;
+  return (
+    <div className="center">
+      <div className="page-header">
+        <h1>Novo Usuário</h1>
+      </div>
+      <NewUsuario>
+        <form>
+          <Grid>
+            <Row>
+              <Col xs={12}>
+                <div className="nfs item">
+                  <label>
+                    <input
+                      type="checkbox"
+                      name=""
+                      id="checkAdmin"
+                      value={isAdmin}
+                      onChange={() => setIsAdmin(!isAdmin)}
+                    />
+                    Administrador
+                  </label>
+                </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12} md={6}>
+                <div className="item">
+                  <label>Nome:</label>
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                    placeholder="Digite o seu nome"
+                    id="nu-name"
+                  />
+                </div>
+              </Col>
+              <Col xs={12} md={6}>
+                <div className="item">
+                  <label>Telefone:</label>
+                  <InputMask
+                    value={phone}
+                    onChange={e => setPhone(e.target.value)}
+                    placeholder="Digite o seu telefone"
+                    mask="(99) 99999-9999"
+                    maskChar=" "
+                  />
+                </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12} md={6}>
+                <div className="item">
+                  <label>E-mail:</label>
+                  <input
+                    type="email"
+                    value={username}
+                    onChange={e => setUsername(e.target.value)}
+                    placeholder="Digite o e-mail"
+                    id="txtemail"
+                  />
+                </div>
+              </Col>
+              <Col xs={12} md={6}>
+                <div className="item">
+                  <label>Senha:</label>
+                  <input
+                    type={type}
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    placeholder="Digite a senha"
+                    id="txtpassword"
+                  />
+                  <BtnMostrar
+                    type="button"
+                    className={type === 'text' ? 'hide' : 'show'}
+                    onClick={showHide}
+                  />
+                </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12}>
+                <div className="item">
+                  <label>Foto de perfil:</label>
+                  <input
+                    type="file"
+                    id="imguser"
+                    onChange={e => {
+                      getBase64(e.target.files[0], result => {
+                        setPhoto(result);
+                      });
+                      console.log(e.target.files[0]);
+                    }}
+                  />
+                </div>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col xs={12} md={3}>
+                <div className="nfs item">
+                  <label>Notificações:</label>
+                  <label>
+                    <input
+                      type="checkbox"
+                      id="notemail"
+                      onChange={() => setMailAlert(!mailAlert)}
+                    />
+                    E-mail
+                  </label>
+                </div>
+              </Col>
+              <Col xs={12} md={3}>
+                <div className="nfs item">
+                  <label>&nbsp;</label>
+                  <label>
+                    <input
+                      type="checkbox"
+                      id="notwhats"
+                      onChange={() => setWppAlert(!wppAlert)}
+                    />
+                    WhatsApp
+                  </label>
+                </div>
+              </Col>
+              <Col xs={12} md={3}>
+                <div className="nfs item">
+                  <label>&nbsp;</label>
+                  <label>
+                    <input
+                      type="checkbox"
+                      id="notsms"
+                      onChange={() => setSmsAlert(!smsAlert)}
+                    />
+                    SMS
+                  </label>
+                </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12}>
+                <div className="item">
+                  <button type="button" onClick={addUser} className="btn">
+                    Cadastrar
+                  </button>
+                </div>
+              </Col>
+            </Row>
+          </Grid>
+        </form>
+        <div className="boxcroped">
+          <Cropper
+            image={photo}
+            crop={crop}
+            aspect={aspect}
+            onCropChange={newCrop => {
+              setCrop(newCrop);
+            }}
+            onCropComplete={(croppedArea, croppedAreaPixels) => {
+              setCroppedAreaPixels(croppedAreaPixels);
+            }}
+            // onZoomChange={onZoomChange}
+          />
+        </div>
+      </NewUsuario>
+    </div>
+  );
+}
