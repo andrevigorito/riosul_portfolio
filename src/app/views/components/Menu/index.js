@@ -28,8 +28,6 @@ class Menu extends Component {
   render() {
     const { onLogout, username, empresa, photo } = this.props;
 
-    console.log(photo);
-
     return (
       <div className="main-menu">
         <div className="scrollmenu">
