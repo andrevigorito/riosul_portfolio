@@ -4,7 +4,6 @@ import imgChecked from '../../img/icons/icon-check.png';
 import iconMostrar from '../../img/icons/icon-mostrar.png';
 import iconOcultar from '../../img/icons/icon-ocultar.png';
 
-
 const columnsSize = '2.5fr 1.5fr 1.5fr 0.5fr';
 
 export const UserList = styled.div`
@@ -108,6 +107,7 @@ export const Box = styled.div`
         border: solid 1px #292d41;
       }
     }
+
     /* input[type='checkbox'] {
       width: 18px;
       height: 18px;
@@ -353,7 +353,7 @@ export const BtnCadastrar = styled.button`
   font-size: 14px;
   color: #fff;
   transition: 0.2s;
-  &:hover{
+  &:hover {
     background: transparent;
     border: solid 1px #1abc9c;
     color: #1abc9c;
@@ -361,20 +361,33 @@ export const BtnCadastrar = styled.button`
 `;
 
 export const NewUsuario = styled.div`
-  form{
+  display: flex;
+  justify-content: space-between;
+  .boxcroped {
+    width: calc(100% - 680px);
+    height: 355px;
+    position: relative;
+  }
+  form {
     max-width: 640px;
-    .item{
+    width: 100%;
+    margin-right: 40px;
+    .item {
       margin-bottom: 20px;
       position: relative;
+      &.iCropper {
+        height: 400px;
+      }
     }
-    label{
+    label {
       display: block;
       font-size: 14px;
       font-weight: 300;
       margin-bottom: 10px;
       text-align: left;
     }
-    input, select{
+    input,
+    select {
       width: 100%;
       height: 50px;
       border: solid 1px #fff;
@@ -384,31 +397,36 @@ export const NewUsuario = styled.div`
       font-size: 14px;
       font-weight: 400;
       transition: all ease 0.3s;
-      &:focus{
+      &:focus {
         border: solid 1px #c2c2c2;
       }
     }
-    input[type="checkbox"]{
+    input[type='file'] {
+      height: auto;
+      padding: 13px 12px;
+      background: #fff;
+    }
+    input[type='checkbox'] {
       width: 18px;
       height: 18px;
       appearance: none;
       padding: 0;
       border: solid 2px #929292;
       background-position: center;
-      &:checked{
-        background: url(${imgChecked})no-repeat center;
-        border: solid 2px #292D41;
+      &:checked {
+        background: url(${imgChecked}) no-repeat center;
+        border: solid 2px #292d41;
       }
     }
-    .nfs{
-      input{
+    .nfs {
+      input {
         margin-right: 10px;
       }
-      label{
+      label {
         display: flex;
         align-items: center;
         font-size: 15px;
-        &:last-child{
+        &:last-child {
           margin-bottom: 0;
         }
       }
@@ -422,7 +440,7 @@ export const BtnMostrar = styled.button`
   position: absolute;
   right: 0;
   background: url(${iconMostrar}) no-repeat center;
-  &.hide{
+  &.hide {
     background: url(${iconOcultar}) no-repeat center;
   }
 `;
