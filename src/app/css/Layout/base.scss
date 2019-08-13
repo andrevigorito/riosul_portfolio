@@ -351,7 +351,7 @@
   color: #fff;
   border: solid 1px $verde;
   transition: 0.2s;
-	&.remove{
+	&.remove, &.excluir{
       background: $vermelho;
       border: solid 1px $vermelho;
       &:hover{
@@ -374,6 +374,21 @@
     color: $verde;
     background: transparent;
     border: solid 1px $verde;
+  }
+  &.loading{
+    display: flex;
+    align-items: center;
+    float: left;
+    padding: 0 20px;
+    .loadingbtn{
+      display: block;
+    }
+    &:hover{
+      color: #fff;
+      background: $verde;
+      border: solid 1px $verde;
+    }
+
   }
 }
 h1{

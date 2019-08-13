@@ -1,5 +1,14 @@
 import React from 'react';
 import { Form, Formik, Field } from 'formik';
+import styled from 'styled-components';
+import imgloading from '../../img/load.gif';
+
+const Loadingbtn = styled.div`
+  width: 44px;
+  height: 44px;
+  background: url(${imgloading}) no-repeat center;
+  display: none;
+`
 
 const handleValidate = ({ type, email, description }) => {
   const errors = {};
@@ -102,11 +111,11 @@ const JustifieForm = props => {
 
           <button
             variant="contained"
-            color="primary"
             type="submit"
             disabled={props.isSubmitting}
-            className='btn'
+            className='btn loading'
           >
+            <Loadingbtn className='loadingbtn' />
             Salvar
           </button>
           <button
