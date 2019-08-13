@@ -41,7 +41,7 @@ class DetalheOperacional extends Component {
   
   handleJustifieCreation = async (justifie) => {
     
-    const { poItemUuid } = this.props.match.params;
+    const { poItemUuidd } = this.props.match.params;
     
     try{
       
@@ -50,7 +50,7 @@ class DetalheOperacional extends Component {
             text: justifie.text,
             type: justifie.type,
             email: justifie.email,
-            poItemUuid: poItemUuid,
+            poItemUuid: poItemUuidd,
          },
         { 
           headers: { 'Content-Type': 'application/json' } 
