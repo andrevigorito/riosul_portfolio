@@ -18,6 +18,7 @@ const handleSubmit = (props) => async (values, {setSubmitting, resetForm}) => {
     
     await props.onJustifieCreation({...values}); 
     setSubmitting(false);
+    resetForm();
     
 };
 
@@ -70,7 +71,7 @@ const JustifieForm = (props) => {
                             id="email"
                             name="email"
                             type="email"
-                            value={props.values.eamil}
+                            value={props.values.email}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
                             style={{
