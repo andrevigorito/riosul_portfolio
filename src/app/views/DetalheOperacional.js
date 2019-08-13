@@ -38,35 +38,31 @@ class DetalheOperacional extends Component {
       isLoading: false,
     });
   }
-  
-  handleJustifieCreation = async (justifie) => {
-    
+
+  handleJustifieCreation = async justifie => {
     const { poItemUuidd } = this.props.match.params;
-    
-    try{
-      
-      const rawResponse = await API.post('justifies',  
-         {
-            text: justifie.text,
-            type: justifie.type,
-            email: justifie.email,
-            poItemUuid: poItemUuidd,
-         },
-        { 
-          headers: { 'Content-Type': 'application/json' } 
+
+    try {
+      const rawResponse = await API.post(
+        'justifies',
+        {
+          text: justifie.text,
+          type: justifie.type,
+          email: justifie.email,
+          poItemUuid: poItemUuidd,
         },
+        {
+          headers: { 'Content-Type': 'application/json' },
+        }
       ).catch(error => {
-        throw error
-      })
-        
+        throw error;
+      });
+
       const content = await rawResponse.json();
-  
-        
-    }catch(err){
-        alert(err)
+    } catch (err) {
+      alert(err);
     }
-    
-  }
+  };
 
   render() {
     const { deop } = this.state;
@@ -164,17 +160,17 @@ class DetalheOperacional extends Component {
                           <img src={iconMap} alt="" />
                           <p>Destinatário</p>
                         </div>
-                          <div className="info">
-                            <div className="row">
-                              <p>Razão Social:</p>
-                              <p>{deop.shipper}</p>
-                            </div>
-                            <div className="row">
-                              <p>Origem:</p>
-                              <p>{deop.origin}</p>
-                            </div>
+                        <div className="info">
+                          <div className="row">
+                            <p>Razão Social:</p>
+                            <p>{deop.shipper}</p>
+                          </div>
+                          <div className="row">
+                            <p>Origem:</p>
+                            <p>{deop.origin}</p>
                           </div>
                         </div>
+                      </div>
 
                       <div className="box">
                         <div className="icon">
@@ -249,13 +245,9 @@ class DetalheOperacional extends Component {
                   <div className="content">
                     <h2>Justificativa</h2>
                     {this.state.modalAddJust && (
-                      <div className="form-just">
-                        <div className="row c2">
-                          <JustifieForm 
-                            onJustifieCreation={this.handleJustifieCreation}
-                          />
-                        </div>
-                      </div>
+                      <JustifieForm
+                        onJustifieCreation={this.handleJustifieCreation}
+                      />
                     )}
                     {this.state.modalJust && (
                       <div className="list-justificativas">

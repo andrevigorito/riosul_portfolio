@@ -164,6 +164,14 @@
         }
         .btn{
             height: 50px;
+            &.cancel{
+              margin-left: 20px;
+            }
+        }
+        .erro{
+          color: #FF4E50;
+          font-size: 12px;
+          margin: 5px 0;
         }
     }
     .list-justificativas{

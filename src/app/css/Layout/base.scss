@@ -348,13 +348,33 @@
 	background: $verde;
 	padding: 10px 20px;
 	font-size: 14px;
-	color: #fff;
+  color: #fff;
+  border: solid 1px $verde;
+  transition: 0.2s;
 	&.remove{
-			background: $vermelho;
-	}
+      background: $vermelho;
+      border: solid 1px $vermelho;
+      &:hover{
+        color: $vermelho;
+        background: transparent;
+        border: solid 1px $vermelho;
+      }
+  }
+
 	&.cancel{
-			background: #8B8D97;
-	}
+      background: #8B8D97;
+      border: solid 1px #8B8D97;
+      &:hover{
+        color: #8B8D97;
+        background: transparent;
+        border: solid 1px #8B8D97;
+      }
+  }
+  &:hover{
+    color: $verde;
+    background: transparent;
+    border: solid 1px $verde;
+  }
 }
 h1{
 	font-size: 20px;
