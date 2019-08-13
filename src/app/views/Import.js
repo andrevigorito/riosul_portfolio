@@ -11,7 +11,7 @@ import iconTitleDash from '../img/icons/title-dash.png';
 import Loading from './components/Loading';
 import DragAndDrop from './components/DragAndDrop';
 
-const socket = io('https://webcol.herokuapp.com');
+const socket = io('https://toniato.herokuapp.com');
 
 class Import extends Component {
   state = {
@@ -30,13 +30,25 @@ class Import extends Component {
 
   handleImportAtl = async file => {
     let name = file[0].name.split('.');
-    if(name[1] === 'xlsx' || name[1] === 'xls'){
+    if(name[1] === 'xlsx' || name[1] === 'xls' || name[1] === 'XLSX' || name[1] === 'XLS'){
       this.setState({ isConverting: true });
       const workbook = await this.getWorkbookFromFile(file[0]);
       const first_worksheet = workbook.Sheets[workbook.SheetNames[0]];
+      let firstColumn = first_worksheet.A1.v;
       const data = await XLSX.utils.sheet_to_json(first_worksheet, { header: 0 });
       this.setState({ isConverting: false });
-      this.sendImportATL(data);
+      
+      if(firstColumn === "Group name"){
+        this.setState({ importType: "PLANILHA ATL" });
+        await this.sendImportATL(data);
+      }else if (firstColumn === "Product Number"){
+        this.setState({ importType: "PLANILHA SAP - DOW" }); 
+        await this.sendImportSAPDow(data);
+      }else if (firstColumn === "Opening Date"){
+        this.setState({ importType: "PLANILHA SAP - DUPONT" });
+      }else{
+        this.notifyError('A PLANILHA EXCEL NÃO TEM UM FORMATO VÁLIDO!');
+      }
     }else{
       this.notifyError('NÃO É UM ARQUIVO VÁLIDO!');
     }
@@ -49,6 +61,26 @@ class Import extends Component {
     }).then(res => {
       this.setState({ isSending: false, isWaiting: true });
       this.notifyWarn('IMPORTAÇÃO ATL ENVIADA! AGUARDANDO CONCLUSÃO!');
+    });
+  }
+  
+  sendImportSAPDow(data) {
+    this.setState({ isSending: true });
+    API.post(`products/importSap`, data, {
+      headers: { 'Content-Type': 'application/json' },
+    }).then(res => {
+      this.setState({ isSending: false, isWaiting: true });
+      this.notifyWarn('IMPORTAÇÃO SAP DOW ENVIADA! AGUARDANDO CONCLUSÃO!');
+    });
+  }
+  
+  sendImportSAPDupont(data) {
+    this.setState({ isSending: true });
+    API.post(`products/importSapDupont`, data, {
+      headers: { 'Content-Type': 'application/json' },
+    }).then(res => {
+      this.setState({ isSending: false, isWaiting: true });
+      this.notifyWarn('IMPORTAÇÃO SAP DUPONT ENVIADA! AGUARDANDO CONCLUSÃO!');
     });
   }
 
