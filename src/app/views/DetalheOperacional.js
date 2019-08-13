@@ -4,6 +4,7 @@ import API from '../services/api';
 
 // Components
 import Loading from './components/Loading';
+import JustifieForm from './Justifies/justifieForm';
 
 // Images
 import iconOperacional from '../img/icons/title-ope.png';
@@ -36,6 +37,32 @@ class DetalheOperacional extends Component {
       deop,
       isLoading: false,
     });
+  }
+  
+  handleJustifieCreation = async (justifie) => {
+    
+    try{
+      
+      const rawResponse = await API.post('justifies',  
+         {
+            text: justifie.text,
+            type: justifie.type,
+            email: justifie.email
+         },
+        { 
+          headers: { 'Content-Type': 'application/json' } 
+        },
+      ).catch(error => {
+        throw error
+      })
+        
+      const content = await rawResponse.json();
+  
+        
+    }catch(err){
+        alert(err)
+    }
+    
   }
 
   render() {
@@ -221,26 +248,10 @@ class DetalheOperacional extends Component {
                     {this.state.modalAddJust && (
                       <div className="form-just">
                         <div className="row c2">
-                          <div className="item">
-                            <label>Tipo de Justificativa</label>
-                            <select>
-                              <option>Teste</option>
-                            </select>
-                          </div>
-                          <div className="item">
-                            <label>E-mail</label>
-                            <input type="text" />
-                          </div>
+                          <JustifieForm 
+                            onJustifieCreation={this.handleJustifieCreation}
+                          />
                         </div>
-                        <div className="row">
-                          <div className="item">
-                            <label>Justificativa</label>
-                            <textarea />
-                          </div>
-                        </div>
-                        <button type="button" className="btn">
-                          Enviar
-                        </button>
                       </div>
                     )}
                     {this.state.modalJust && (

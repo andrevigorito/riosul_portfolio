@@ -18,6 +18,7 @@ class Import extends Component {
     isConverting: false,
     isSending: false,
     isWaiting: false,
+    importType: "PLANILHA",
   };
 
   componentDidMount() {
@@ -30,19 +31,36 @@ class Import extends Component {
 
   handleImportAtl = async file => {
     let name = file[0].name.split('.');
-    if(name[1] === 'xlsx' || name[1] === 'xls'){
+    if(name[1] === 'xlsx' || name[1] === 'xls' || name[1] === 'XLSX' || name[1] === 'XLS'){
+      
       this.setState({ isConverting: true });
       const workbook = await this.getWorkbookFromFile(file[0]);
       const first_worksheet = workbook.Sheets[workbook.SheetNames[0]];
+      let firstColumn = first_worksheet.A1.v;
       const data = await XLSX.utils.sheet_to_json(first_worksheet, { header: 0 });
       this.setState({ isConverting: false });
-      this.sendImportATL(data);
+      
+      console.log(firstColumn)
+      
+      if(firstColumn === "Group name"){
+        this.setState({ importType: "PLANILHA ATL" });
+        this.sendImportATL(data);
+      }else if (firstColumn === "Product Number"){
+        this.setState({ importType: "PLANILHA SAP - DOW" }); 
+      }else if (firstColumn === "Opening Date"){
+        this.setState({ importType: "PLANILHA SAP - DUPONT" });
+      }else{
+        this.notifyError('A PLANILHA EXCEL NÃO TEM UM FORMATO VÁLIDO!');
+      }
+      
+      
     }else{
       this.notifyError('NÃO É UM ARQUIVO VÁLIDO!');
     }
   };
 
   sendImportATL(data) {
+    
     this.setState({ isSending: true });
     API.post(`products`, data, {
       headers: { 'Content-Type': 'application/json' },
@@ -110,16 +128,19 @@ class Import extends Component {
           <center className='box-import'>
             {this.state.isConverting ? (
               <Fragment>
+                <h2>{this.state.importType}</h2>
                 <Loading />
                 <h2>CONVERTENDO PLANILHA EXCEL...</h2>
               </Fragment>
             ) : this.state.isSending ? (
               <Fragment>
+                <h2>{this.state.importType}</h2>
                 <Loading />
                 <h2>ENVIANDO DADOS PARA O SERVIDOR...</h2>
               </Fragment>
             ) : this.state.isWaiting ? (
               <Fragment>
+                <h2>{this.state.importType}</h2>
                 <Loading />
                 <h2>ENVIADO COM SUCESSO! AGUARDANDO RESPOSTA DO SERVIDOR...</h2>
               </Fragment>
