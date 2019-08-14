@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import io from 'socket.io-client';
 import API from './services/api';
+import history from './services/history';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -24,6 +25,8 @@ import TransitTimeList from './views/TransitTimeList';
 // Components
 import Menu from './views/components/Menu/index';
 import Header from './views/components/Header/index';
+
+
 
 // Images
 
@@ -139,12 +142,12 @@ class App extends Component {
       console.log(logado);
 
       if (lembrar) {
-        this.saveLocalStorage(email, logado.data.uuid, logado.data.photo);
+        this.saveLocalStorage(logado.data.name, logado.data.uuid, logado.data.photo);
       }
 
       this.setState({
         isAuth: true,
-        username: email,
+        username: logado.data.name,
         useruuid: logado.data.uuid,
         photo: logado.data.photo,
       });
@@ -156,10 +159,13 @@ class App extends Component {
     return true;
   };
 
-  handleLogout = () => {
+  handleLogout = () => {   
+    history.push('/');
+
     this.setState({
       isAuth: false,
     });
+
     localStorage.removeItem('USER_USERNAME');
     localStorage.removeItem('USER_UUID');
     localStorage.removeItem('USER_PHOTO');
@@ -191,7 +197,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <BrowserRouter>
+        <Router history={history}>
           {!isAuth && (
             <Route
               path="*"
@@ -263,7 +269,7 @@ class App extends Component {
 
             {isAuth && <Route path="/" exact component={ProductContainer} />}
           </Switch>
-        </BrowserRouter>
+        </Router>
       </div>
     );
   }
