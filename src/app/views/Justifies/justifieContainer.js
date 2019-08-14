@@ -33,6 +33,15 @@ class justifieContainer extends Component {
     });
   }
   
+  handleJustifieDelete = async uuid => {
+    
+    API.delete(`justifies/${uuid}`).then(res => {
+      
+      this.getJustifies(this.props.uuid)
+      
+    });
+  }
+  
 
   handleJustifieCreation = async justifie => {
 
@@ -82,6 +91,7 @@ class justifieContainer extends Component {
           
             <JustifieList 
               isLoading={this.state.isLoading}
+              onJustifieDelete={this.handleJustifieDelete}
               justifies={this.state.justifies}
             />
           
