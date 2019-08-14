@@ -18,6 +18,7 @@ class Import extends Component {
     isConverting: false,
     isSending: false,
     isWaiting: false,
+    importType: "",
   };
 
   componentDidMount() {
