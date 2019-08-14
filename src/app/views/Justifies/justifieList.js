@@ -1,21 +1,28 @@
-import React from 'react';
+import React,{Fragment} from 'react';
+import Loading from '../components/Loading';
 
-function JustifieList() {
+function JustifieList(props) {
   return (
-    <div className="list-justificativas">
-      <div className="item">
-        <p>
-          Nulla vel placerat dolor. Etiam feugiat odio malesuada pellentesque
-          vulputate. Nulla convallis varius erat quis vestibulum. Donec vitae
-          ipsum vel elit porttitor porttitor quis eu sem.
-        </p>
-        <div className="user">
-          <p>Romero Almeida</p>
-          <p>12/07/2019 08:16:21</p>
-          <p>XO - AGENDAMENTO</p>
+    <Fragment>
+      {!props.isLoading ?
+      
+      props.justifies.map(justifie => (
+        <div className="list-justificativas">
+        <div className="item">
+          <p>
+            {justifie.description}
+          </p>
+          <div className="user">
+            <p>{justifie.tye}</p>
+            <p>{new Date(justifie.createdAt).toLocaleDateString()}</p>
+            <p>{justifie.email}</p>
+          </div>
         </div>
       </div>
-    </div>
+      ))
+      
+      : <Loading /> }
+    </Fragment>
   );
 }
 
