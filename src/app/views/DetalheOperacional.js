@@ -4,7 +4,7 @@ import API from '../services/api';
 
 // Components
 import Loading from './components/Loading';
-import JustifieForm from './Justifies/justifieForm';
+import JustifieContainer from './Justifies/justifieContainer';
 
 // Images
 import iconOperacional from '../img/icons/title-ope.png';
@@ -21,8 +21,7 @@ class DetalheOperacional extends Component {
   state = {
     deop: [],
     isLoading: false,
-    modalJust: false,
-    modalAddJust: true,
+    uuid: null,
   };
 
   async componentDidMount() {
@@ -36,37 +35,14 @@ class DetalheOperacional extends Component {
     this.setState({
       deop,
       isLoading: false,
+      uuid
     });
   }
 
-  handleJustifieCreation = async justifie => {
-    const { uuid } = this.props.match.params;
 
-    try {
-      const rawResponse = await API.post(
-        'justifies',
-        {
-          description: justifie.description,
-          type: justifie.type,
-          email: justifie.email,
-          poItemUuid: uuid,
-        },
-        {
-          headers: { 'Content-Type': 'application/json' },
-        }
-      ).catch(error => {
-        throw error;
-      });
-
-      const content = await rawResponse;
-      
-    } catch (err) {
-      alert(err);
-    }
-  };
 
   render() {
-    const { deop } = this.state;
+    const { deop,uuid } = this.state;
     return (
       <div>
         <div className="center">
@@ -242,71 +218,7 @@ class DetalheOperacional extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="lb-justificativa">
-                  <div className="content">
-                    <h2>Justificativa</h2>
-                    {this.state.modalAddJust && (
-                      <JustifieForm
-                        onJustifieCreation={this.handleJustifieCreation}
-                      />
-                    )}
-                    {this.state.modalJust && (
-                      <div className="list-justificativas">
-                        <div className="item">
-                          <p>
-                            Nulla vel placerat dolor. Etiam feugiat odio
-                            malesuada pellentesque vulputate. Nulla convallis
-                            varius erat quis vestibulum. Donec vitae ipsum vel
-                            elit porttitor porttitor quis eu sem.
-                          </p>
-                          <div className="user">
-                            <input type="checkbox" />
-                            <p>Romero Almeida</p>
-                            <p>12/07/2019 08:16:21</p>
-                            <p>XO - AGENDAMENTO</p>
-                          </div>
-                        </div>
-                        <div className="item">
-                          <p>
-                            Nulla vel placerat dolor. Etiam feugiat odio
-                            malesuada pellentesque vulputate. Nulla convallis
-                            varius erat quis vestibulum. Donec vitae ipsum vel
-                            elit porttitor porttitor quis eu sem.
-                          </p>
-                          <div className="user">
-                            <input type="checkbox" />
-                            <p>Romero Almeida</p>
-                            <p>12/07/2019 08:16:21</p>
-                            <p>XO - AGENDAMENTO</p>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                  <div className="wrap-btns">
-                    <button type="button" className="btn abonar">
-                      Abonar
-                    </button>
-                    <button
-                      type="button"
-                      className="btn"
-                      onClick={() =>
-                        this.setState({ modalJust: false, modalAddJust: true })
-                      }
-                    >
-                      Adicionar
-                    </button>
-                    <button
-                      type="button"
-                      className="btn"
-                      onClick={() =>
-                        this.setState({ modalJust: true, modalAddJust: false })
-                      }
-                    >
-                      Justificativas
-                    </button>
-                  </div>
-                </div>
+                <JustifieContainer uuid={uuid}/>
               </div>
             </div>
           )}
