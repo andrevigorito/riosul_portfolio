@@ -113,7 +113,7 @@ const JustifieForm = props => {
             variant="contained"
             type="submit"
             disabled={props.isSubmitting}
-            className='btn loading'
+            className={props.isSubmitting ? 'btn loading' : 'btn'}
           >
             <Loadingbtn className='loadingbtn' />
             Salvar

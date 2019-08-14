@@ -40,16 +40,16 @@ class DetalheOperacional extends Component {
   }
 
   handleJustifieCreation = async justifie => {
-    const { poItemUuidd } = this.props.match.params;
+    const { uuid } = this.props.match.params;
 
     try {
       const rawResponse = await API.post(
         'justifies',
         {
-          text: justifie.text,
+          description: justifie.description,
           type: justifie.type,
           email: justifie.email,
-          poItemUuid: poItemUuidd,
+          poItemUuid: uuid,
         },
         {
           headers: { 'Content-Type': 'application/json' },
@@ -58,7 +58,8 @@ class DetalheOperacional extends Component {
         throw error;
       });
 
-      const content = await rawResponse.json();
+      const content = await rawResponse;
+      
     } catch (err) {
       alert(err);
     }
