@@ -39,8 +39,6 @@ class DetalheOperacional extends Component {
     });
   }
 
-
-
   render() {
     const { deop,uuid } = this.state;
     return (
@@ -218,7 +216,7 @@ class DetalheOperacional extends Component {
                     </div>
                   </div>
                 </div>
-                <JustifieContainer uuid={uuid}/>
+                <JustifieContainer uuid={uuid} />
               </div>
             </div>
           )}
