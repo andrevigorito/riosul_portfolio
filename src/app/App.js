@@ -30,7 +30,7 @@ import Header from './views/components/Header/index';
 // Css
 import './css/main.scss';
 
-const socket = io('https://toniato.herokuapp.com');
+const socket = io('https://webcol.herokuapp.com');
 // para testes no localhost:
 // const socket = io('http://localhost:4000/');
 

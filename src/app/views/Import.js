@@ -11,7 +11,7 @@ import iconTitleDash from '../img/icons/title-dash.png';
 import Loading from './components/Loading';
 import DragAndDrop from './components/DragAndDrop';
 
-const socket = io('https://toniato.herokuapp.com');
+const socket = io('https://webcol.herokuapp.com');
 
 class Import extends Component {
   state = {
@@ -144,7 +144,7 @@ class Import extends Component {
             </h1>
           </div>
           <div className='list-planilhas'>
-            <div className='item active'>Planilha ATL</div>
+            <div className='item'>Planilha ATL</div>
             <div className='item'>Planilha SAP DOW</div>
             <div className='item'>Planilha SAP DUPONT</div>
           </div>
@@ -152,17 +152,17 @@ class Import extends Component {
             {this.state.isConverting ? (
               <Fragment>
                 <Loading />
-                <h2>CONVERTENDO PLANILHA EXCEL...</h2>
+                <h2>CONVERTENDO... {this.state.importType}</h2>
               </Fragment>
             ) : this.state.isSending ? (
               <Fragment>
                 <Loading />
-                <h2>ENVIANDO DADOS PARA O SERVIDOR...</h2>
+                <h2>{this.state.importType}... ENVIANDO DADOS PARA O SERVIDOR...</h2>
               </Fragment>
             ) : this.state.isWaiting ? (
               <Fragment>
                 <Loading />
-                <h2>ENVIADO COM SUCESSO! AGUARDANDO RESPOSTA DO SERVIDOR...</h2>
+                <h2>{this.state.importType}... ENVIADA COM SUCESSO! AGUARDANDO RESPOSTA DO SERVIDOR... </h2>
               </Fragment>
             ) : (
               <Fragment>
