@@ -348,13 +348,48 @@
 	background: $verde;
 	padding: 10px 20px;
 	font-size: 14px;
-	color: #fff;
-	&.remove{
-			background: $vermelho;
-	}
+  color: #fff;
+  border: solid 1px $verde;
+  transition: 0.2s;
+	&.remove, &.excluir{
+      background: $vermelho;
+      border: solid 1px $vermelho;
+      &:hover{
+        color: $vermelho;
+        background: transparent;
+        border: solid 1px $vermelho;
+      }
+  }
+
 	&.cancel{
-			background: #8B8D97;
-	}
+      background: #8B8D97;
+      border: solid 1px #8B8D97;
+      &:hover{
+        color: #8B8D97;
+        background: transparent;
+        border: solid 1px #8B8D97;
+      }
+  }
+  &:hover{
+    color: $verde;
+    background: transparent;
+    border: solid 1px $verde;
+  }
+  &.loading{
+    display: flex;
+    align-items: center;
+    float: left;
+    padding: 0 20px;
+    .loadingbtn{
+      display: block;
+    }
+    &:hover{
+      color: #fff;
+      background: $verde;
+      border: solid 1px $verde;
+    }
+
+  }
 }
 h1{
 	font-size: 20px;

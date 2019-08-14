@@ -4,6 +4,7 @@ import API from '../services/api';
 
 // Components
 import Loading from './components/Loading';
+import JustifieContainer from './Justifies/justifieContainer';
 
 // Images
 import iconOperacional from '../img/icons/title-ope.png';
@@ -20,6 +21,7 @@ class DetalheOperacional extends Component {
   state = {
     deop: [],
     isLoading: false,
+    uuid: null,
   };
 
   async componentDidMount() {
@@ -33,11 +35,12 @@ class DetalheOperacional extends Component {
     this.setState({
       deop,
       isLoading: false,
+      uuid
     });
   }
 
   render() {
-    const { deop } = this.state;
+    const { deop,uuid } = this.state;
     return (
       <div>
         <div className="center">
@@ -84,138 +87,136 @@ class DetalheOperacional extends Component {
                 </header>
 
                 <div className="list-po">
-                  <div>
-                    <div className="content-po ">
-                      <header>
-                        <div className="gra">
-                          <p>Modal:</p>
-                          <p>{deop.modal}</p>
+                  <div className="content-po ">
+                    <header>
+                      <div className="gra">
+                        <p>Modal:</p>
+                        <p>{deop.modal}</p>
+                      </div>
+                      <div className="historico">
+                        <div className="hist-tit">
+                          <p>Último Histórico</p>
+                          <p className="date">
+                            {deop.last_update
+                              ? new Date(deop.last_update).toLocaleDateString()
+                              : '-'}
+                          </p>
                         </div>
-                        <div className="historico">
-                          <div className="hist-tit">
-                            <p>Último Histórico</p>
-                            <p className="date">
-                              {deop.last_update
-                                ? new Date(
-                                    deop.last_update
-                                  ).toLocaleDateString()
-                                : '-'}
-                            </p>
-                          </div>
-                          <div className="boll">
-                            <span />
-                          </div>
-                          <div className="infouser">
-                            <img src={iconUser} alt="" />
-                            <div className="info">
-                              <p>{deop.last_historic}</p>
-                            </div>
-                          </div>
+                        <div className="boll">
+                          <span />
                         </div>
-                      </header>
-                      <div className="boxs">
-                        <div className="box">
-                          <div className="icon">
-                            <img src={iconRemetente} alt="" />
-                            <p>Remetente</p>
-                          </div>
+                        <div className="infouser">
+                          <img src={iconUser} alt="" />
                           <div className="info">
-                            <div className="row">
-                              <p>Razão Social:</p>
-                              <p>{deop.shipper}</p>
-                            </div>
-                            <div className="row">
-                              <p>Origem:</p>
-                              <p>{deop.origin}</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="box">
-                          <div className="icon">
-                            <img src={iconMap} alt="" />
-                            <p>Destinatário</p>
-                          </div>
-                          <div className="info">
-                            <div className="row">
-                              <p>Razão Social:</p>
-                              <p>1</p>
-                            </div>
-                            <div className="row">
-                              <p>Destino:</p>
-                              <p>{deop.destination}</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="box">
-                          <div className="icon">
-                            <img
-                              src={
-                                deop.modal === 'Ocean Import'
-                                  ? iconBarco
-                                  : iconAir
-                              }
-                              alt=""
-                            />
-                            <p>Previsões</p>
-                          </div>
-                          <div className="info">
-                            <div className="row">
-                              <p>ETD - Prev. Embarque:</p>
-                              <p>
-                                {new Date(deop.etd_date).toLocaleDateString()}
-                              </p>
-                            </div>
-                            <div className="row">
-                              <p>ATD - Prev. Chegada:</p>
-                              <p>
-                                {new Date(deop.atd_date).toLocaleDateString()}
-                              </p>
-                            </div>
-                            <div className="row">
-                              <p>GR - Prev. Entrega:</p>
-                              <p>
-                                {new Date(
-                                  deop.gr_requested_date
-                                ).toLocaleDateString()}
-                              </p>
-                            </div>
+                            <p>{deop.last_historic}</p>
                           </div>
                         </div>
                       </div>
-                      <div className="box-transportadora">
-                        <p className="tit">
-                          Tranportadora: <span>{deop.carrier}</span>
-                        </p>
-                        <div className="line-status">
-                          <div className="position">
-                            <div
-                              className={
-                                !deop.ata_date && !deop.gr_actual
-                                  ? 'boll atual'
-                                  : 'boll'
-                              }
-                            />
-                            <div
-                              className={
-                                deop.ata_date && !deop.gr_actual
-                                  ? 'boll atual'
-                                  : 'boll'
-                              }
-                            />
-                            <div
-                              className={deop.gr_actual ? 'boll atual' : 'boll'}
-                            />
+                    </header>
+                    <div className="boxs">
+                      <div className="box">
+                        <div className="icon">
+                          <img src={iconRemetente} alt="" />
+                          <p>Remetente</p>
+                        </div>
+                        <div className="info">
+                          <div className="row">
+                            <p>Razão Social:</p>
+                            <p>{deop.shipper}</p>
                           </div>
-                          <div className="legenda">
-                            <p>Embarque</p>
-                            <p>Chegada Porto/Aeroporto</p>
-                            <p>Chegada na Planta</p>
+                          <div className="row">
+                            <p>Origem:</p>
+                            <p>{deop.shipper_address}</p>
                           </div>
+                        </div>
+                      </div>
+                      <div className="box">
+                        <div className="icon">
+                          <img src={iconMap} alt="" />
+                          <p>Destinatário</p>
+                        </div>
+                        <div className="info">
+                          <div className="row">
+                            <p>Razão Social:</p>
+                            <p>{deop.shipper}</p>
+                          </div>
+                          <div className="row">
+                            <p>Origem:</p>
+                            <p>{deop.origin}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="box">
+                        <div className="icon">
+                          <img
+                            src={
+                              deop.modal === 'Ocean Import'
+                                ? iconBarco
+                                : iconAir
+                            }
+                            alt=""
+                          />
+                          <p>Previsões</p>
+                        </div>
+                        <div className="info">
+                          <div className="row">
+                            <p>ETD - Prev. Embarque:</p>
+                            <p>
+                              {new Date(deop.etd_date).toLocaleDateString()}
+                            </p>
+                          </div>
+                          <div className="row">
+                            <p>ATD - Prev. Chegada:</p>
+                            <p>
+                              {new Date(deop.atd_date).toLocaleDateString()}
+                            </p>
+                          </div>
+                          <div className="row">
+                            <p>GR - Prev. Entrega:</p>
+                            <p>
+                              {new Date(
+                                deop.gr_requested_date
+                              ).toLocaleDateString()}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="box-transportadora">
+                      <p className="tit">
+                        Tranportadora: <span>{deop.carrier}</span>
+                      </p>
+                      <div className="line-status">
+                        <div className="position">
+                          <div
+                            className={
+                              !deop.ata_date && !deop.gr_actual
+                                ? 'boll atual'
+                                : 'boll'
+                            }
+                          />
+                          <div
+                            className={
+                              deop.ata_date && !deop.gr_actual
+                                ? 'boll atual'
+                                : 'boll'
+                            }
+                          />
+                          <div
+                            className={deop.gr_actual ? 'boll atual' : 'boll'}
+                          />
+                        </div>
+                        <div className="legenda">
+                          <p>Embarque</p>
+                          <p>Chegada Porto/Aeroporto</p>
+                          <p>Chegada na Planta</p>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
+                <JustifieContainer uuid={uuid} />
               </div>
             </div>
           )}

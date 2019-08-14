@@ -96,8 +96,9 @@
 
 
 .lb-justificativa{
-    width: 860px;
+    width: 100%;
     display: flex;
+    margin-bottom: 40px;
     h2{
         font-size: 22px;
         margin-bottom: 40px;
@@ -163,6 +164,14 @@
         }
         .btn{
             height: 50px;
+            &.cancel{
+              margin-left: 20px;
+            }
+        }
+        .erro{
+          color: #FF4E50;
+          font-size: 12px;
+          margin: 5px 0;
         }
     }
     .list-justificativas{
