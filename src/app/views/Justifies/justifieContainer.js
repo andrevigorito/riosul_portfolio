@@ -21,8 +21,6 @@ class justifieContainer extends Component {
 
   handleJustifieCreation = async justifie => {
     
-    alert(this.props.uuid)
-    
     try {
       const rawResponse = await API.post(
         'justifies',
