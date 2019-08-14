@@ -11,7 +11,6 @@ import iconBack from '../../img/icons/back.png';
 
 // eslint-disable-next-line react/prefer-stateless-function
 
-export default function NovoUsuario({history }) {
 export default function NovoUsuario({ history }) {
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
