@@ -34,7 +34,7 @@ class Import extends Component {
       this.setState({ isConverting: true });
       const workbook = await this.getWorkbookFromFile(file[0]);
       const first_worksheet = workbook.Sheets[workbook.SheetNames[0]];
-      let firstColumn = first_worksheet.A1.v;
+      let firstColumn = first_worksheet.A1 ? first_worksheet.A1.v : null;
       const data = await XLSX.utils.sheet_to_json(first_worksheet, { header: 0 });
       this.setState({ isConverting: false });
       
@@ -46,6 +46,7 @@ class Import extends Component {
         await this.sendImportSAPDow(data);
       }else if (firstColumn === "Opening Date"){
         this.setState({ importType: "PLANILHA SAP - DUPONT" });
+        await this.sendImportSAPDupont(data);
       }else{
         this.notifyError('A PLANILHA EXCEL NÃO TEM UM FORMATO VÁLIDO!');
       }
@@ -66,7 +67,7 @@ class Import extends Component {
   
   sendImportSAPDow(data) {
     this.setState({ isSending: true });
-    API.post(`products/importSap`, data, {
+    API.post(`products/importSapDow`, data, {
       headers: { 'Content-Type': 'application/json' },
     }).then(res => {
       this.setState({ isSending: false, isWaiting: true });
@@ -100,10 +101,18 @@ class Import extends Component {
     socket.on('productsImport', () => {
       this.setState({ isWaiting: false });
     });
+    socket.on('SapDowImport', () => {
+      this.setState({ isWaiting: false });
+    });
+    socket.on('SapDupontImport', () => {
+      this.setState({ isWaiting: false });
+    });
   };
 
   unregisterToSocket = () => {
     socket.removeListener('productsImport');
+    socket.removeListener('SapDowImport');
+    socket.removeListener('SapDupontImport');
   };
 
   notifySucess = msg => {
