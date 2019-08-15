@@ -23,6 +23,7 @@ import EditTransitTime from './views/EditTransit';
 import TransitTimeList from './views/TransitTimeList';
 import ListTipoJustificativa from './views/TipoJustificativa/ListTipoJustificativa';
 import AddTipoJustificativa from './views/TipoJustificativa/AddTipoJustificativa';
+import EditTipoJustificativa from './views/TipoJustificativa/EditTipoJustificativa';
 
 // Components
 import Menu from './views/components/Menu/index';
@@ -284,6 +285,14 @@ class App extends Component {
                 path="/tipoJustificativa/novo"
                 exact
                 component={AddTipoJustificativa}
+              />
+            )}
+
+            {isAuth && (
+              <Route
+                path="/tipoJustificativa/:uuid"
+                exact
+                component={EditTipoJustificativa}
               />
             )}
 
