@@ -22,12 +22,11 @@ import AddTransitTime from './views/AddTransit';
 import EditTransitTime from './views/EditTransit';
 import TransitTimeList from './views/TransitTimeList';
 import ListTipoJustificativa from './views/TipoJustificativa/ListTipoJustificativa';
+import AddTipoJustificativa from './views/TipoJustificativa/AddTipoJustificativa';
 
 // Components
 import Menu from './views/components/Menu/index';
 import Header from './views/components/Header/index';
-
-
 
 // Images
 
@@ -67,40 +66,40 @@ class App extends Component {
   }
 
   registerToSocket = () => {
-    //socket.on('poItemAlert', newAlert => {
-      // console.log('poItemAlert do WebSocket...', newAlert);
-      //this.notifySucess(newAlert);
-    //});
+    // socket.on('poItemAlert', newAlert => {
+    // console.log('poItemAlert do WebSocket...', newAlert);
+    // this.notifySucess(newAlert);
+    // });
 
     socket.on('productsImport', () => {
       // console.log('poItemAlert do WebSocket...', newAlert);
       this.notifySucessText('Importação ATL concluída!');
     });
-    
+
     socket.on('SapDowImport', () => {
       // console.log('poItemAlert do WebSocket...', newAlert);
       this.notifySucessText('Importação SAP DOW concluída!');
     });
-    
+
     socket.on('SapDupontImport', () => {
       // console.log('poItemAlert do WebSocket...', newAlert);
       this.notifySucessText('Importação SAP Dupont concluída!');
     });
 
-    //socket.on('newAlert', newAlert => {
-      //const useruuid = this.getUserUuidFromState();
+    // socket.on('newAlert', newAlert => {
+    // const useruuid = this.getUserUuidFromState();
 
-      // console.log('newAlert do WebSocket...', newAlert);
-      // console.log('socket NewAlert: ');
+    // console.log('newAlert do WebSocket...', newAlert);
+    // console.log('socket NewAlert: ');
 
-      // console.log(newAlert.toAllUsers);
-      // console.log(typeof newAlert.userUuid);
-      // console.log(newAlert.userUuid, '//', useruuid);
+    // console.log(newAlert.toAllUsers);
+    // console.log(typeof newAlert.userUuid);
+    // console.log(newAlert.userUuid, '//', useruuid);
 
-      //if (newAlert.toAllUsers || newAlert.userUuid === useruuid) {
-        //this.notifySucess(newAlert);
-      //}
-    //});
+    // if (newAlert.toAllUsers || newAlert.userUuid === useruuid) {
+    // this.notifySucess(newAlert);
+    // }
+    // });
   };
 
   unregisterToSocket = () => {
@@ -109,13 +108,13 @@ class App extends Component {
     socket.removeListener('productsImport');
   };
 
-  //notifySucess = alertObj => {
+  // notifySucess = alertObj => {
   //  toast.success(alertObj.message, {
   //    position: toast.POSITION.BOTTOM_RIGHT,
   //    // alterar
   //    onClick: () => this.markAlertAsRead(alertObj),
   //  });
-  //};
+  // };
 
   notifySucessText = message => {
     toast.success(message, {
@@ -143,7 +142,11 @@ class App extends Component {
       console.log(logado);
 
       if (lembrar) {
-        this.saveLocalStorage(logado.data.name, logado.data.uuid, logado.data.photo);
+        this.saveLocalStorage(
+          logado.data.name,
+          logado.data.uuid,
+          logado.data.photo
+        );
       }
 
       this.setState({
@@ -160,7 +163,7 @@ class App extends Component {
     return true;
   };
 
-  handleLogout = () => {   
+  handleLogout = () => {
     history.push('/');
 
     this.setState({
@@ -273,6 +276,14 @@ class App extends Component {
                 path="/tipoJustificativa"
                 exact
                 component={ListTipoJustificativa}
+              />
+            )}
+
+            {isAuth && (
+              <Route
+                path="/tipoJustificativa/novo"
+                exact
+                component={AddTipoJustificativa}
               />
             )}
 
