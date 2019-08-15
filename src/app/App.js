@@ -21,6 +21,7 @@ import DetalheOperacional from './views/DetalheOperacional';
 import AddTransitTime from './views/AddTransit';
 import EditTransitTime from './views/EditTransit';
 import TransitTimeList from './views/TransitTimeList';
+import ListTipoJustificativa from './views/TipoJustificativa/ListTipoJustificativa';
 
 // Components
 import Menu from './views/components/Menu/index';
@@ -264,6 +265,14 @@ class App extends Component {
                 path="/operacional/detalhe/:uuid"
                 exact
                 component={DetalheOperacional}
+              />
+            )}
+
+            {isAuth && (
+              <Route
+                path="/tipoJustificativa"
+                exact
+                component={ListTipoJustificativa}
               />
             )}
 
