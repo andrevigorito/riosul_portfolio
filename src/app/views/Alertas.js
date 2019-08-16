@@ -26,7 +26,8 @@ class Alertas extends Component {
     // const useruuid = '12430f8a-e492-4efb-a8cd-bb2b2784567c';
     this.setState({ isLoading: true });
     const res = await API.get(`alerts/user/all/${useruuid}`);
-    console.log(res);
+    console.log('##################');
+    console.log(res.data);
 
     this.setState({
       alerts: res.data,
@@ -76,21 +77,21 @@ class Alertas extends Component {
               <p>Data Leitura</p>
             </div>
             {isLoading && <Loading />}
-            {alerts.map(alerta => (
+            {alerts.forEach(alerta => (
               <div className="item" key={alerta.uuid}>
                 <p className="date current">
                   {new Date(alerta.createdAt).toLocaleDateString()}
                 </p>
                 <p className="po">{alerta.message}</p>
                 <p className="po">
-                  {alerta.userAlerts[0].read ? 'Sim' : 'Não'}
+                  {/* {alerta.user_alerts[0].read ? 'Sim' : 'Não'} */}
                 </p>
                 <p className="altered date">
-                  {alerta.userAlerts[0].read
+                  {/* {alerta.user_alerts[0].read
                     ? new Date(
-                        alerta.userAlerts[0].updatedAt
+                        alerta.user_alerts[0].updatedAt
                       ).toLocaleDateString()
-                    : ''}
+                    : ''} */}
                 </p>
               </div>
             ))}
