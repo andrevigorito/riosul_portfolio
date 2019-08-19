@@ -9,11 +9,12 @@ import iconTitleDash from '../img/icons/title-dash.png';
 
 // Components
 import Loading from './components/Loading';
+import Slideshow from './components/SlideShow';
 import DragAndDrop from './components/DragAndDrop';
 
 const socket = io('https://webcol.herokuapp.com');
 
-class Import extends Component {
+class Home extends Component {
   state = {
     isConverting: false,
     isSending: false,
@@ -22,8 +23,6 @@ class Import extends Component {
   };
 
 
-  
-
   render() {
     return (
       <div>
@@ -31,12 +30,14 @@ class Import extends Component {
           <center>
             
               <h1>
-                <img src={iconTitleDash} alt="" />
-                Import
+                RIO SUL EQUIPAMENTOS
               </h1>
-
-          
             
+            <Slideshow />
+            
+            
+                ALGUM TECOSDAKJH KAJSDHLKAJSHD LKAJSDHLKASJDHASL LKJHASDLKAJSHD AKSJDHALSKDJHASD LKJASHDLKAJSHD AKJSDHLAKJSDHASD
+           
           </center>
         </div>
       </div>
@@ -44,4 +45,4 @@ class Import extends Component {
   }
 }
 
-export default Import;
+export default Home;

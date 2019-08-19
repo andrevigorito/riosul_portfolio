@@ -13,20 +13,9 @@ export default function Header() {
   const [useruuid, setUserUuid] = useState(localStorage.getItem('USER_UUID'));
   const [userPhoto, setUserPhoto] = useState(imgUser);
 
-  async function notifyErr(message) {
-    toast.error(message, {
-      position: toast.POSITION.BOTTOM_RIGHT,
-      onClick: () => history.push('/alertas'),
-    });
-  }
+  
 
-  async function haveUnreadAlerts() {
-    const alerts = await API.get(`alerts/user/unread/${useruuid}`);
-    if (alerts.data.length > 0)
-      notifyErr(
-        `Há ${alerts.data.length} alertas não lidos. Clique aqui para ver.`
-      );
-  }
+
 
   async function getUser() {
     const response = await API.get(`users/${useruuid}`);
@@ -42,7 +31,6 @@ export default function Header() {
     async function load() {
       await getUser();
       await setUserUuid(localStorage.getItem('USER_UUID'));
-      await haveUnreadAlerts();
     }
 
     load();
@@ -61,12 +49,12 @@ export default function Header() {
         </div>
         <nav className="main-nav">
           <Route>
-            <Link to="/dashboard">Home</Link>
+            <Link to="/home">Home</Link>
             <Link to="/gerencial">Equipamentos</Link>
             <Link to="/operacional">Contatos</Link>
           </Route>
         </nav>
-        {useruuid &&
+        {useruuid ?
           <div className="user-header">
             <UserImage src={userPhoto} className="logo" alt="" />
             <div className="icon-menu" onClick={btnMenu}>
@@ -75,6 +63,8 @@ export default function Header() {
               <span />
             </div>
           </div>
+          :
+          <Link to="/login">Login</Link>
         }
       </div>
     </header>

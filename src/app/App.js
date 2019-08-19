@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 // Views
 
 import Login from './views/Login';
+import Home from './views/Home';
 
 import Usuarios from './views/Usuarios';
 import NovoUsuario from './views/Usuarios/new';
@@ -150,24 +151,30 @@ class App extends Component {
       <div className="App">
         <Router history={history}>
           
-          <Route
-            path="*"
-            render={props => (
-              <div>
-                <Menu
-                  onLogout={this.handleLogout}
-                  username={username}
-                  empresa=""
-                  photo={photo}
-                />
-                <Header />
-                <Login {...props} handleLogin={this.handleLogin} />
-              </div>  
-            )}
-          />
+          <div>
+            <Menu
+              onLogout={this.handleLogout}
+              username={username}
+              empresa=""
+              photo={photo}
+            />
+            <Header />
+          </div>
   
           <Switch>
+          
+            <Route
+              path="/login"
+              exact
+              render={props =>  <Login {...props} handleLogin={this.handleLogin} />}
+            />
             
+            <Route path="/usuarios" exact={true} component={Usuarios} />
+          
+            <Route path="/home" exact={true} component={Home} />
+          
+            <Route path="/"component={Home} />
+
           </Switch>
         </Router>
       </div>

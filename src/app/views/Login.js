@@ -54,7 +54,6 @@ class Login extends Component {
         <div className="content-login">
           <img src={logoLogin} alt="" />
           <div className="box-login">
-            <p className="tit">Rio Sul Equipamentos</p>
             <p>Bem vindo! Digite seus dados de acesso.</p>
             <div className="main-form">
               <input
