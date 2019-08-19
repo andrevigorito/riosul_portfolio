@@ -35,12 +35,12 @@ class DetalheOperacional extends Component {
     this.setState({
       deop,
       isLoading: false,
-      uuid
+      uuid,
     });
   }
 
   render() {
-    const { deop,uuid } = this.state;
+    const { deop, uuid } = this.state;
     return (
       <div>
         <div className="center">
