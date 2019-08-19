@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import API from '../../../services/api';
 import history from '../../../services/history';
 
-import logo from '../../../img/logo.png';
+import logo from '../../../img/logo.jpeg';
 import imgUser from '../../../img/user-header.png';
 
 import { UserImage } from './styles';
@@ -61,20 +61,21 @@ export default function Header() {
         </div>
         <nav className="main-nav">
           <Route>
-            <Link to="/dashboard">Dashboard</Link>
-            <Link to="/gerencial">Gerencial </Link>
-            <Link to="/operacional">Operacional </Link>
-            <Link to="/import">Import</Link>
+            <Link to="/dashboard">Home</Link>
+            <Link to="/gerencial">Equipamentos</Link>
+            <Link to="/operacional">Contatos</Link>
           </Route>
         </nav>
-        <div className="user-header">
-          <UserImage src={userPhoto} className="logo" alt="" />
-          <div className="icon-menu" onClick={btnMenu}>
-            <span />
-            <span />
-            <span />
+        {useruuid &&
+          <div className="user-header">
+            <UserImage src={userPhoto} className="logo" alt="" />
+            <div className="icon-menu" onClick={btnMenu}>
+              <span />
+              <span />
+              <span />
+            </div>
           </div>
-        </div>
+        }
       </div>
     </header>
   );

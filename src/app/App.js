@@ -8,22 +8,11 @@ import history from './services/history';
 import 'react-toastify/dist/ReactToastify.css';
 
 // Views
-import Detalhe from './views/Detalhe';
+
 import Login from './views/Login';
-import ProductContainer from './views/ProductContainer';
-import Dashboard from './views/Dashboard';
-import Import from './views/Import';
-import Alertas from './views/Alertas';
+
 import Usuarios from './views/Usuarios';
 import NovoUsuario from './views/Usuarios/new';
-import Operacional from './views/Operacional';
-import DetalheOperacional from './views/DetalheOperacional';
-import AddTransitTime from './views/AddTransit';
-import EditTransitTime from './views/EditTransit';
-import TransitTimeList from './views/TransitTimeList';
-import ListTipoJustificativa from './views/TipoJustificativa/ListTipoJustificativa';
-import AddTipoJustificativa from './views/TipoJustificativa/AddTipoJustificativa';
-import EditTipoJustificativa from './views/TipoJustificativa/EditTipoJustificativa';
 
 // Components
 import Menu from './views/components/Menu/index';
@@ -59,59 +48,7 @@ class App extends Component {
       });
     }
 
-    this.registerToSocket();
   }
-
-  componentWillUnmount() {
-    this.unregisterToSocket();
-  }
-
-  registerToSocket = () => {
-    // socket.on('poItemAlert', newAlert => {
-    // console.log('poItemAlert do WebSocket...', newAlert);
-    // this.notifySucess(newAlert);
-    // });
-
-    socket.on('productsImport', () => {
-      // console.log('poItemAlert do WebSocket...', newAlert);
-      this.notifySucessText('Importação ATL concluída!');
-    });
-
-    socket.on('SapDowImport', () => {
-      // console.log('poItemAlert do WebSocket...', newAlert);
-      this.notifySucessText('Importação SAP DOW concluída!');
-    });
-
-    socket.on('SapDupontImport', () => {
-      // console.log('poItemAlert do WebSocket...', newAlert);
-      this.notifySucessText('Importação SAP Dupont concluída!');
-    });
-
-    socket.on('newAlertText', textMessage => {
-      this.notifyErrorTextOnClick(textMessage, '/alertas');
-    });
-    // socket.on('newAlertText', newAlert => {
-    //   // alerta com objeto ALERTA completo
-    //   const useruuid = this.getUserUuidFromState();
-
-    //   if (newAlert.toAllUsers || newAlert.userUuid === useruuid) {
-    //     this.notifySucess(newAlert);
-    //   }
-    // });
-  };
-
-  unregisterToSocket = () => {
-    socket.removeListener('productsImport');
-    socket.removeListener('SapDowImport');
-    socket.removeListener('SapDupontImport');
-    socket.removeListener('newAlertText');
-  };
-
-  notifySucessText = message => {
-    toast.success(message, {
-      position: toast.POSITION.BOTTOM_RIGHT,
-    });
-  };
 
   /**
    * @argument message = mensagem texto puro do toast
@@ -144,6 +81,8 @@ class App extends Component {
 
       console.log(logado);
 
+    
+      
       if (lembrar) {
         this.saveLocalStorage(
           logado.data.name,
@@ -158,6 +97,9 @@ class App extends Component {
         useruuid: logado.data.uuid,
         photo: logado.data.photo,
       });
+      
+      window.location.reload();
+      
       // console.log('logado.data', logado.data);
     } catch (err) {
       // console.log(err);
@@ -172,6 +114,8 @@ class App extends Component {
     this.setState({
       isAuth: false,
     });
+
+    window.location.reload();
 
     localStorage.removeItem('USER_USERNAME');
     localStorage.removeItem('USER_UUID');
@@ -205,100 +149,25 @@ class App extends Component {
     return (
       <div className="App">
         <Router history={history}>
-          {!isAuth && (
-            <Route
-              path="*"
-              render={props => (
+          
+          <Route
+            path="*"
+            render={props => (
+              <div>
+                <Menu
+                  onLogout={this.handleLogout}
+                  username={username}
+                  empresa=""
+                  photo={photo}
+                />
+                <Header />
                 <Login {...props} handleLogin={this.handleLogin} />
-              )}
-            />
-          )}
-
-          {isAuth ? (
-            <div>
-              <Menu
-                onLogout={this.handleLogout}
-                username={username}
-                empresa=""
-                photo={photo}
-              />
-              <Header />
-              <ToastContainer hideProgressBar autoClose={false} />
-            </div>
-          ) : null}
-
+              </div>  
+            )}
+          />
+  
           <Switch>
-            {isAuth && (
-              <Route path="/gerencial/:uuid" exact component={Detalhe} />
-            )}
-            {isAuth && (
-              <Route path="/gerencial" exact component={ProductContainer} />
-            )}
-            {isAuth && <Route path="/dashboard" exact component={Dashboard} />}
-            {isAuth && <Route path="/import" exact component={Import} />}
-            {isAuth && (
-              <Route
-                path="/alertas"
-                exact
-                // useruuid={useruuid}
-                // component={Alertas}
-                render={props => <Alertas {...props} useruuid={useruuid} />}
-              />
-            )}
-            {isAuth && <Route path="/usuarios" exact component={Usuarios} />}
-            {isAuth && (
-              <Route path="/usuarios/novo" exact component={NovoUsuario} />
-            )}
-            {isAuth && (
-              <Route path="/transit" exact component={TransitTimeList} />
-            )}
-            {isAuth && (
-              <Route path="/novo/transit/" exact component={AddTransitTime} />
-            )}
-            {isAuth && (
-              <Route
-                path="/transit/:uuid"
-                exact
-                component={EditTransitTime}
-                isPrivate
-              />
-            )}
-            {isAuth && (
-              <Route path="/operacional" exact component={Operacional} />
-            )}
-            {isAuth && (
-              <Route
-                path="/operacional/detalhe/:uuid"
-                exact
-                component={DetalheOperacional}
-              />
-            )}
-
-            {isAuth && (
-              <Route
-                path="/tipoJustificativa"
-                exact
-                component={ListTipoJustificativa}
-              />
-            )}
-
-            {isAuth && (
-              <Route
-                path="/tipoJustificativa/novo"
-                exact
-                component={AddTipoJustificativa}
-              />
-            )}
-
-            {isAuth && (
-              <Route
-                path="/tipoJustificativa/:uuid"
-                exact
-                component={EditTipoJustificativa}
-              />
-            )}
-
-            {isAuth && <Route path="/" exact component={ProductContainer} />}
+            
           </Switch>
         </Router>
       </div>

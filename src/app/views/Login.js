@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 // Images
-import logoLogin from '../img/logologin.png';
+import logoLogin from '../img/logoLogin.jpeg';
 
 // Css
 import '../css/Layout/login.scss';
@@ -54,7 +54,7 @@ class Login extends Component {
         <div className="content-login">
           <img src={logoLogin} alt="" />
           <div className="box-login">
-            <p className="tit">Corteva Agriscience</p>
+            <p className="tit">Rio Sul Equipamentos</p>
             <p>Bem vindo! Digite seus dados de acesso.</p>
             <div className="main-form">
               <input
