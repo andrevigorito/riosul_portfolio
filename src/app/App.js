@@ -87,35 +87,25 @@ class App extends Component {
       this.notifySucessText('Importação SAP Dupont concluída!');
     });
 
-    // socket.on('newAlert', newAlert => {
-    // const useruuid = this.getUserUuidFromState();
+    socket.on('newAlertText', textMessage => {
+      this.notifyErrorTextOnClick(textMessage, '/alertas');
+    });
+    // socket.on('newAlertText', newAlert => {
+    //   // alerta com objeto ALERTA completo
+    //   const useruuid = this.getUserUuidFromState();
 
-    // console.log('newAlert do WebSocket...', newAlert);
-    // console.log('socket NewAlert: ');
-
-    // console.log(newAlert.toAllUsers);
-    // console.log(typeof newAlert.userUuid);
-    // console.log(newAlert.userUuid, '//', useruuid);
-
-    // if (newAlert.toAllUsers || newAlert.userUuid === useruuid) {
-    // this.notifySucess(newAlert);
-    // }
+    //   if (newAlert.toAllUsers || newAlert.userUuid === useruuid) {
+    //     this.notifySucess(newAlert);
+    //   }
     // });
   };
 
   unregisterToSocket = () => {
-    socket.removeListener('poItemAlert');
-    socket.removeListener('newAlert');
     socket.removeListener('productsImport');
+    socket.removeListener('SapDowImport');
+    socket.removeListener('SapDupontImport');
+    socket.removeListener('newAlertText');
   };
-
-  // notifySucess = alertObj => {
-  //  toast.success(alertObj.message, {
-  //    position: toast.POSITION.BOTTOM_RIGHT,
-  //    // alterar
-  //    onClick: () => this.markAlertAsRead(alertObj),
-  //  });
-  // };
 
   notifySucessText = message => {
     toast.success(message, {
@@ -123,13 +113,25 @@ class App extends Component {
     });
   };
 
-  markAlertAsRead = async alertObj => {
-    const useruuid = this.getUserUuidFromState();
-    await API.put(`alerts/read/`, {
-      useruuid,
-      alertuuid: alertObj.uuid,
+  /**
+   * @argument message = mensagem texto puro do toast
+   * @argument linkOnClick caso preenchido com uma rota, ao clicar no toast,
+   * redireciona a página para a rota informada
+   */
+  notifyErrorTextOnClick = (message, linkOnClick) => {
+    const routeLink = !linkOnClick || linkOnClick === '' ? null : linkOnClick;
+    toast.error(message, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+      onClick: () => {
+        if (routeLink) history.push(routeLink);
+      },
     });
-    // console.log(teste);
+  };
+
+  notifyErrorText = message => {
+    toast.error(message, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+    });
   };
 
   handleLogin = async (email, passwd, lembrar = false) => {
