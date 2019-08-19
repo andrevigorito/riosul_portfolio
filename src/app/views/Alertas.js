@@ -14,24 +14,25 @@ export default function Alertas({ useruuid }) {
   const [alerts, setalerts] = useState([]);
   const [isLoading, setisLoading] = useState(false);
 
+  async function getAlerts() {
+    // const useruuid = '12430f8a-e492-4efb-a8cd-bb2b2784567c';
+    setisLoading(true);
+    const res = await API.get(`alerts/user/all/${useruuid}`);
+    // console.log('##################');
+    // console.log(res.data);
+    setalerts(res.data);
+    setisLoading(false);
+  }
+
   async function markAlertAsRead(alertuuid) {
     await API.put(`alerts/read/`, {
       useruuid,
       alertuuid,
     });
+    await getAlerts();
   }
 
   useEffect(() => {
-    async function getAlerts() {
-      // const useruuid = '12430f8a-e492-4efb-a8cd-bb2b2784567c';
-      setisLoading(true);
-      const res = await API.get(`alerts/user/all/${useruuid}`);
-      // console.log('##################');
-      // console.log(res.data);
-      setalerts(res.data);
-      setisLoading(false);
-    }
-
     getAlerts();
   }, []);
 
@@ -70,6 +71,7 @@ export default function Alertas({ useruuid }) {
             <p>Mensagem</p>
             <p>Lido</p>
             <p>Data Leitura</p>
+            <p>Marcar como lido</p>
           </div>
           {isLoading && <Loading />}
           {alerts.map(alerta => (
@@ -93,6 +95,23 @@ export default function Alertas({ useruuid }) {
                       ).toLocaleDateString()
                     : ''
                   : ''}
+              </p>
+              <p>
+                {alerta.user_alerts[0] ? (
+                  alerta.user_alerts[0].read ? (
+                    ''
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => markAlertAsRead(alerta.uuid)}
+                      className="btn"
+                    >
+                      Marcar como lido
+                    </button>
+                  )
+                ) : (
+                  ''
+                )}
               </p>
             </div>
           ))}
